@@ -44,10 +44,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collections\CollTest.cs" />
+    <Compile Include="Collections\DisposableListTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Bardock.Utils\Bardock.Utils.csproj">
+      <Project>{dff10396-c6b8-43f7-bbdd-d7ad9f57e4bf}</Project>
+      <Name>Bardock.Utils</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
