@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using Xunit;
 using System.Linq;
+using Bardock.Utils.Collections;
 
-namespace Bardock.Utils.Collections
+namespace Bardock.Utils.Tests.Collections
 {
 	public class DisposableListTest
 	{

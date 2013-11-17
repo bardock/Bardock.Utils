@@ -22,5 +22,13 @@ namespace Bardock.Utils.Tests.Collections
             Assert.Equal(3, r[3]);
             Assert.Equal(5, r[4]);
         }
+
+        [Fact]
+        public void Array_Empty()
+        {
+            var r = Coll.Array<int>();
+
+            Assert.Equal(0, r.Length);
+        }
     }
 }
