@@ -7,7 +7,6 @@ namespace Bardock.Utils.Extensions
 
     public static class DecimalFormatExtensions
 	{
-
 		/// <summary>
 		/// Returns string representation with currency format without symbol
 		/// </summary>
@@ -25,19 +24,16 @@ namespace Bardock.Utils.Extensions
 		}
 
 		/// <summary>
-		/// Returns string representation with default format (English)
+		/// Returns string representation with invariant format
 		/// </summary>
-        public static string ToDefaultFormat(this decimal d)
+        public static string ToInvariantFormat(this decimal d)
 		{
-            using ((new ContextCulture()))
-            {
-				return d.ToString();
-			}
+            return d.ToString(CultureInfo.InvariantCulture);
 		}
 
         public static NumberFormatInfo CurrentFormatInfo
         {
-			get { return System.Globalization.CultureInfo.CurrentCulture.NumberFormat; }
+			get { return CultureInfo.CurrentCulture.NumberFormat; }
 		}
 
 	}
