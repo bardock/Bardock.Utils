@@ -29,6 +29,12 @@ namespace Bardock.Utils.Extensions
             return d.ToString("yyyyMMdd");
         }
 
+        public static string ToIsoFormat(this DateTime d)
+        {
+            DateTimeOffset dateOffset = new DateTimeOffset(d, TimeZoneInfo.Local.GetUtcOffset(d));
+            return dateOffset.ToString("o");
+        }
+
         public static DateTime ToDayStart(this DateTime d)
         {
             return new DateTime(d.Year, d.Month, d.Day, 0, 0, 0, 0, d.Kind);
@@ -58,11 +64,5 @@ namespace Bardock.Utils.Extensions
         {
             return System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern;
         }
-
-        public static string ToIso (this DateTime d){
-            DateTimeOffset dateOffset = new DateTimeOffset(d,TimeZoneInfo.Local.GetUtcOffset(d));
-            return dateOffset.ToString("o");
-        }
     }
-
 }
