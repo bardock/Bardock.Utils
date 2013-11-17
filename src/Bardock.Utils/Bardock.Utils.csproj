@@ -50,7 +50,7 @@
     <Compile Include="Globalization\Resources.cs" />
     <Compile Include="Linq\Expressions\ExpressionHelper.cs" />
     <Compile Include="Extensions\DateExtensions.cs" />
-    <Compile Include="Extensions\DecimalFormatExtensions.cs" />
+    <Compile Include="Extensions\DecimalExtensions.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Collections\Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Linq\Extensions\IQueryableExtensions.cs" />

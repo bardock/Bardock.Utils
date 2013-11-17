@@ -5,7 +5,7 @@ using Bardock.Utils.Globalization;
 namespace Bardock.Utils.Extensions
 {
 
-    public static class DecimalFormatExtensions
+    public static class DecimalExtensions
 	{
 		/// <summary>
 		/// Returns string representation with currency format without symbol

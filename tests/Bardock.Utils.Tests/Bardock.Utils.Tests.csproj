@@ -47,6 +47,7 @@
     <Compile Include="Collections\CollTest.cs" />
     <Compile Include="Collections\DisposableListTest.cs" />
     <Compile Include="Collections\Extensions\IEnumerableExtensionsTest.cs" />
+    <Compile Include="Extensions\DecimalExtensionsTest.cs" />
     <Compile Include="Extensions\DateExtensionsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

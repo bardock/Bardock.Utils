@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 using Bardock.Utils.Extensions;
-using System.Text.RegularExpressions;
 
 namespace Bardock.Utils.Tests.Extensions
 {
