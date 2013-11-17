@@ -32,7 +32,7 @@ namespace Bardock.Utils.Extensions
                 else if (c >= 'A' && c <= 'Z')
                 {
                     // tricky way to convert to lowercase
-                    sb.Append((char)(c | 32));
+                    sb.Append(c.ToLower());
                     prevdash = false;
                 }
                 else if (c == '´' || c == '’')
@@ -52,16 +52,16 @@ namespace Bardock.Utils.Extensions
                 else if ((int)c >= 128)
                 {
                     int prevlen = sb.Length;
-                    sb.Append(FoldDiacritical(c));
+                    sb.Append(FoldDiacritical(c).ToLower());
                     if (prevlen != sb.Length) prevdash = false;
                 }
                 if (i == maxlen) break;
             }
 
             if (prevdash)
-                return sb.ToString().Substring(0, sb.Length - 1);
-            else
-                return sb.ToString();
+                sb.Remove(sb.Length - 1, 1);
+            
+            return sb.ToString();
         }
 
         private static char FoldDiacritical(char letter)
