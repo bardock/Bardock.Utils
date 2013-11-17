@@ -9,9 +9,7 @@ namespace Bardock.Utils.Extensions
     {
         public static char ToLower(this char c)
         {
-            if (c < 'A' || c > 'Z')
-                return c;
-            return (char)(c | 32);
+            return Char.ToLower(c);
         }
     }
 }
