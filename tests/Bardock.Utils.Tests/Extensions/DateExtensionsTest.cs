@@ -64,5 +64,12 @@ namespace Bardock.Utils.Tests.Extensions
             var offset = TimeZoneInfo.Local.GetUtcOffset(date);
             Assert.Equal(string.Format("2013-01-05T12:45:06.1230000{0:+00;-00}:{1:00}", offset.Hours, offset.Minutes), r);
         }
+
+        [Fact]
+        public void ToDayStart()
+        {
+            var r = DATE1.ToDayStart();
+            Assert.Equal(new DateTime(2013, 01, 05), r);
+        }
     }
 }
