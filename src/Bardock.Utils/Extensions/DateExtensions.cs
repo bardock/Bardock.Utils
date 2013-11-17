@@ -19,11 +19,6 @@ namespace Bardock.Utils.Extensions
             return d.ToString("yyyy-MM-dd");
         }
 
-        public static string DefaultDateFormat(this DateTime d)
-        {
-            return d.ToString("dd/MM/yyyy");
-        }
-
         public static string CompactFormat(this DateTime d)
         {
             return d.ToString("yyyyMMddhhmmss");
