@@ -31,17 +31,22 @@ namespace Bardock.Utils.Extensions
 
         public static DateTime ToDayStart(this DateTime d)
         {
-            return new DateTime(d.Year, d.Month, d.Day);
+            return new DateTime(d.Year, d.Month, d.Day, 0, 0, 0, 0, d.Kind);
+        }
+
+        public static DateTime ToDayEnd(this DateTime d)
+        {
+            return d.ToDayStart().AddDays(1).AddSeconds(-1);
         }
 
         public static DateTime ToMonthStart(this DateTime d)
         {
-            return d.AddDays(1 - d.Day);
+            return d.AddDays(1 - d.Day).ToDayStart();
         }
 
         public static DateTime ToMonthEnd(this DateTime d)
         {
-            return d.ToMonthStart().AddMonths(1).AddDays(-1);
+            return d.ToMonthStart().AddMonths(1).AddSeconds(-1);
         }
 
         public static string CurrentFormat()
