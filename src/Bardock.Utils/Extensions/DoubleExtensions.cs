@@ -9,9 +9,9 @@ namespace Bardock.Utils.Extensions
 {
     public static class DoubleExtensions
     {
-        public static string ToInvariantString(this double @this)
+        public static string ToInvariantString(this double d)
         {
-            return @this.ToString(CultureInfo.InvariantCulture);
+            return d.ToString(CultureInfo.InvariantCulture);
         }
     }
 }
