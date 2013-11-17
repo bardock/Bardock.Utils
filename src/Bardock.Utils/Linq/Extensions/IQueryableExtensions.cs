@@ -40,11 +40,14 @@ namespace Bardock.Utils.Linq.Extensions
             return source.Where(condition ? predicateTrue : predicateFalse);
         }
 
-        public static IQueryable<TSource> WhereDateRange<TSource>(
-                                                    this IQueryable<TSource> source,
-                                                    DateTime? fromDate,
-                                                    DateTime? toDate,
-                                                    Expression<Func<TSource, DateTime>> dateExp)
+        /// <summary>
+        /// Filters a sequence of values based on specified range of dates.
+        /// </summary>
+        public static IQueryable<TSource> WhereBetween<TSource>(
+            this IQueryable<TSource> source,
+            Expression<Func<TSource, DateTime>> dateExp,
+            DateTime? fromDate,
+            DateTime? toDate)
         {
             //Build a binary expression with date range evaluation
             {
@@ -85,6 +88,9 @@ namespace Bardock.Utils.Linq.Extensions
         private static readonly MethodInfo _OrderByMethod = typeof(Queryable).GetMethods().Where(method => method.Name == "OrderBy").Where(method => method.GetParameters().Length == 2).Single();
         private static readonly MethodInfo _OrderByDescendingMethod = typeof(Queryable).GetMethods().Where(method => method.Name == "OrderByDescending").Where(method => method.GetParameters().Length == 2).Single();
 
+        /// <summary>
+        /// Sorts the elements of a sequence according to a key property specified as string.
+        /// </summary>
         public static IOrderedQueryable<TSource> OrderByProperty<TSource>(IQueryable<TSource> source, string propertyExpression, bool @ascending = true)
         {
 	        var lambda = ExpressionHelper.ParseProperties<TSource>(propertyExpression);
