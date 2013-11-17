@@ -22,5 +22,15 @@ namespace Bardock.Utils.Tests.Extensions
                 Assert.Equal("123,456.79", r);
             }
         }
+
+        [Fact]
+        public void ToCurrencyInputString()
+        {
+            using (var c = new ContextCulture())
+            {
+                var r = DEC1.ToCurrencyInputString();
+                Assert.Equal("123456.79", r);
+            }
+        }
     }
 }
