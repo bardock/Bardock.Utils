@@ -5,6 +5,9 @@ namespace Bardock.Utils.Linq.Expressions
 {
 	public class ExpressionHelper
 	{
+        /// <summary>
+        /// Obtains the member name string of a specified expression
+        /// </summary>
 		public static string GetMemberName<T>(Expression<System.Func<T, object>> expression)
 		{
 			if (expression.Body is MemberExpression) {
