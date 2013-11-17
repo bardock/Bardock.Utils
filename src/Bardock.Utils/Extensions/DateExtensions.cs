@@ -61,7 +61,7 @@ namespace Bardock.Utils.Extensions
 
         public static DateTime ToDayEnd(this DateTime d)
         {
-            return d.ToDayStart().AddDays(1).AddSeconds(-1);
+            return d.ToDayStart().AddDays(1).AddMilliseconds(-1);
         }
 
         public static DateTime ToMonthStart(this DateTime d)
@@ -71,7 +71,7 @@ namespace Bardock.Utils.Extensions
 
         public static DateTime ToMonthEnd(this DateTime d)
         {
-            return d.ToMonthStart().AddMonths(1).AddSeconds(-1);
+            return d.ToMonthStart().AddMonths(1).AddMilliseconds(-1);
         }
 
         public static string CurrentFormat()

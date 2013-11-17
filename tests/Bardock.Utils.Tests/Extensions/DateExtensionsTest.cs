@@ -71,5 +71,12 @@ namespace Bardock.Utils.Tests.Extensions
             var r = DATE1.ToDayStart();
             Assert.Equal(new DateTime(2013, 01, 05), r);
         }
+
+        [Fact]
+        public void ToDayEnd()
+        {
+            var r = DATE1.ToDayEnd();
+            Assert.Equal(new DateTime(2013, 01, 05, 23, 59, 59, 999), r);
+        }
     }
 }
