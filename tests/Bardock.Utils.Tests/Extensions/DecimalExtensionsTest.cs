@@ -32,5 +32,12 @@ namespace Bardock.Utils.Tests.Extensions
                 Assert.Equal("123456.79", r);
             }
         }
+
+        [Fact]
+        public void ToInvariantFormat()
+        {
+            var r = DEC1.ToInvariantFormat();
+            Assert.Equal("123456.789", r);
+        }
     }
 }
