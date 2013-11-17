@@ -31,8 +31,27 @@ namespace Bardock.Utils.Extensions
 
         public static string ToIsoFormat(this DateTime d)
         {
-            DateTimeOffset dateOffset = new DateTimeOffset(d, TimeZoneInfo.Local.GetUtcOffset(d));
-            return dateOffset.ToString("o");
+            switch (d.Kind)
+            {
+                case DateTimeKind.Unspecified:
+                case DateTimeKind.Utc:
+                    return d.ToString("o", System.Globalization.CultureInfo.InvariantCulture);
+
+                case DateTimeKind.Local:
+                    return new DateTimeOffset(d, TimeZoneInfo.Local.GetUtcOffset(d)).ToString("o");
+
+                default:
+                    throw new NotImplementedException(string.Format("DateTimeKind: {0}", d.Kind));
+            }
+        }
+
+        public static DateTime Clone(
+            this DateTime d, int? year = null, int? month = null, int? day = null, 
+            int? hour = null, int? minute = null, int? second = null, int? millisecond = null, DateTimeKind? kind = null)
+        {
+            return new DateTime(
+                year ?? d.Year, month ?? d.Month, day ?? d.Day, 
+                hour ?? d.Hour, minute ?? d.Minute, second ?? d.Second, millisecond ?? d.Millisecond, kind ?? d.Kind);
         }
 
         public static DateTime ToDayStart(this DateTime d)
