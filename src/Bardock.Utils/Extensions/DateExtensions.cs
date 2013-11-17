@@ -3,10 +3,12 @@ using System.Runtime.CompilerServices;
 
 namespace Bardock.Utils.Extensions
 {
+    /// <summary>
+    /// Provides helper methods for Dates.
+    /// Custom Date and Time Format Strings: http://msdn.microsoft.com/en-us/library/8kb3ddd4.aspx
+    /// </summary>
     public static class DateExtensions
     {
-        //http://msdn.microsoft.com/en-us/library/8kb3ddd4.aspx
-        
         public static string NormalizedFormat(this DateTime d)
         {
             return d.ToString("yyyy-MM-dd HH:mm:ss");
