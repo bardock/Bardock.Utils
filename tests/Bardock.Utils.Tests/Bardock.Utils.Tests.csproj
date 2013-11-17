@@ -47,6 +47,8 @@
     <Compile Include="Collections\CollTest.cs" />
     <Compile Include="Collections\DisposableListTest.cs" />
     <Compile Include="Collections\Extensions\IEnumerableExtensionsTest.cs" />
+    <Compile Include="Extensions\ByteExtensionsTest.cs" />
+    <Compile Include="Extensions\StringHashingExtensionsTest.cs" />
     <Compile Include="Extensions\StringExtensionsTest.cs" />
     <Compile Include="Extensions\StreamExtensionsTest.cs" />
     <Compile Include="Extensions\NumberBaseExtensionsTest.cs" />

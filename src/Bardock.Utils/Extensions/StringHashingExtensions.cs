@@ -6,24 +6,27 @@ namespace Bardock.Utils.Extensions
     public static class StringHashingExtensions
     {
         /// <summary>
-        /// Creates a hash using MD5 algorithm and UTF8 encoding for input string
+        /// Creates a hash using MD5 algorithm and specified encoding (UTF8 by default)
         /// </summary>
-        public static byte[] GetHash(this string inputString)
+        public static byte[] GetHash(this string inputString, Encoding enc = null)
         {
+            if (enc == null)
+                enc = Encoding.UTF8;
+
             HashAlgorithm algorithm = MD5.Create();
-            return algorithm.ComputeHash(Encoding.UTF8.GetBytes(inputString));
+            return algorithm.ComputeHash(enc.GetBytes(inputString));
         }
 
         /// <summary>
-        /// Creates a hash using MD5 algorithm, UTF8 encoding for input string and hexadecimal for output string
+        /// Creates a hash using MD5 algorithm, and specified encodings for input (UTF8 by default) and output strings (lower hexa by default)
         /// </summary>
-        public static string GetHashString(this string inputString)
+        public static string GetHashString(this string inputString, Encoding inputEncoding = null, Encoding outputEncoding = null)
         {
-            StringBuilder sb = new StringBuilder();
-            foreach (byte b in GetHash(inputString))
-                sb.Append(b.ToString("X2"));
-
-            return sb.ToString();
+            var hash = inputString.GetHash(inputEncoding);
+            if (outputEncoding == null)
+                return hash.ToHexa();
+            else
+                return outputEncoding.GetString(hash);
         }
     }
 }
