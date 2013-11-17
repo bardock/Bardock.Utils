@@ -14,15 +14,16 @@ namespace Bardock.Utils.Extensions
 		}
 
 		/// <summary>
-		/// Retrieves a new string with specified length at maximum using last characters.
+		/// Retrieves a new string with specified length at maximum using trailing characters.
 		/// </summary>
         public static string CutEnd(this string str, int length)
 		{
-			return str.Substring(str.Length < length ? 0 : str.Length - length, length);
+			return str.Substring(str.Length <= length ? 0 : str.Length - length);
 		}
 
         /// <summary>
-        /// Determines if string contains another string using specified StringComparison
+        /// Returns a value indicating whether the specified System.String object occurs
+        /// within this string using specified StringComparison.
         /// </summary>
         public static bool Contains(this string source, string toCheck, StringComparison comp)
         {

@@ -47,6 +47,11 @@
     <Compile Include="Collections\CollTest.cs" />
     <Compile Include="Collections\DisposableListTest.cs" />
     <Compile Include="Collections\Extensions\IEnumerableExtensionsTest.cs" />
+    <Compile Include="Extensions\StringExtensionsTest.cs" />
+    <Compile Include="Extensions\StreamExtensionsTest.cs" />
+    <Compile Include="Extensions\NumberBaseExtensionsTest.cs" />
+    <Compile Include="Extensions\NullableExtensionsTest.cs" />
+    <Compile Include="Extensions\GenericExtensionsTest.cs" />
     <Compile Include="Extensions\DoubleExtensionsTest.cs" />
     <Compile Include="Extensions\DecimalExtensionsTest.cs" />
     <Compile Include="Extensions\DateExtensionsTest.cs" />
