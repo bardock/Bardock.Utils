@@ -34,9 +34,9 @@ namespace Bardock.Utils.Tests.Extensions
         }
 
         [Fact]
-        public void ToInvariantFormat()
+        public void ToInvariantString()
         {
-            var r = DEC1.ToInvariantFormat();
+            var r = DEC1.ToInvariantString();
             Assert.Equal("123456.789", r);
         }
     }

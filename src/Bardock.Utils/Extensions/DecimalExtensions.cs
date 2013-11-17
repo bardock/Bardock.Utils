@@ -26,7 +26,7 @@ namespace Bardock.Utils.Extensions
 		/// <summary>
 		/// Returns string representation with invariant format
 		/// </summary>
-        public static string ToInvariantFormat(this decimal d)
+        public static string ToInvariantString(this decimal d)
 		{
             return d.ToString(CultureInfo.InvariantCulture);
 		}
