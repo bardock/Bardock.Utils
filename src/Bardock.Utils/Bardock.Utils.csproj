@@ -43,7 +43,6 @@
     <Compile Include="Extensions\ByteExtensions.cs" />
     <Compile Include="Extensions\CharExtensions.cs" />
     <Compile Include="Extensions\DoubleExtensions.cs" />
-    <Compile Include="Extensions\IQueryableExtensions.cs" />
     <Compile Include="Extensions\GenericExtensions.cs" />
     <Compile Include="Extensions\StreamExtensions.cs" />
     <Compile Include="Extensions\StringHashingExtensions.cs" />
@@ -54,7 +53,7 @@
     <Compile Include="Extensions\DateExtensions.cs" />
     <Compile Include="Extensions\DecimalExtensions.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
-    <Compile Include="Collections\Extensions\IEnumerableExtensions.cs" />
+    <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Linq\Extensions\IQueryableExtensions.cs" />
     <Compile Include="Extensions\NullableExtensions.cs" />
     <Compile Include="Extensions\NumberBaseExtensions.cs" />

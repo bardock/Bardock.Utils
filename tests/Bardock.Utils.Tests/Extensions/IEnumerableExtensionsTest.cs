@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Linq;
 using Bardock.Utils.Collections;
-using Bardock.Utils.Collections.Extensions;
+using Bardock.Utils.Extensions;
 using Xunit;
 
-namespace Bardock.Utils.Tests.Collections.Extensions
+namespace Bardock.Utils.Tests.Extensions
 {
     public class IEnumerableExtensionsTest
 	{

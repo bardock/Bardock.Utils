@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Linq;
 
-namespace Bardock.Utils.Collections.Extensions
+namespace Bardock.Utils.Extensions
 {
     public static class IEnumerableExtensions
 	{
