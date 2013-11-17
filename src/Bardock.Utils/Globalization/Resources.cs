@@ -5,6 +5,9 @@ using System.Threading;
 
 namespace Bardock.Utils.Globalization
 {
+    /// <summary>
+    /// Provides a wrapper for a Resource instance.
+    /// </summary>
     public class Resources
 	{
         private static object _resouces;
@@ -14,15 +17,17 @@ namespace Bardock.Utils.Globalization
             _resouces = r;
         }
 
+        /// <summary>
+        /// Obtains resource value by its name.
+        /// </summary>
         public static string GetValue(string resourceName)
         {
             var prop = _resouces.GetType().GetProperty(resourceName);
 
-            if ((prop == null))
+            if (prop == null)
                 return resourceName;
 
             return prop.GetValue(null).ToString();
         }
-
 	}
 }
