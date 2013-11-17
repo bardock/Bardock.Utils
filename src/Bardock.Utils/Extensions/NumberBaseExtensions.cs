@@ -4,6 +4,13 @@ namespace Bardock.Utils.Extensions
 {
     public static class NumberBaseExtensions
     {
+        /// <summary>
+        /// Converts the given decimal number to the numeral system with the
+        /// specified base (in the range [2, 36]).
+        /// </summary>
+        /// <param name="decimalNumber">The number to convert.</param>
+        /// <param name="numBase">The radix of the destination numeral system (in the range [2, 36]).</param>
+        /// <returns></returns>
         public static string ConvertBase(this int decimalNumber, int numBase)
         {
             return ((long)decimalNumber).ConvertBase(numBase);

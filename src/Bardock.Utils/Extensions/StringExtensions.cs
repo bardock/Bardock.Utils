@@ -3,10 +3,8 @@ using System.Text;
 
 namespace Bardock.Utils.Extensions
 {
-
     public static class StringExtensions
 	{
-
 		/// <summary>
 		/// Retrieves a new string with specified length at maximum.
 		/// </summary>
@@ -23,19 +21,12 @@ namespace Bardock.Utils.Extensions
 			return str.Substring(str.Length < length ? 0 : str.Length - length, length);
 		}
 
-        public static string PadLeft(this string input, char pad, int length)
-        {
-            var sb = new StringBuilder();
-            for (var i = 0; i < length - input.Length; i++)
-                sb.Append(pad);
-            sb.Append(input);
-            return sb.ToString();
-        }
-
+        /// <summary>
+        /// Determines if string contains another string using specified StringComparison
+        /// </summary>
         public static bool Contains(this string source, string toCheck, StringComparison comp)
         {
             return source.IndexOf(toCheck, comp) >= 0;
         }
 	}
-
 }

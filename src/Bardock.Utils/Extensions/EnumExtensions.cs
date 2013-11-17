@@ -4,7 +4,6 @@ using System.Linq;
 
 namespace Bardock.Utils.Extensions
 {
-
     public static class EnumExtensions
 	{
         public static Dictionary<string, int> ToDictionary<TEnum>(this TEnum enumInstance) where TEnum : struct
@@ -14,7 +13,5 @@ namespace Bardock.Utils.Extensions
 			}
 			return Enum.GetValues(typeof(TEnum)).Cast<int>().ToDictionary(x => Enum.ToObject(typeof(TEnum), x).ToString());
 		}
-
 	}
-
 }
