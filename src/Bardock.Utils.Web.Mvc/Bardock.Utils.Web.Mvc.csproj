@@ -95,6 +95,7 @@
     <Compile Include="Extensions\TextBoxExtensions.cs" />
     <Compile Include="Extensions\UrlHelperExtensions.cs" />
     <Compile Include="Validation\DocumentFileExtensions.cs" />
+    <Compile Include="Validation\EmailAttribute.cs" />
     <Compile Include="Validation\HttpFileExtensionsAttribute.cs" />
     <Compile Include="Extensions\WebViewPageExtensions.cs" />
   </ItemGroup>
