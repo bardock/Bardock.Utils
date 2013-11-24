@@ -15,9 +15,9 @@ namespace Bardock.Utils.Web.Extensions
 					ms.Write(buffer, 0, read);
 					read = file.InputStream.Read(buffer, 0, buffer.Length);
 				}
-				var bytes = ms.ToArray();
+                var bytes = ms.ToArray();
+                //Reset stream position for consecutive reads
 				file.InputStream.Position = 0;
-				//Reset stream position for consecutive reads
 				return bytes;
 			}
 		}
