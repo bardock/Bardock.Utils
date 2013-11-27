@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using System.Linq;
 
 namespace Bardock.Utils.Extensions
 {
@@ -52,7 +53,7 @@ namespace Bardock.Utils.Extensions
                 else if ((int)c >= 128)
                 {
                     int prevlen = sb.Length;
-                    sb.Append(FoldDiacritical(c));
+                    sb.Append(FoldDiacriticals(c));
                     if (prevlen != sb.Length) prevdash = false;
                 }
                 if (i == maxlen) break;
@@ -63,8 +64,17 @@ namespace Bardock.Utils.Extensions
             else
                 return sb.ToString();
         }
+        public static string FoldDiacritical(this string str)
+        {
+            return new string(
+                str
+                    .ToCharArray()
+                    .Select(x => FoldDiacriticals(x))
+                    .ToArray()
+            );
+        }
 
-        private static char FoldDiacritical(char letter)
+        private static char FoldDiacriticals(char letter)
         {
             switch (letter)
             {
