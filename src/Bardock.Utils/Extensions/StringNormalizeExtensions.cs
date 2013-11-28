@@ -53,7 +53,7 @@ namespace Bardock.Utils.Extensions
                 else if ((int)c >= 128)
                 {
                     int prevlen = sb.Length;
-                    sb.Append(FoldDiacriticals(c));
+                    sb.Append(FoldDiacritical(c));
                     if (prevlen != sb.Length) prevdash = false;
                 }
                 if (i == maxlen) break;
@@ -64,17 +64,17 @@ namespace Bardock.Utils.Extensions
             else
                 return sb.ToString();
         }
-        public static string FoldDiacritical(this string str)
+        public static string FoldDiacriticals(this string str)
         {
             return new string(
                 str
                     .ToCharArray()
-                    .Select(x => FoldDiacriticals(x))
+                    .Select(x => FoldDiacritical(x))
                     .ToArray()
             );
         }
 
-        private static char FoldDiacriticals(char letter)
+        private static char FoldDiacritical(char letter)
         {
             switch (letter)
             {
