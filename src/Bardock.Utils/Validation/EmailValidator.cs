@@ -20,7 +20,7 @@ namespace Bardock.Utils.Validation
     {
         public const string REGEX_PATTERN = @"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$";
 
-        public bool IsValid(string email)
+        public static bool IsValid(string email)
         {
             return Regex.IsMatch(email, REGEX_PATTERN);
         }
