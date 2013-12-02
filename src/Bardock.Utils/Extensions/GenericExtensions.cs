@@ -40,5 +40,23 @@ namespace Bardock.Utils.Extensions
         {
             return @this.In(evaluate as IEnumerable<T>);
         }
+
+        /// <summary>
+        /// Applies specified function when the flag is true, otherwise return specified default value
+        /// This methods provides method chaining when a condition must be evaluated.
+        /// </summary>
+        public static TResult Apply<T, TResult>(this T @this, Func<T, TResult> f, bool when, TResult @default = default(TResult))
+        {
+            return when ? f.Invoke(@this) : @default;
+        }
+
+        /// <summary>
+        /// Applies specified function when the flag is true. 
+        /// This methods provides method chaining when a condition must be evaluated.
+        /// </summary>
+        public static T Apply<T>(this T @this, Func<T, T> f, bool when)
+        {
+            return when ? f.Invoke(@this) : @this;
+        }
 	}
 }

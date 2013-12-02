@@ -66,5 +66,47 @@ namespace Bardock.Utils.Tests.Extensions
             var r = 3.In(1, 2, 4);
             Assert.Equal(false, r);
         }
+
+        [Fact]
+        public void Apply_True()
+        {
+            var r = 3.Apply(x => ++x, when: true);
+            Assert.Equal(4, r);
+        }
+
+        [Fact]
+        public void Apply_False()
+        {
+            var r = 3.Apply(x => x++, when: false);
+            Assert.Equal(3, r);
+        }
+
+        [Fact]
+        public void Apply_Project_True()
+        {
+            var r = 3.Apply(x => x.ToString(), when: true);
+            Assert.Equal("3", r);
+        }
+
+        [Fact]
+        public void Apply_Project_False()
+        {
+            var r = 3.Apply(x => x.ToString(), when: false);
+            Assert.Equal(null, r);
+        }
+
+        [Fact]
+        public void Apply_Project_True_Default()
+        {
+            var r = 3.Apply(x => x.ToString(), when: true, @default: "X");
+            Assert.Equal("3", r);
+        }
+
+        [Fact]
+        public void Apply_Project_False_Default()
+        {
+            var r = 3.Apply(x => x.ToString(), when: false, @default: "X");
+            Assert.Equal("X", r);
+        }
     }
 }
