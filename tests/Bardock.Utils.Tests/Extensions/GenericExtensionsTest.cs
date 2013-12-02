@@ -12,6 +12,20 @@ namespace Bardock.Utils.Tests.Extensions
     public class GenericExtensionsTest
     {
         [Fact]
+        public void Is_True()
+        {
+            var r = 3.Is(predicate: x => x == 3);
+            Assert.Equal(true, r);
+        }
+
+        [Fact]
+        public void Is_False()
+        {
+            var r = 3.Is(predicate: x => x == 4);
+            Assert.Equal(false, r);
+        }
+
+        [Fact]
         public void In_Empty()
         {
             var r = 3.In();
