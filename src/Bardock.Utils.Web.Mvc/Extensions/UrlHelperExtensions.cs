@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Runtime.CompilerServices;
 
 namespace Bardock.Utils.Web.Mvc.Extensions
 {
@@ -142,6 +143,49 @@ namespace Bardock.Utils.Web.Mvc.Extensions
         public static UrlHelper ToEmptyRouteData(this UrlHelper helper)
         {
             return new UrlHelper(new RequestContext(helper.RequestContext.HttpContext, new RouteData()));
+        }
+        private static RouteValueDictionary GetRouteValuesDictionary(object routeValues)
+        {
+            var originalValues = new RouteValueDictionary(routeValues);
+            var finalValues = new RouteValueDictionary();
+            foreach (var key in originalValues.Keys)
+            {
+                var value = originalValues[key];
+                if (value is IEnumerable && !(value is string))
+                {
+                    var i = 0;
+                    foreach (var val in (IEnumerable)value)
+                    {
+                        finalValues[string.Format("{0}[{1}]", key, i)] = val;
+                        i += 1;
+                    }
+                }
+                else if (value is bool?)
+                {
+                    finalValues[key] = value ?? "null";
+                }
+                else
+                {
+                    finalValues[key] = value;
+                }
+            }
+            return finalValues;
+        }
+
+        /// <summary>
+        /// Action method wrapper that supports array as a route value
+        /// </summary>
+        public static string MyAction(this UrlHelper helper, string actionName, object routeValues)
+        {
+            return helper.Action(actionName, GetRouteValuesDictionary(routeValues));
+        }
+
+        /// <summary>
+        /// Action method wrapper that supports array as a route value
+        /// </summary>
+        public static string MyAction(this UrlHelper helper, string actionName, string controllerName, object routeValues)
+        {
+            return helper.Action(actionName, controllerName, GetRouteValuesDictionary(routeValues));
         }
 	}
 
