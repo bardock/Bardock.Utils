@@ -1,4 +1,5 @@
 :: nuget spec
 nuget pack -sym Bardock.Utils.Logger.Log4net.csproj -Prop Configuration=Release -IncludeReferencedProjects
-nuget push Bardock.Utils.Logger.Log4net.1.0.0.0.nupkg
+set /p version=Version number:
+nuget push Bardock.Utils.Logger.Log4net.%version%.nupkg
 pause;
