@@ -42,27 +42,29 @@
     <Compile Include="Collections\Coll.cs" />
     <Compile Include="Extensions\ByteExtensions.cs" />
     <Compile Include="Extensions\CharExtensions.cs" />
-    <Compile Include="Extensions\IntegerExtensions.cs" />
-    <Compile Include="Extensions\WebRequestExtensions.cs" />
     <Compile Include="Extensions\DoubleExtensions.cs" />
     <Compile Include="Extensions\GenericExtensions.cs" />
+    <Compile Include="Extensions\IEnumerableExtensions.cs" />
+    <Compile Include="Extensions\IntegerExtensions.cs" />
+    <Compile Include="Extensions\IQueryableExtensions.cs" />
     <Compile Include="Extensions\StreamExtensions.cs" />
     <Compile Include="Extensions\StringHashingExtensions.cs" />
+    <Compile Include="Extensions\WebRequestExtensions.cs" />
     <Compile Include="Globalization\ContextCulture.cs" />
     <Compile Include="Collections\DisposableList.cs" />
     <Compile Include="Globalization\Resources.cs" />
     <Compile Include="Linq\Expressions\ExpressionHelper.cs" />
     <Compile Include="Extensions\DateExtensions.cs" />
-    <Compile Include="Extensions\DecimalExtensions.cs" />
+    <Compile Include="Extensions\DecimalFormatExtensions.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
-    <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Linq\Extensions\IQueryableExtensions.cs" />
     <Compile Include="Extensions\NullableExtensions.cs" />
     <Compile Include="Extensions\NumberBaseExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
-    <Compile Include="Sync\Lockers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Extensions\StringNormalizeExtensions.cs" />
+    <Compile Include="Sync\Lockers.cs" />
+    <Compile Include="Validation\EmailValidator.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

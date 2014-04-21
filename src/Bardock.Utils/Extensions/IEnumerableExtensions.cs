@@ -37,7 +37,18 @@ namespace Bardock.Utils.Extensions
 			}
 
 			return resultList;
-		}
-	}
+        }
 
+        public static IEnumerable<TSource> ForEach<TSource>(this IEnumerable<TSource> source, Action<TSource> action)
+        {
+            source.ToList().ForEach(action);
+            return source;
+        }
+
+        public static IEnumerable<TSource> ForEach<TSource>(this IEnumerable<TSource> source, Action<TSource, int> action)
+        {
+            source.ToList().ForEach(action);
+            return source;
+        }
+	}
 }

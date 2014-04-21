@@ -4,10 +4,6 @@ using System.Threading;
 
 namespace Bardock.Utils.Globalization
 {
-    /// <summary>
-    /// This class allows to override culture from current thread.
-    /// When it is disposed, the previous culture is restored.
-    /// </summary>
 	public class ContextCulture : IDisposable
 	{
 		private CultureInfo _previousUICulture;
