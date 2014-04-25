@@ -19,6 +19,14 @@ namespace Bardock.Utils.Extensions
                 return ms.ToArray();
             }
         }
+
+        public static string ReadAllString(this Stream input)
+        {
+            using (var reader = new StreamReader(input))
+            {
+                return reader.ReadToEnd();
+            }
+        }
     }
 
 }
