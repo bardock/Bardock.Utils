@@ -6,7 +6,37 @@ using System.Linq;
 namespace Bardock.Utils.Extensions
 {
     public static class IEnumerableExtensions
-	{
+    {
+        /// <summary>
+        /// Filters a sequence of values based on a predicate if specified condition is true.
+        /// This methods allows to use method chaining when we must to apply a filter based on a condition that cannot be part of the predicate (i.e. performance issues or query builder does not support it).
+        /// For example: myList.Where(...).Where(x => ids.Contains(x.ID), when: ids != null).Select(...)
+        /// </summary>
+        public static IEnumerable<TSource> Where<TSource>(
+            this IEnumerable<TSource> source,
+            bool when,
+            Func<TSource, bool> predicate)
+        {
+            if (!when)
+                return source;
+
+            return source.Where(predicate);
+        }
+
+        /// <summary>
+        /// Filters a sequence of values based on a predicate selected based on a specified condition.
+        /// This methods allows to use method chaining when we must to apply a filter based on a condition that cannot be part of the predicate (i.e. performance issues or query builder does not support it).
+        /// For example: myList.Where(...).Where(when: ids != null, predicate: x => ids.Contains(x.ID), else: x => true).Select(...)
+        /// </summary>
+        public static IEnumerable<TSource> Where<TSource>(
+            this IEnumerable<TSource> source,
+            bool when,
+            Func<TSource, bool> predicate,
+            Func<TSource, bool> elsePredicate)
+        {
+            return source.Where(when ? predicate : elsePredicate);
+        }
+
         /// <summary>
         /// Splits a sequence of values based on a predicate.
         /// </summary>
@@ -49,6 +79,11 @@ namespace Bardock.Utils.Extensions
         {
             source.ToList().ForEach(action);
             return source;
+        }
+
+        public static bool ContainsAny<TSource>(this IEnumerable<TSource> source, params TSource[] items)
+        {
+            return items.Any(item => source.Contains(item));
         }
 	}
 }

@@ -1,4 +1,5 @@
 :: nuget spec
-nuget pack -sym Bardock.Utils.csproj -Prop Configuration=Release -IncludeReferencedProjects
-nuget push Bardock.Utils.1.1.0.0.nupkg
+set /p version=Version number:
+nuget pack Bardock.Utils.csproj -Prop Configuration=Release -IncludeReferencedProjects -Version %version%
+nuget push Bardock.Utils.%version%.nupkg
 pause;

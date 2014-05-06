@@ -15,8 +15,8 @@ namespace Bardock.Utils.Extensions
         /// </summary>
         public static IQueryable<TSource> Where<TSource>(
             this IQueryable<TSource> source,
-            Expression<Func<TSource, bool>> predicate,
-            bool when)
+            bool when,
+            Expression<Func<TSource, bool>> predicate)
         {
             if (!when)
                 return source;
@@ -29,7 +29,7 @@ namespace Bardock.Utils.Extensions
         /// This methods allows to use method chaining when we must to apply a filter based on a condition that cannot be part of the predicate (i.e. performance issues or query builder does not support it).
         /// For example: myQuery.Where(...).Where(when: ids != null, predicate: x => ids.Contains(x.ID), else: x => true).Select(...)
         /// </summary>
-        public static IQueryable<TSource> WhereIf<TSource>(
+        public static IQueryable<TSource> Where<TSource>(
             this IQueryable<TSource> source,
             bool when,
             Expression<Func<TSource, bool>> predicate,

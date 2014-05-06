@@ -26,6 +26,30 @@ namespace Bardock.Utils.Extensions
         }
 
         /// <summary>
+        /// Formats date and time to format: "yyyy/MM/dd HH:mm:ss"
+        /// </summary>
+        public static string Format(this DateTime d)
+        {
+            return d.ToString();
+        }
+
+        /// <summary>
+        /// Formats date to a date format: "yyyy/MM/dd"
+        /// </summary>
+        public static string DateFormat(this DateTime d)
+        {
+            return d.ToShortDateString();
+        }
+
+        /// <summary>
+        /// Formats date to a default date format: "dd/MM/yyyy"
+        /// </summary>
+        public static string DefaultDateFormat(this DateTime d)
+        {
+            return d.ToString("dd/MM/yyyy");
+        }
+
+        /// <summary>
         /// Formats date and time to a compact format: "yyyyMMddHHmmss"
         /// </summary>
         public static string CompactFormat(this DateTime d)
@@ -106,6 +130,22 @@ namespace Bardock.Utils.Extensions
         public static DateTime ToMonthEnd(this DateTime d)
         {
             return d.ToMonthStart().AddMonths(1).AddMilliseconds(-1);
+        }
+
+        /// <summary>
+        /// Create a new date from the first moment of the year.
+        /// </summary>
+        public static DateTime ToYearStart(this System.DateTime d)
+        {
+            return d.AddMonths(1 - d.Month).ToMonthStart();
+        }
+
+        /// <summary>
+        /// Create a new date from the last moment of the year.
+        /// </summary>
+        public static DateTime ToYearEnd(this System.DateTime d)
+        {
+            return d.ToYearStart().AddYears(1).AddDays(-1);
         }
 
         /// <summary>
