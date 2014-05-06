@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Configuration;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
@@ -42,6 +43,22 @@ namespace Bardock.Utils.Web.Mvc.Extensions
 		{
             return UriHelper.Absolute(relative);
 		}
+
+        public static Uri Absolute(string relative, bool escapeDataParts = false)
+        {
+            if (escapeDataParts)
+            {
+                relative = UrlHelperExtensions.EscapeDataParts(relative);
+            }
+            return new Uri(UriHelper.GetBaseUri(), relative.Trim(new char[] { '/' }));
+        }
+
+        public static string EscapeDataParts(string path)
+        {
+            object parts = path.Split('/').Select(x => Uri.EscapeDataString(x)).ToArray();
+            return string.Join("/", parts);
+        }
+
 
         public static string Api(this UrlHelper helper, string controllerName, string action = null, object values = null)
 		{
