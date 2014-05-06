@@ -44,6 +44,7 @@
     <Compile Include="Extensions\CharExtensions.cs" />
     <Compile Include="Extensions\DoubleExtensions.cs" />
     <Compile Include="Extensions\GenericExtensions.cs" />
+    <Compile Include="Extensions\ArrayExtensions.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\IntegerExtensions.cs" />
     <Compile Include="Extensions\IQueryableExtensions.cs" />

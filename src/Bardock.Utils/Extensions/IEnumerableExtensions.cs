@@ -75,12 +75,6 @@ namespace Bardock.Utils.Extensions
             return source;
         }
 
-        public static IEnumerable<TSource> ForEach<TSource>(this IEnumerable<TSource> source, Action<TSource, int> action)
-        {
-            source.ToList().ForEach(action);
-            return source;
-        }
-
         public static bool ContainsAny<TSource>(this IEnumerable<TSource> source, params TSource[] items)
         {
             return items.Any(item => source.Contains(item));
