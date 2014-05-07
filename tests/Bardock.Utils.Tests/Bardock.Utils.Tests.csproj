@@ -46,6 +46,8 @@
   <ItemGroup>
     <Compile Include="Collections\CollTest.cs" />
     <Compile Include="Collections\DisposableListTest.cs" />
+    <Compile Include="Extensions\ArrayExtensionsTest.cs" />
+    <Compile Include="Extensions\IQueryableExtensionsTest.cs" />
     <Compile Include="Extensions\IEnumerableExtensionsTest.cs" />
     <Compile Include="Extensions\ByteExtensionsTest.cs" />
     <Compile Include="Extensions\CharExtensionsTest.cs" />

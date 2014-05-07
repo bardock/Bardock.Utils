@@ -76,6 +76,48 @@ namespace Bardock.Utils.Tests.Extensions
             Assert.Equal(6, r.ElementAt(2).ElementAt(1));
             Assert.Equal(7, r.ElementAt(2).ElementAt(2));
         }
-	}
 
+        [Fact]
+        public void ContainsAny()
+        {
+            var list = Coll.Array(1, 2, 3, 4, 5, 6, 7, 8);
+
+            Assert.True(list.ContainsAny(new int[] { 1, 3, 5 }));
+            Assert.True(list.ContainsAny(new int[] { 4, 13, 15 }));
+            Assert.False(list.ContainsAny(new int[] { 9, 15, 22 }));
+        }
+
+        [Fact]
+        public void Where_If()
+        {
+            var list = Coll.Array(1, 2, 3, 4, 5, 6, 7, 8);
+            var condition = true;
+
+            Assert.Equal(4, list.Where(condition, x => x % 2 == 0).Count());
+            Assert.Equal(list.Count(), list.Where(!condition, x => x % 2 == 0).Count());
+        }
+
+        [Fact]
+        public void Where_IfElse()
+        {
+            var list = Coll.Array(1, 2, 3, 4, 5, 6, 7, 8);
+            var condition = true;
+
+            Assert.Equal(4, list.Where(condition, x => x % 2 == 0, x => x % 3 == 0).Count());
+            Assert.Equal(2, list.Where(!condition, x => x % 2 == 0, x => x % 3 == 0).Count());
+        }
+
+        [Fact]
+        public void ForEach_SingleParameter()
+        {
+            var list = Coll.Array(1, 2, 3, 4, 5, 6, 7, 8);
+            var acc = 0;
+            list.ForEach((i) => 
+            {
+                acc += i;
+            });
+
+            Assert.Equal(list.Sum(), acc);
+        }
+	}
 }
