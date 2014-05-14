@@ -19,22 +19,27 @@ namespace Bardock.Utils.Web.Mvc.Filters
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            if (filterContext.IsChildAction 
-                || filterContext.HttpContext.IsDebuggingEnabled 
-                || (!string.IsNullOrWhiteSpace(this.Code) 
-                    && !string.IsNullOrWhiteSpace(this.ParamName)
-                    && filterContext.HttpContext.Request[this.ParamName] == this.Code
-                   )
-                )
-                return;
+            if (IsValidAccessCode(filterContext))
+                base.OnActionExecuting(filterContext);
 
-            this.ReturnNotFound(filterContext);
+            OnError(filterContext);
         }
 
-        private void ReturnNotFound(ActionExecutingContext filterContext)
+        private void OnError(ActionExecutingContext filterContext)
         {
             filterContext.Result = new HttpNotFoundResult("Not Found");
             filterContext.Result.ExecuteResult(filterContext.Controller.ControllerContext);
+        }
+
+        protected bool IsValidAccessCode(ActionExecutingContext filterContext)
+        {
+            return (filterContext.IsChildAction
+                || filterContext.HttpContext.IsDebuggingEnabled
+                || (!string.IsNullOrWhiteSpace(this.Code)
+                    && !string.IsNullOrWhiteSpace(this.ParamName)
+                    && filterContext.HttpContext.Request[this.ParamName] == this.Code
+                   )
+                );
         }
     }
 }

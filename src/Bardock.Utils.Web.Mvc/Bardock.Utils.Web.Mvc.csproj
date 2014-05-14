@@ -94,6 +94,7 @@
     <Compile Include="BaseApiController.cs" />
     <Compile Include="Extensions\HtmlHelperTabBuilderExtensions.cs" />
     <Compile Include="Filters\AccessCodeAttribute.cs" />
+    <Compile Include="Filters\HttpAccessCodeAttribute.cs" />
     <Compile Include="Filters\RequireAuthorizationAttribute.cs" />
     <Compile Include="Helpers\HtmlAttributeHelper.cs" />
     <Compile Include="Extensions\CheckboxListForExtensions.cs" />
