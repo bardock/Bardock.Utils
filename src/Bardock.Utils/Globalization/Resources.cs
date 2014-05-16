@@ -10,11 +10,11 @@ namespace Bardock.Utils.Globalization
     /// </summary>
     public class Resources
 	{
-        private static object _resouces;
+        private static Type _resourceType;
 
-        public static void Register(object r)
+        public static void Register(Type resourceType)
         {
-            _resouces = r;
+            _resourceType = resourceType;
         }
 
         /// <summary>
@@ -22,7 +22,7 @@ namespace Bardock.Utils.Globalization
         /// </summary>
         public static string GetValue(string resourceName)
         {
-            var prop = _resouces.GetType().GetProperty(resourceName);
+            var prop = _resourceType.GetProperty(resourceName);
 
             if (prop == null)
                 return resourceName;
