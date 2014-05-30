@@ -1,12 +1,8 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.ComponentModel.DataAnnotations;
 using Bardock.Utils.Validation;
 
-namespace Bardock.Utils.Web.Mvc.Validation
+namespace Bardock.Utils.DataAnnotations
 {
-
 	/// <summary>
 	/// Validates email based on W3C HTML5 specification:
     /// http://www.w3.org/TR/html5/forms.html#e-mail-state-(type=email)
@@ -17,7 +13,7 @@ namespace Bardock.Utils.Web.Mvc.Validation
     /// to be of practical use here.
 	/// </summary>
     /// <remarks>
-    /// For client-side validation you must register the adapter when the application starts:
+    /// For MVC client-side validation you must register the adapter when the application starts:
     /// DataAnnotationsModelValidatorProvider.RegisterAdapter(typeof(EmailAttribute), typeof(RegularExpressionAttributeAdapter));
     /// </remarks>
 	public class EmailAttribute : RegularExpressionAttribute
