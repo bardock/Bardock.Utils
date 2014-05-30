@@ -45,42 +45,47 @@ namespace Bardock.Utils.Extensions
             this IQueryable<TSource> source,
             Expression<Func<TSource, DateTime>> dateExp,
             DateTime? fromDate,
-            DateTime? toDate)
+            DateTime? toDate,
+            bool removeTime = false)
         {
-            //Build a binary expression with date range evaluation
+            // Build a binary expression with date range evaluation
+            BinaryExpression exp = null;
+
+            if (fromDate.HasValue)
             {
-                BinaryExpression exp = null;
-                if (fromDate.HasValue)
+                if(removeTime)
                 {
                     fromDate = fromDate.Value.ToDayStart();
-                    exp = Expression.GreaterThanOrEqual(dateExp.Body, Expression.Constant(fromDate.Value));
                 }
-                if (toDate.HasValue)
+                exp = Expression.GreaterThanOrEqual(dateExp.Body, Expression.Constant(fromDate.Value));
+            }
+
+            if (toDate.HasValue)
+            {
+                if (removeTime)
                 {
                     toDate = toDate.Value.ToDayStart().AddDays(1);
-                    var exp2 = Expression.LessThan(dateExp.Body, Expression.Constant(toDate.Value));
-                    if (exp == null)
-                    {
-                        exp = exp2;
-                    }
-                    else
-                    {
-                        exp = Expression.AndAlso(exp, exp2);
-                    }
                 }
-
-                //Return original source if dates are both null
+                var exp2 = Expression.LessThan(dateExp.Body, Expression.Constant(toDate.Value));
                 if (exp == null)
                 {
-                    return source;
+                    exp = exp2;
                 }
-
-                //Build "where" predicate
-                Expression<Func<TSource, bool>> predicate = Expression.Lambda<Func<TSource, bool>>(exp, dateExp.Parameters);
-
-                //Apply where predicate
-                return source.Where(predicate);
+                else
+                {
+                    exp = Expression.AndAlso(exp, exp2);
+                }
             }
+
+            // Return original source if dates are both null
+            if (exp == null)
+            {
+                return source;
+            }
+
+            Expression<Func<TSource, bool>> predicate = Expression.Lambda<Func<TSource, bool>>(exp, dateExp.Parameters);
+
+            return source.Where(predicate);
         }
 
         private static readonly MethodInfo _OrderByMethod = typeof(Queryable).GetMethods().Where(method => method.Name == "OrderBy").Where(method => method.GetParameters().Length == 2).Single();
