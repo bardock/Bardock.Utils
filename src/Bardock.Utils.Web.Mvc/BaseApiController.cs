@@ -14,7 +14,7 @@ namespace Bardock.Utils.Web.Mvc
 
 		protected ILog Log 
         {
-			get { return Logger.Manager.GetLog(this); }
+            get { return Logger.LogManager.Default.GetLog(this); }
 		}
     }
 }

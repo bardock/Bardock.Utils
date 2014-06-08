@@ -42,9 +42,9 @@
     <Compile Include="ILogFactory.cs" />
     <Compile Include="Extensions\ILogExtensions.cs" />
     <Compile Include="ILog.cs" />
-    <Compile Include="LogMock.cs" />
-    <Compile Include="LogFactoryMock.cs" />
-    <Compile Include="Manager.cs" />
+    <Compile Include="NullLog.cs" />
+    <Compile Include="NullLogFactory.cs" />
+    <Compile Include="LogManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -49,7 +49,7 @@ namespace Bardock.Utils.Web
 				} 
                 catch (Exception ex) 
                 {
-					Logger.Manager.GetLog(this).Error(ex);
+					Logger.LogManager.Default.GetLog(this).Error(ex);
 				} 
                 finally 
                 {
