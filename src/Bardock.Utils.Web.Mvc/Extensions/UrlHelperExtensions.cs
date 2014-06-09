@@ -55,11 +55,10 @@ namespace Bardock.Utils.Web.Mvc.Extensions
 
         public static string EscapeDataParts(string path)
         {
-            object parts = path.Split('/').Select(x => Uri.EscapeDataString(x)).ToArray();
+            var parts = path.Split('/').Select(x => Uri.EscapeDataString(x)).ToArray();
             return string.Join("/", parts);
         }
-
-
+        
         public static string Api(this UrlHelper helper, string controllerName, string action = null, object values = null)
 		{
 			RouteValueDictionary routeValues = new RouteValueDictionary {
@@ -109,6 +108,11 @@ namespace Bardock.Utils.Web.Mvc.Extensions
         public static string Content(this UrlHelper helper)
         {
             return helper.Content("~");
+        }
+
+        public static string Content(this UrlHelper url, string relative, bool escapeDataParts)
+        {
+            return url.Content(escapeDataParts ? EscapeDataParts(relative) : relative);
         }
 
         /// <summary>
