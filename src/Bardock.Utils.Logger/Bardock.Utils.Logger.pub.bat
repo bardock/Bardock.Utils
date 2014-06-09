@@ -1,4 +1,5 @@
 :: nuget spec
-nuget pack -sym Bardock.Utils.Logger.csproj -Prop Configuration=Release -IncludeReferencedProjects
-nuget push Bardock.Utils.Logger.1.0.0.0.nupkg
+set /p version=Version number:
+nuget pack Bardock.Utils.Logger.csproj -Prop Configuration=Release -IncludeReferencedProjects -Version %version%
+nuget push Bardock.Utils.Logger.%version%.nupkg
 pause;
