@@ -13,5 +13,10 @@ namespace Bardock.Utils.Extensions
         {
             return @this.ToString(CultureInfo.InvariantCulture);
         }
+
+        public static string ToDecimalString(this double @this)
+        {
+            return @this.ToString("0,0.00", System.Globalization.CultureInfo.CurrentCulture.NumberFormat);
+        }
     }
 }
