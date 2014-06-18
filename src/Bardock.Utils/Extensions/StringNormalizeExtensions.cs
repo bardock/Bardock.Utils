@@ -21,7 +21,7 @@ namespace Bardock.Utils.Extensions
             bool prevdash = false;
             var sb = new StringBuilder(len);
 
-            for (int i = 0; i < len; i++)
+            for (int i = 0; i < len && i < maxLength; i++)
             {
                 char c = title[i];
                 if (c.IsAlphaNumeric())
@@ -51,7 +51,6 @@ namespace Bardock.Utils.Extensions
                         prevdash = false;
                     }
                 }
-                if (i == maxLength) break;
             }
             if (prevdash)
                 sb.RemoveLastCharacter();
