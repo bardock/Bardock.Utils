@@ -39,7 +39,6 @@
     <Compile Include="Collections\Coll.cs" />
     <Compile Include="DataAnnotations\EmailAttribute.cs" />
     <Compile Include="Extensions\ByteExtensions.cs" />
-    <Compile Include="Extensions\CharExtensions.cs" />
     <Compile Include="Extensions\DoubleExtensions.cs" />
     <Compile Include="Extensions\GenericExtensions.cs" />
     <Compile Include="Extensions\ArrayExtensions.cs" />
@@ -49,6 +48,8 @@
     <Compile Include="Extensions\StreamExtensions.cs" />
     <Compile Include="Extensions\StringHashingExtensions.cs" />
     <Compile Include="Extensions\WebRequestExtensions.cs" />
+    <Compile Include="Extensions\CharExtensions.cs" />
+    <Compile Include="Extensions\StringBuilderExtensions.cs" />
     <Compile Include="Globalization\ContextCulture.cs" />
     <Compile Include="Collections\DisposableList.cs" />
     <Compile Include="Globalization\Resources.cs" />
