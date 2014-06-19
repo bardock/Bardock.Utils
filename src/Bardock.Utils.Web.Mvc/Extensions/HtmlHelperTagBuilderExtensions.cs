@@ -6,7 +6,7 @@ using System;
 
 namespace Bardock.Utils.Web.Mvc.Extensions
 {
-    public static class HtmlHelperTabBuilderExtensions
+    public static class HtmlHelperTagBuilderExtensions
     {
         public static T Attr<T>(this T tagBuilder, string key, string value) where T : TagBuilder
         {

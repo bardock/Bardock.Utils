@@ -92,7 +92,7 @@
   <ItemGroup>
     <Compile Include="BaseController.cs" />
     <Compile Include="BaseApiController.cs" />
-    <Compile Include="Extensions\HtmlHelperTabBuilderExtensions.cs" />
+    <Compile Include="Extensions\HtmlHelperTagBuilderExtensions.cs" />
     <Compile Include="Filters\AccessCodeAttribute.cs" />
     <Compile Include="Filters\HttpAccessCodeAttribute.cs" />
     <Compile Include="Filters\RequireAuthorizationAttribute.cs" />
