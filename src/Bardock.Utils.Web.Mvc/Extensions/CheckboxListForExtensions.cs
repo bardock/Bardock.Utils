@@ -1,4 +1,5 @@
 ﻿using Bardock.Utils.Web.Mvc.Helpers;
+using bardock = Bardock.Utils.Linq.Expressions;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
@@ -16,7 +17,7 @@ namespace Bardock.Utils.Web.Mvc.Extensions
             IEnumerable<SelectListItem> list,
             Dictionary<string, Dictionary<string, object>> htmlAttributes = null)
         {
-            var name = MyExpressionHelper.GetExpressionText(nameExpression);
+            var name = bardock.ExpressionHelper.GetExpressionText(nameExpression);
             var selectedValues = nameExpression.Compile().Invoke(helper.ViewData.Model);
             var selectedValueStrings = selectedValues == null ? null : selectedValues.Select(x => x.ToString()).ToArray();
 
@@ -42,7 +43,7 @@ namespace Bardock.Utils.Web.Mvc.Extensions
                 throw new ArgumentException("TEnum must be an enumerated type");
             }
 
-            var name = MyExpressionHelper.GetExpressionText(nameExpression);
+            var name = bardock.ExpressionHelper.GetExpressionText(nameExpression);
 
             var items = GetSelectListFor(helper, nameExpression, labels);
 

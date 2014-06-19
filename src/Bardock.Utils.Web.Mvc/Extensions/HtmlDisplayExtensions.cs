@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using System;
 using System.Collections.Generic;
 using Bardock.Utils.Web.Mvc.Helpers;
+using bardock = Bardock.Utils.Linq.Expressions;
 
 namespace Bardock.Utils.Web.Mvc.Extensions
 {
@@ -17,7 +18,7 @@ namespace Bardock.Utils.Web.Mvc.Extensions
 
         public static string DisplayLiteral<TModel>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, object>> expression)
 		{
-			return MyExpressionHelper.GetExpressionText(expression);
+            return bardock.ExpressionHelper.GetExpressionText(expression);
 		}
 
         public static string DisplayForEnum<TEnum, TModel>(this HtmlHelper<TModel> helper, Expression<Func<TModel, TEnum>> expression, string defaultName = null) where TEnum : struct

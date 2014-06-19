@@ -1,4 +1,5 @@
 ﻿using Bardock.Utils.Web.Mvc.Helpers;
+using bardock = Bardock.Utils.Linq.Expressions;
 using Newtonsoft.Json;
 using System;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace Bardock.Utils.Web.Mvc.ModelBinders
 
 		public InnerJsonModelBinder(params Expression<Func<T, object>>[] fieldNameExp)
 		{
-			_fieldNames = fieldNameExp.Select(x => MyExpressionHelper.GetExpressionText(x)).ToArray();
+			_fieldNames = fieldNameExp.Select(x => bardock.ExpressionHelper.GetExpressionText(x)).ToArray();
 		}
 
 		public override object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)

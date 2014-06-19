@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System;
 using Bardock.Utils.Globalization;
 using Bardock.Utils.Web.Mvc.Helpers;
+using bardock = Bardock.Utils.Linq.Expressions;
 
 namespace Bardock.Utils.Web.Mvc.Extensions
 {
@@ -37,7 +38,7 @@ namespace Bardock.Utils.Web.Mvc.Extensions
 				throw new ArgumentException("enumType must be an enumerated type");
 			}
 
-            var name = MyExpressionHelper.GetExpressionText(nameExpression);
+            var name = bardock.ExpressionHelper.GetExpressionText(nameExpression);
             var options = EnumOption.BuildList(enumType);
 
 			int? selectedValue = defaultValue;
