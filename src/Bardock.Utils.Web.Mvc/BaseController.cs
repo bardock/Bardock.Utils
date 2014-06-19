@@ -19,12 +19,11 @@ namespace Bardock.Utils.Web.Mvc
 
 		protected ActionResult RedirectToPreviousLocal()
 		{
-			object prev = Url.PreviousLocal();
-			if ((prev == null)) {
+			var prev = Url.PreviousLocal();
+			if (prev == null)
 				return RedirectToHome();
-			} else {
+			else
 				return Redirect(prev.ToString());
-			}
 		}
 
 		protected RedirectResult RedirectToHome()
@@ -36,12 +35,6 @@ namespace Bardock.Utils.Web.Mvc
         {
             return RedirectToAction(string.Empty);
         }
-
-		protected RedirectToRouteResult RedirectToError()
-		{
-            //TODO: config
-			return RedirectToAction("unknown", "error");
-		}
 
 		public string RenderViewToString(string viewName, object model)
 		{
