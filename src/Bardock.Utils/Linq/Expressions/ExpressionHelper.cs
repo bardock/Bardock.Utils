@@ -41,6 +41,11 @@ namespace Bardock.Utils.Linq.Expressions
             return Expression.Lambda(exp, parameter);
 		}
 
+        public static string GetExpressionText<TModel, TResult>(Expression<Func<TModel, TResult>> exp)
+        {
+            return GetExpressionText(RemoveConvert(exp));
+        }
+
         public static LambdaExpression RemoveConvert<TModel, TResult>(Expression<Func<TModel, TResult>> exp)
         {
             LambdaExpression lambdaExp = exp;
@@ -117,13 +122,6 @@ namespace Bardock.Utils.Linq.Expressions
         #endregion
 
         #region "Mvc Official Helpers"
-        public static string GetExpressionText(string expression)
-        {
-            return
-                String.Equals(expression, "model", StringComparison.OrdinalIgnoreCase)
-                    ? String.Empty // If it's exactly "model", then give them an empty string, to replicate the lambda behavior
-                    : expression;
-        }
 
         public static string GetExpressionText(LambdaExpression expression)
         {
