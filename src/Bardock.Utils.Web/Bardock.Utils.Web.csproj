@@ -65,11 +65,13 @@
     <Compile Include="Extensions\HttpCookieCollectionExtensions.cs" />
     <Compile Include="Extensions\HttpRequestExtensions.cs" />
     <Compile Include="Extensions\RouteCollectionExtensions.cs" />
+    <Compile Include="Filters\AccessCodeFilter.cs" />
     <Compile Include="RequestNotifications.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UriHelper.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="Bardock.Utils.Web.nuspec" />
     <None Include="Bardock.Utils.Web.pub.bat" />
     <None Include="packages.config">
@@ -80,6 +82,10 @@
     <ProjectReference Include="..\Bardock.Utils.Logger\Bardock.Utils.Logger.csproj">
       <Project>{676059aa-7eee-4b18-9085-beab688a2037}</Project>
       <Name>Bardock.Utils.Logger</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Bardock.Utils\Bardock.Utils.csproj">
+      <Project>{dff10396-c6b8-43f7-bbdd-d7ad9f57e4bf}</Project>
+      <Name>Bardock.Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30110.0
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bardock.Utils", "src\Bardock.Utils\Bardock.Utils.csproj", "{DFF10396-C6B8-43F7-BBDD-D7AD9F57E4BF}"
 EndProject
@@ -23,6 +23,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{987E50
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bardock.Utils.Logger.Demo", "src\Bardock.Utils.Logger.Demo\Bardock.Utils.Logger.Demo.csproj", "{BD3782CB-1D92-49C9-A504-B6B6274B66D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bardock.Utils.Web.WebApi", "src\Bardock.Utils.Web.WebApi\Bardock.Utils.Web.WebApi.csproj", "{B9DCAF67-DE27-461E-9259-CDD44BC885DA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -58,6 +60,10 @@ Global
 		{BD3782CB-1D92-49C9-A504-B6B6274B66D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD3782CB-1D92-49C9-A504-B6B6274B66D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD3782CB-1D92-49C9-A504-B6B6274B66D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9DCAF67-DE27-461E-9259-CDD44BC885DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9DCAF67-DE27-461E-9259-CDD44BC885DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9DCAF67-DE27-461E-9259-CDD44BC885DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9DCAF67-DE27-461E-9259-CDD44BC885DA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

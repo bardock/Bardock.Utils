@@ -1,45 +1,53 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace Bardock.Utils.Web.Mvc.Filters
 {
     public class AccessCodeAttribute : ActionFilterAttribute
     {
-        public string Code { get; set; }
-        public string ParamName { get; set; }
+        public MvcFilter Filter { get; set; }
 
         public AccessCodeAttribute ()
 	    {
-            ParamName = "accessCode";
+            this.Filter = new MvcFilter();
 	    }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            if (IsValidAccessCode(filterContext))
-                base.OnActionExecuting(filterContext);
+            Filter.FilterContext = filterContext;
 
-            OnError(filterContext);
+            if (!Filter.IsValidAccessCode())
+            {
+                OnError(filterContext);
+                return;
+            }
+            base.OnActionExecuting(filterContext);
         }
 
-        private void OnError(ActionExecutingContext filterContext)
+        protected virtual void OnError(ActionExecutingContext filterContext)
         {
             filterContext.Result = new HttpNotFoundResult("Not Found");
             filterContext.Result.ExecuteResult(filterContext.Controller.ControllerContext);
         }
 
-        protected bool IsValidAccessCode(ActionExecutingContext filterContext)
+        public class MvcFilter : Bardock.Utils.Web.Filters.AccessCodeFilter
         {
-            return (filterContext.IsChildAction
-                || filterContext.HttpContext.IsDebuggingEnabled
-                || (!string.IsNullOrWhiteSpace(this.Code)
-                    && !string.IsNullOrWhiteSpace(this.ParamName)
-                    && filterContext.HttpContext.Request[this.ParamName] == this.Code
-                   )
-                );
+            public ActionExecutingContext FilterContext { get; set; }
+
+            public override bool IsValidAccessCode()
+            {
+                return FilterContext.IsChildAction 
+                    || base.IsValidAccessCode();
+            }
+
+            protected override bool IsDebuggingEnabled()
+            {
+                return FilterContext.HttpContext.IsDebuggingEnabled;
+            }
+
+            protected override string GetRequestCode()
+            {
+                return FilterContext.HttpContext.Request[this.ParamName];
+            }
         }
     }
 }

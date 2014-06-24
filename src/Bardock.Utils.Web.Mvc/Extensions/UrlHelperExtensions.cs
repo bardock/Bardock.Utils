@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections;
-using System.Configuration;
-using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using System.Runtime.CompilerServices;
+using Bardock.Utils.Collections;
 
 namespace Bardock.Utils.Web.Mvc.Extensions
 {
@@ -19,45 +15,15 @@ namespace Bardock.Utils.Web.Mvc.Extensions
             return UriHelper.GetBaseUri();
 		}
 
-        public static Uri Base(this System.Web.Http.Routing.UrlHelper url)
-		{
-            return UriHelper.GetBaseUri();
-		}
-
-        public static Uri Absolute(this System.Web.Http.Routing.UrlHelper url)
-		{
-			return url.Absolute(string.Empty);
-		}
-
-        public static Uri Absolute(this System.Web.Mvc.UrlHelper url, string relative)
-		{
-            return UriHelper.Absolute(relative);
+        public static Uri Absolute(this System.Web.Mvc.UrlHelper url, string relative, bool escapeDataParts = false)
+        {
+            return UriHelper.Absolute(relative, escapeDataParts: escapeDataParts);
 		}
 
         public static Uri Absolute(this System.Web.Mvc.UrlHelper url)
 		{
 			return url.Absolute(string.Empty);
 		}
-
-        public static Uri Absolute(this System.Web.Http.Routing.UrlHelper url, string relative)
-		{
-            return UriHelper.Absolute(relative);
-		}
-
-        public static Uri Absolute(string relative, bool escapeDataParts = false)
-        {
-            if (escapeDataParts)
-            {
-                relative = UrlHelperExtensions.EscapeDataParts(relative);
-            }
-            return new Uri(UriHelper.GetBaseUri(), relative.Trim(new char[] { '/' }));
-        }
-
-        public static string EscapeDataParts(string path)
-        {
-            var parts = path.Split('/').Select(x => Uri.EscapeDataString(x)).ToArray();
-            return string.Join("/", parts);
-        }
         
         public static string Api(this UrlHelper helper, string controllerName, string action = null, object values = null)
 		{
@@ -112,7 +78,7 @@ namespace Bardock.Utils.Web.Mvc.Extensions
 
         public static string Content(this UrlHelper url, string relative, bool escapeDataParts)
         {
-            return url.Content(escapeDataParts ? EscapeDataParts(relative) : relative);
+            return url.Content(escapeDataParts ? UriHelper.EscapeDataParts(relative) : relative);
         }
 
         /// <summary>

@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Linq;
 using System.Collections;
 using System.Configuration;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Routing;
+using Bardock.Utils.Collections;
 
 namespace Bardock.Utils.Web
 {
@@ -48,13 +50,30 @@ namespace Bardock.Utils.Web
 			return realmUri.Uri;
 		}
 
-        public static Uri Absolute(string relative, bool removeAppPath = false)
+        public static Uri Absolute(
+            string relative,
+            bool removeAppPath = false, 
+            bool escapeDataParts = false)
 		{
             if (removeAppPath)
                 relative = RemoveAppPath(relative);
 
+            if (escapeDataParts)
+                relative = EscapeDataParts(relative);
+
 			return new Uri(Path.Combine(GetBaseUri().ToString(), relative.Trim('/')));
-		}
+        }
+
+        public static Uri Absolute(string relative)
+        {
+            return new Uri(UriHelper.GetBaseUri(), relative.Trim(Coll.Array('/')));
+        }
+
+        public static string EscapeDataParts(string path)
+        {
+            var parts = path.Split('/').Select(x => Uri.EscapeDataString(x)).ToArray();
+            return string.Join("/", parts);
+        }
 
         public static string RemoveAppPath(string relative)
 		{

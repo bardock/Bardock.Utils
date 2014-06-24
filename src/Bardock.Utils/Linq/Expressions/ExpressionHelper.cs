@@ -34,7 +34,8 @@ namespace Bardock.Utils.Linq.Expressions
 			ParameterExpression parameter = Expression.Parameter(typeof(TSource), "posting");
 
 			Expression exp = parameter;
-			foreach (var prop in properties) {
+			foreach (var prop in properties) 
+            {
 				exp = Expression.Property(exp, prop);
 			}
 
