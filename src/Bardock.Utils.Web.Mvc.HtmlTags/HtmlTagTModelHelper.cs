@@ -13,6 +13,16 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
     {
         private HtmlHelper<TModel> _htmlHelper;
 
+        public HtmlHelper<TModel> HtmlHelper { get { return _htmlHelper; } }
+
+        public HtmlTagTModelHelper()
+            : this(HtmlHelperFactory.CreateInstance<TModel>())
+        { }
+
+        public HtmlTagTModelHelper(TModel model)
+            : this(HtmlHelperFactory.CreateInstance<TModel>(model))
+        { }
+
         public HtmlTagTModelHelper(HtmlHelper<TModel> htmlHelper) 
         {
             this._htmlHelper = htmlHelper;
@@ -40,7 +50,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
             Expression<Func<TModel, TProp>> propExpression,
             InputType type)
         {
-            return InputFor(propExpression, HtmlHelper.GetInputTypeString(type));
+            return InputFor(propExpression, System.Web.Mvc.HtmlHelper.GetInputTypeString(type));
         }
 
         public virtual HtmlTag TextAreaFor<TProp>(
@@ -74,9 +84,13 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
         }
 
         public virtual HtmlTag CheckBoxFor<TProp>(
-            Expression<Func<TModel, TProp>> propExpression)
+            Expression<Func<TModel, TProp>> propExpression,
+            bool isChecked = false)
         {
-            return InputFor(propExpression, InputType.CheckBox);
+            var tag = InputFor(propExpression, InputType.CheckBox);
+            if (isChecked)
+                tag.Attr("checked", "true");
+            return tag;
         }
     }
 }

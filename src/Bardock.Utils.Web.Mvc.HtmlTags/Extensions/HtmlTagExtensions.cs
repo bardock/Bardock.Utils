@@ -34,38 +34,48 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Extensions
         public static HtmlTag NameFor<TModel, TProp>(
             this HtmlTag tag, 
             Expression<Func<TModel, TProp>> propExpression,
-            HtmlHelper<TModel> _htmlHelper)
+            HtmlHelper<TModel> htmlHelper)
         {
-            var name = _htmlHelper.NameFor(propExpression).ToString();
+            var name = htmlHelper.NameFor(propExpression).ToString();
             return tag.Attr("name", name);
         }
 
         public static HtmlTag IdFor<TModel, TProp>(
             this HtmlTag tag,
             Expression<Func<TModel, TProp>> propExpression,
-            HtmlHelper<TModel> _htmlHelper)
+            HtmlHelper<TModel> htmlHelper)
         {
-            var id = _htmlHelper.IdFor(propExpression).ToString();
+            var id = htmlHelper.IdFor(propExpression).ToString();
             return tag.Attr("id", id);
         }
 
         public static HtmlTag ValueFor<TModel, TProp>(
             this HtmlTag tag,
             Expression<Func<TModel, TProp>> propExpression,
-            HtmlHelper<TModel> _htmlHelper)
+            HtmlHelper<TModel> htmlHelper)
         {
-            var value = _htmlHelper.ValueFor(propExpression);
+            var value = htmlHelper.ValueFor(propExpression);
+            return tag.Value(value);
+        }
+
+        public static HtmlTag ValueFor<TModel, TProp>(
+            this HtmlTag tag,
+            Expression<Func<TModel, TProp>> propExpression,
+            string format,
+            HtmlHelper<TModel> htmlHelper)
+        {
+            var value = htmlHelper.ValueFor(propExpression, format);
             return tag.Value(value);
         }
 
         public static HtmlTag ValidationFor<TModel, TProp>(
             this HtmlTag tag,
             Expression<Func<TModel, TProp>> propExpression,
-            HtmlHelper<TModel> _htmlHelper)
+            HtmlHelper<TModel> htmlHelper)
         {
-            var name = _htmlHelper.NameFor(propExpression).ToString();
-            ModelMetadata metadata = ModelMetadata.FromLambdaExpression(propExpression, _htmlHelper.ViewData);
-            var rules = _htmlHelper.GetUnobtrusiveValidationAttributes(name, metadata);
+            var name = htmlHelper.NameFor(propExpression).ToString();
+            ModelMetadata metadata = ModelMetadata.FromLambdaExpression(propExpression, htmlHelper.ViewData);
+            var rules = htmlHelper.GetUnobtrusiveValidationAttributes(name, metadata);
             return rules.Aggregate(tag, (current, rule) => current.Attr(rule.Key, rule.Value));
         }
     }

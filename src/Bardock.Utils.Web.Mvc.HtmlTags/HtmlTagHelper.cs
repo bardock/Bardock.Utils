@@ -13,18 +13,27 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
     {
         private HtmlHelper _htmlHelper;
 
+        public HtmlHelper HtmlHelper { get { return _htmlHelper; } }
+
+        public HtmlTagHelper()
+            : this(HtmlHelperFactory.CreateInstance()) 
+        { }
+
         public HtmlTagHelper(HtmlHelper htmlHelper) 
         {
             this._htmlHelper = htmlHelper;
         }
 
-        public virtual HtmlTag HtmlTag(
-            string tag,
-            string name)
+        public virtual HtmlTag HtmlTag(string tag, string name)
         {
             return new HtmlTag(tag)
                 .Attr("id", _htmlHelper.Id(name))
                 .Attr("name", name);
+        }
+
+        public virtual HtmlTag TextArea(string name)
+        {
+            return this.HtmlTag("textarea", name);
         }
 
         public virtual HtmlTag Input(string type, string name)
@@ -35,11 +44,6 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
         public virtual HtmlTag Input(InputType type, string name)
         {
             return Input(HtmlHelper.GetInputTypeString(type), name);
-        }
-
-        public virtual HtmlTag TextArea(string name)
-        {
-            return this.HtmlTag("textarea", name);
         }
 
         public virtual HtmlTag TextBox(string name)
@@ -64,7 +68,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
 
         public virtual HtmlTag CheckBox(string name)
         {
-            return Input(InputType.Password, name);
+            return Input(InputType.CheckBox, name);
         }
     }
 }
