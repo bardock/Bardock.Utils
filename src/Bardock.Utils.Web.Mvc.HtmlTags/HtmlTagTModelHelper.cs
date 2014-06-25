@@ -78,19 +78,17 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
         }
 
         public virtual HtmlTag RadioFor<TProp>(
-            Expression<Func<TModel, TProp>> expression)
+            Expression<Func<TModel, TProp>> expression,
+            bool isChecked = false)
         {
-            return InputFor(expression, InputType.Radio);
+            return InputFor(expression, InputType.Radio).Checked(isChecked);
         }
 
         public virtual HtmlTag CheckBoxFor<TProp>(
             Expression<Func<TModel, TProp>> expression,
             bool isChecked = false)
         {
-            var tag = InputFor(expression, InputType.CheckBox);
-            if (isChecked)
-                tag.Attr("checked", "true");
-            return tag;
+            return InputFor(expression, InputType.CheckBox).Checked(isChecked);
         }
     }
 }

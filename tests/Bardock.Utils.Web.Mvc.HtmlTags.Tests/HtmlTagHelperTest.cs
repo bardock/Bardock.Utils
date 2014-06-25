@@ -120,6 +120,18 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
             var tag = helper.Radio(name);
 
             AssertValid(tag, "input", name, "radio");
+            Assert.False(tag.HasAttr("checked"));
+        }
+
+        [Fact]
+        public void Radio_Checked()
+        {
+            var helper = new HtmlTagHelper();
+            var name = "name1";
+            var tag = helper.Radio(name, isChecked: true);
+
+            AssertValid(tag, "input", name, "radio");
+            Assert.Equal("true", tag.Attr("checked"));
         }
 
         [Fact]
@@ -130,6 +142,18 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
             var tag = helper.CheckBox(name);
 
             AssertValid(tag, "input", name, "checkbox");
+            Assert.False(tag.HasAttr("checked"));
+        }
+
+        [Fact]
+        public void CheckBox_Checked()
+        {
+            var helper = new HtmlTagHelper();
+            var name = "name1";
+            var tag = helper.CheckBox(name, isChecked: true);
+
+            AssertValid(tag, "input", name, "checkbox");
+            Assert.Equal("true", tag.Attr("checked"));
         }
     }
 }

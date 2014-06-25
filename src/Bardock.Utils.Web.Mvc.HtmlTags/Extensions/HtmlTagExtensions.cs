@@ -31,6 +31,13 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Extensions
             return tag.Type(HtmlHelper.GetInputTypeString(type));
         }
 
+        public static HtmlTag Checked(this HtmlTag tag, bool isChecked)
+        {
+            if (isChecked)
+                tag.Attr("checked", "true");
+            return tag;
+        }
+
         public static HtmlTag NameFor<TModel, TProp>(
             this HtmlTag tag, 
             Expression<Func<TModel, TProp>> propExpression,

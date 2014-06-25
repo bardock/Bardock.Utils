@@ -221,6 +221,32 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
         }
 
         [Fact]
+        public void RadioFor_Value_Bool()
+        {
+            var model = new Model1() { PropBool = true };
+            var helper = new HtmlTagTModelHelper<Model1>(model);
+
+            var propExpression = Expr((Model1 m) => m.PropBool);
+            var tag = helper.RadioFor(propExpression);
+
+            AssertValid(tag, "input", "PropBool", type: "radio", value: model.PropBool);
+            Assert.False(tag.HasAttr("checked"));
+        }
+
+        [Fact]
+        public void RadioFor_Value_Bool_Checked()
+        {
+            var model = new Model1() { PropBool = true };
+            var helper = new HtmlTagTModelHelper<Model1>(model);
+
+            var propExpression = Expr((Model1 m) => m.PropBool);
+            var tag = helper.RadioFor(propExpression, isChecked: true);
+
+            AssertValid(tag, "input", "PropBool", type: "radio", value: model.PropBool);
+            Assert.Equal("true", tag.Attr("checked"));
+        }
+
+        [Fact]
         public void CheckBoxFor_Value_Int()
         {
             var model = new Model1() { PropInt = 1 };

@@ -61,14 +61,14 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
             return Input(InputType.Hidden, name);
         }
 
-        public virtual HtmlTag Radio(string name)
+        public virtual HtmlTag Radio(string name, bool isChecked = false)
         {
-            return Input(InputType.Radio, name);
+            return Input(InputType.Radio, name).Checked(isChecked);
         }
 
-        public virtual HtmlTag CheckBox(string name)
+        public virtual HtmlTag CheckBox(string name, bool isChecked = false)
         {
-            return Input(InputType.CheckBox, name);
+            return Input(InputType.CheckBox, name).Checked(isChecked);
         }
     }
 }
