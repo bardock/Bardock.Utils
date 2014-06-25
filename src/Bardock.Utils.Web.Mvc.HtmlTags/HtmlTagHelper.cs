@@ -16,7 +16,11 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
         public HtmlHelper HtmlHelper { get { return _htmlHelper; } }
 
         public HtmlTagHelper()
-            : this(HtmlHelperFactory.CreateInstance()) 
+            : this(HtmlHelperFactory.CreateInstance())
+        { }
+
+        public HtmlTagHelper(object model)
+            : this(HtmlHelperFactory.CreateInstance(model))
         { }
 
         public HtmlTagHelper(HtmlHelper htmlHelper) 
@@ -28,7 +32,8 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
         {
             return new HtmlTag(tag)
                 .Attr("id", _htmlHelper.Id(name))
-                .Attr("name", name);
+                .Attr("name", name)
+                .ValueFor(name, _htmlHelper);
         }
 
         public virtual HtmlTag TextArea(string name)

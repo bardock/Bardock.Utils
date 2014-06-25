@@ -9,12 +9,28 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
 {
     public class HtmlTagHelperTest
     {
-        public void AssertValid(HtmlTag tag, string tagName, string name, string type = "")
+        private class Model1
+        {
+            public int? PropInt { get; set; }
+            public DateTime? PropDate { get; set; }
+            public bool PropBool { get; set; }
+        }
+
+        public void AssertValid(HtmlTag tag, string tagName, string name, string type = "", object value = null)
         {
             Assert.Equal(tagName, tag.TagName());
             Assert.Equal(name, tag.Attr("name"));
             Assert.Equal(name, tag.Attr("id"));
-            Assert.Equal(type, tag.Attr("type"));
+
+            if (type == null)
+                Assert.False(tag.HasAttr("type"));
+            else
+                Assert.Equal(type, tag.Attr("type"));
+
+            if (value == null)
+                Assert.True(!tag.HasAttr("value") || tag.Attr("value") == "");
+            else
+                Assert.Equal(value.ToString(), tag.Attr("value"));
         }
 
         [Fact]
@@ -26,6 +42,42 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
             var tag = helper.HtmlTag(tagName, name);
 
             AssertValid(tag, tagName, name);
+        }
+
+        [Fact]
+        public void HtmlTag_Input_Value_Int()
+        {
+            var model = new Model1() { PropInt = 1 };
+            var helper = new HtmlTagHelper(model);
+            var tagName = "input";
+            var name = "PropInt";
+            var tag = helper.HtmlTag(tagName, name);
+
+            AssertValid(tag, tagName, name, value: model.PropInt);
+        }
+
+        [Fact]
+        public void HtmlTag_Input_Value_Date()
+        {
+            var model = new Model1() { PropDate = DateTime.UtcNow };
+            var helper = new HtmlTagHelper(model);
+            var tagName = "input";
+            var name = "PropDate";
+            var tag = helper.HtmlTag(tagName, name);
+
+            AssertValid(tag, tagName, name, value: model.PropDate);
+        }
+
+        [Fact]
+        public void HtmlTag_Input_Value_Null()
+        {
+            var model = new Model1() { PropInt = null };
+            var helper = new HtmlTagHelper(model);
+            var tagName = "input";
+            var name = "PropInt";
+            var tag = helper.HtmlTag(tagName, name);
+
+            AssertValid(tag, tagName, name, value: model.PropInt);
         }
 
         [Fact]

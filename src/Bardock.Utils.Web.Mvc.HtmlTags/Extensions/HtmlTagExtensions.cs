@@ -75,6 +75,25 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Extensions
             return tag.Value(value);
         }
 
+        public static HtmlTag ValueFor(
+            this HtmlTag tag,
+            string name,
+            HtmlHelper htmlHelper)
+        {
+            var value = htmlHelper.Value(name);
+            return tag.Value(value);
+        }
+
+        public static HtmlTag ValueFor<TModel, TProp>(
+            this HtmlTag tag,
+            string name,
+            string format,
+            HtmlHelper htmlHelper)
+        {
+            var value = htmlHelper.Value(name, format);
+            return tag.Value(value);
+        }
+
         public static HtmlTag ValidationFor<TModel, TProp>(
             this HtmlTag tag,
             Expression<Func<TModel, TProp>> propExpression,
