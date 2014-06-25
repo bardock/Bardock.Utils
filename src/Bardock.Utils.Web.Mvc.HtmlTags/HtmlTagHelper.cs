@@ -9,11 +9,14 @@ using System.Linq.Expressions;
 
 namespace Bardock.Utils.Web.Mvc.HtmlTags
 {
+    /// <summary>
+    /// Represents support for rendering HTML controls in a view
+    /// </summary>
     public class HtmlTagHelper
     {
-        private HtmlHelper _htmlHelper;
+        protected HtmlHelper _htmlHelper;
 
-        public HtmlHelper HtmlHelper { get { return _htmlHelper; } }
+        public virtual HtmlHelper HtmlHelper { get { return _htmlHelper; } }
 
         public HtmlTagHelper()
             : this(HtmlHelperFactory.CreateInstance())

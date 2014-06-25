@@ -76,7 +76,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HtmlTagTModelHelperTest.cs" />
+    <Compile Include="HtmlTagHelperOfTModelTest.cs" />
     <Compile Include="HtmlTagHelperTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

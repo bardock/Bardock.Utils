@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
 {
-    public class HtmlTagTModelHelperTest
+    public class HtmlTagHelperOfTModelTest
     {
         private class Model1 
         {
@@ -45,7 +45,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
         [Fact]
         public void HtmlTagFor_Input()
         {
-            var helper = new HtmlTagTModelHelper<Model1>();
+            var helper = new HtmlTagHelper<Model1>();
 
             var propExpression = Expr((Model1 m) => m.PropInt);
             var tagName = "input";
@@ -57,7 +57,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
         [Fact]
         public void HtmlTagFor_Any()
         {
-            var helper = new HtmlTagTModelHelper<Model1>();
+            var helper = new HtmlTagHelper<Model1>();
 
             var propExpression = Expr((Model1 m) => m.PropInt);
             var tagName = "any";
@@ -70,7 +70,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
         public void HtmlTagFor_Input_Value_Int()
         {
             var model = new Model1() { PropInt = 1 };
-            var helper = new HtmlTagTModelHelper<Model1>(model);
+            var helper = new HtmlTagHelper<Model1>(model);
 
             var propExpression = Expr((Model1 m) => m.PropInt);
             var tagName = "input";
@@ -83,7 +83,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
         public void HtmlTagFor_Input_Value_Date()
         {
             var model = new Model1() { PropDate = DateTime.UtcNow };
-            var helper = new HtmlTagTModelHelper<Model1>(model);
+            var helper = new HtmlTagHelper<Model1>(model);
 
             var propExpression = Expr((Model1 m) => m.PropDate);
             var tagName = "input";
@@ -96,7 +96,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
         public void HtmlTagFor_Input_Value_Null()
         {
             var model = new Model1() { PropInt = null };
-            var helper = new HtmlTagTModelHelper<Model1>(model);
+            var helper = new HtmlTagHelper<Model1>(model);
 
             var propExpression = Expr((Model1 m) => m.PropInt);
             var tagName = "input";
@@ -108,7 +108,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
         [Fact]
         public void HtmlTagFor_Expression_MethodCall()
         {
-            var helper = new HtmlTagTModelHelper<Model1>();
+            var helper = new HtmlTagHelper<Model1>();
             Assert.Throws<InvalidOperationException>(
                 () => helper.HtmlTagFor(m => m.PropInt.ToString(), "input"));
         }
@@ -116,7 +116,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
         [Fact]
         public void HtmlTagFor_Expression_Constant()
         {
-            var helper = new HtmlTagTModelHelper<Model1>();
+            var helper = new HtmlTagHelper<Model1>();
             Assert.Throws<InvalidOperationException>(
                 () => helper.HtmlTagFor(m => 1, "input"));
         }
@@ -125,7 +125,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
         public void TextAreaFor_Value_Int()
         {
             var model = new Model1() { PropInt = 1 };
-            var helper = new HtmlTagTModelHelper<Model1>(model);
+            var helper = new HtmlTagHelper<Model1>(model);
 
             var propExpression = Expr((Model1 m) => m.PropInt);
             var tag = helper.TextAreaFor(propExpression);
@@ -137,7 +137,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
         public void Input_Text_InputType_Value_Int()
         {
             var model = new Model1() { PropInt = 1 };
-            var helper = new HtmlTagTModelHelper<Model1>(model);
+            var helper = new HtmlTagHelper<Model1>(model);
 
             var propExpression = Expr((Model1 m) => m.PropInt);
             var type = InputType.Text;
@@ -150,7 +150,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
         public void Input_Text_Value_Int()
         {
             var model = new Model1() { PropInt = 1 };
-            var helper = new HtmlTagTModelHelper<Model1>(model);
+            var helper = new HtmlTagHelper<Model1>(model);
 
             var propExpression = Expr((Model1 m) => m.PropInt);
             var type = "text";
@@ -163,7 +163,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
         public void Input_Any_Value_Int()
         {
             var model = new Model1() { PropInt = 1 };
-            var helper = new HtmlTagTModelHelper<Model1>(model);
+            var helper = new HtmlTagHelper<Model1>(model);
 
             var propExpression = Expr((Model1 m) => m.PropInt);
             var type = "any";
@@ -176,7 +176,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
         public void TextBoxFor_Value_Int()
         {
             var model = new Model1() { PropInt = 1 };
-            var helper = new HtmlTagTModelHelper<Model1>(model);
+            var helper = new HtmlTagHelper<Model1>(model);
 
             var propExpression = Expr((Model1 m) => m.PropInt);
             var tag = helper.TextBoxFor(propExpression);
@@ -188,7 +188,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
         public void PasswordFor_Value_Int()
         {
             var model = new Model1() { PropInt = 1 };
-            var helper = new HtmlTagTModelHelper<Model1>(model);
+            var helper = new HtmlTagHelper<Model1>(model);
 
             var propExpression = Expr((Model1 m) => m.PropInt);
             var tag = helper.PasswordFor(propExpression);
@@ -200,7 +200,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
         public void HiddenFor_Value_Int()
         {
             var model = new Model1() { PropInt = 1 };
-            var helper = new HtmlTagTModelHelper<Model1>(model);
+            var helper = new HtmlTagHelper<Model1>(model);
 
             var propExpression = Expr((Model1 m) => m.PropInt);
             var tag = helper.HiddenFor(propExpression);
@@ -212,7 +212,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
         public void RadioFor_Value_Int()
         {
             var model = new Model1() { PropInt = 1 };
-            var helper = new HtmlTagTModelHelper<Model1>(model);
+            var helper = new HtmlTagHelper<Model1>(model);
 
             var propExpression = Expr((Model1 m) => m.PropInt);
             var tag = helper.RadioFor(propExpression);
@@ -224,7 +224,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
         public void RadioFor_Value_Bool()
         {
             var model = new Model1() { PropBool = true };
-            var helper = new HtmlTagTModelHelper<Model1>(model);
+            var helper = new HtmlTagHelper<Model1>(model);
 
             var propExpression = Expr((Model1 m) => m.PropBool);
             var tag = helper.RadioFor(propExpression);
@@ -237,7 +237,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
         public void RadioFor_Value_Bool_Checked()
         {
             var model = new Model1() { PropBool = true };
-            var helper = new HtmlTagTModelHelper<Model1>(model);
+            var helper = new HtmlTagHelper<Model1>(model);
 
             var propExpression = Expr((Model1 m) => m.PropBool);
             var tag = helper.RadioFor(propExpression, isChecked: true);
@@ -250,7 +250,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
         public void CheckBoxFor_Value_Int()
         {
             var model = new Model1() { PropInt = 1 };
-            var helper = new HtmlTagTModelHelper<Model1>(model);
+            var helper = new HtmlTagHelper<Model1>(model);
 
             var propExpression = Expr((Model1 m) => m.PropInt);
             var tag = helper.CheckBoxFor(propExpression);
@@ -262,7 +262,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
         public void CheckBoxFor_Value_Bool()
         {
             var model = new Model1() { PropBool = true };
-            var helper = new HtmlTagTModelHelper<Model1>(model);
+            var helper = new HtmlTagHelper<Model1>(model);
 
             var propExpression = Expr((Model1 m) => m.PropBool);
             var tag = helper.CheckBoxFor(propExpression);
@@ -275,7 +275,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
         public void CheckBoxFor_Value_Bool_Checked()
         {
             var model = new Model1() { PropBool = true };
-            var helper = new HtmlTagTModelHelper<Model1>(model);
+            var helper = new HtmlTagHelper<Model1>(model);
 
             var propExpression = Expr((Model1 m) => m.PropBool);
             var tag = helper.CheckBoxFor(propExpression, isChecked: true);

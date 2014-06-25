@@ -9,21 +9,24 @@ using System.Linq.Expressions;
 
 namespace Bardock.Utils.Web.Mvc.HtmlTags
 {
-    public class HtmlTagTModelHelper<TModel>
+    /// <summary>
+    /// Represents support for rendering HTML controls in a strongly typed view
+    /// </summary>
+    public class HtmlTagHelper<TModel> : HtmlTagHelper
     {
-        private HtmlHelper<TModel> _htmlHelper;
+        protected new HtmlHelper<TModel> _htmlHelper;
 
-        public HtmlHelper<TModel> HtmlHelper { get { return _htmlHelper; } }
+        public new virtual HtmlHelper<TModel> HtmlHelper { get { return _htmlHelper; } }
 
-        public HtmlTagTModelHelper()
+        public HtmlTagHelper()
             : this(HtmlHelperFactory.CreateInstance<TModel>())
         { }
 
-        public HtmlTagTModelHelper(TModel model)
+        public HtmlTagHelper(TModel model)
             : this(HtmlHelperFactory.CreateInstance<TModel>(model))
         { }
 
-        public HtmlTagTModelHelper(HtmlHelper<TModel> htmlHelper) 
+        public HtmlTagHelper(HtmlHelper<TModel> htmlHelper) 
         {
             this._htmlHelper = htmlHelper;
         }
