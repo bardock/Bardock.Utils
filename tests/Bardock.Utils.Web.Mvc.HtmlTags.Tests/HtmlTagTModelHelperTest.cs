@@ -106,6 +106,22 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
         }
 
         [Fact]
+        public void HtmlTagFor_Expression_MethodCall()
+        {
+            var helper = new HtmlTagTModelHelper<Model1>();
+            Assert.Throws<InvalidOperationException>(
+                () => helper.HtmlTagFor(m => m.PropInt.ToString(), "input"));
+        }
+
+        [Fact]
+        public void HtmlTagFor_Expression_Constant()
+        {
+            var helper = new HtmlTagTModelHelper<Model1>();
+            Assert.Throws<InvalidOperationException>(
+                () => helper.HtmlTagFor(m => 1, "input"));
+        }
+
+        [Fact]
         public void TextAreaFor_Value_Int()
         {
             var model = new Model1() { PropInt = 1 };
