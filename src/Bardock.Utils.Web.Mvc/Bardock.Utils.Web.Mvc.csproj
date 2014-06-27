@@ -89,6 +89,7 @@
     <Compile Include="Extensions\HtmlHelperModelExtensions.cs" />
     <Compile Include="Extensions\JsonExtensions.cs" />
     <Compile Include="Extensions\LocalResourceExtensions.cs" />
+    <Compile Include="Helpers\HtmlHelperFactory.cs" />
     <Compile Include="ModelBinders\InnerJsonModelBinder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\SelectListHelper.cs" />

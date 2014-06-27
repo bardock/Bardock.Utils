@@ -230,7 +230,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
             var tag = helper.RadioFor(propExpression);
 
             AssertValid(tag, "input", "PropBool", type: "radio", value: model.PropBool);
-            Assert.False(tag.HasAttr("checked"));
+            Assert.False(tag.Checked());
         }
 
         [Fact]
@@ -243,7 +243,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
             var tag = helper.RadioFor(propExpression, isChecked: true);
 
             AssertValid(tag, "input", "PropBool", type: "radio", value: model.PropBool);
-            Assert.Equal("true", tag.Attr("checked"));
+            Assert.True(tag.Checked());
         }
 
         [Fact]
@@ -268,7 +268,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
             var tag = helper.CheckBoxFor(propExpression);
 
             AssertValid(tag, "input", "PropBool", type: "checkbox", value: model.PropBool);
-            Assert.False(tag.HasAttr("checked"));
+            Assert.False(tag.Checked());
         }
 
         [Fact]
@@ -281,7 +281,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
             var tag = helper.CheckBoxFor(propExpression, isChecked: true);
 
             AssertValid(tag, "input", "PropBool", type: "checkbox", value: model.PropBool);
-            Assert.Equal("true", tag.Attr("checked"));
+            Assert.True(tag.Checked());
         }
     }
 }

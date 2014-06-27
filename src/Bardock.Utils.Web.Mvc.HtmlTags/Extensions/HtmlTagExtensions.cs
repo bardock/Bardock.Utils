@@ -31,11 +31,46 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Extensions
             return tag.Type(HtmlHelper.GetInputTypeString(type));
         }
 
-        public static HtmlTag Checked(this HtmlTag tag, bool isChecked)
+        public static bool BoolAttr(this HtmlTag tag, string name)
         {
-            if (isChecked)
-                tag.Attr("checked", "true");
-            return tag;
+            return tag.HasAttr(name);
+        }
+
+        public static HtmlTag BoolAttr(this HtmlTag tag, string name, bool value)
+        {
+            return value
+                ? tag.BooleanAttr(name)
+                : tag.RemoveAttr(name);
+        }
+
+        public static bool Checked(this HtmlTag tag)
+        {
+            return tag.BoolAttr("checked");
+        }
+
+        public static HtmlTag Checked(this HtmlTag tag, bool value)
+        {
+            return tag.BoolAttr("checked", value);
+        }
+
+        public static bool Disabled(this HtmlTag tag)
+        {
+            return tag.BoolAttr("disabled");
+        }
+
+        public static HtmlTag Disabled(this HtmlTag tag, bool value)
+        {
+            return tag.BoolAttr("disabled", value);
+        }
+
+        public static bool ReadOnly(this HtmlTag tag)
+        {
+            return tag.BoolAttr("readonly");
+        }
+
+        public static HtmlTag ReadOnly(this HtmlTag tag, bool value)
+        {
+            return tag.BoolAttr("readonly", value);
         }
 
         public static HtmlTag NameFor<TModel, TProp>(
