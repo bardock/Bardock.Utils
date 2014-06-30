@@ -21,7 +21,7 @@ namespace Bardock.Utils.Web.Mvc.Extensions
 			public static IEnumerable<EnumOption> BuildList(Type enumType)
 			{
 				return Enum.GetValues(enumType).Cast<int>().Select(x => new EnumOption {
-					Name = Resources.GetValue(Enum.ToObject(enumType, x).ToString()),
+                    Name = Resources.Current.GetValue(Enum.ToObject(enumType, x).ToString()),
 					Value = x
 				});
 			}

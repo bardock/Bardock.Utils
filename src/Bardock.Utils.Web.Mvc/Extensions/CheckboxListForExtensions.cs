@@ -73,7 +73,7 @@ namespace Bardock.Utils.Web.Mvc.Extensions
             foreach (var value in Enum.GetValues(typeof(TEnum)).Cast<int>().ToArray())
             {
                 var enumObj = (TEnum)Enum.ToObject(typeof(TEnum), value);
-                var label = labels != null && labels.ContainsKey(enumObj) ? labels[enumObj] : Bardock.Utils.Globalization.Resources.GetValue(enumObj.ToString());
+                var label = labels != null && labels.ContainsKey(enumObj) ? labels[enumObj] : Bardock.Utils.Globalization.Resources.Current.GetValue(enumObj.ToString());
                 yield return new SelectListItem
                 {
                     Value = enumObj.ToString(),

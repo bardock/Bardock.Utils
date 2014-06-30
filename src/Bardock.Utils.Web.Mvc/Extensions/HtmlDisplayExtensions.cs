@@ -30,7 +30,7 @@ namespace Bardock.Utils.Web.Mvc.Extensions
 			var namesMapping = Enum.GetValues(typeof(TEnum))
                 .Cast<int>()
                 .Select(x => (TEnum)Enum.ToObject(typeof(TEnum), x))
-                .ToDictionary(x => x, x => Bardock.Utils.Globalization.Resources.GetValue(x.ToString()));
+                .ToDictionary(x => x, x => Bardock.Utils.Globalization.Resources.Current.GetValue(x.ToString()));
 
 			return helper.DisplayForEnum(expression, namesMapping, defaultName);
 		}
