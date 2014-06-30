@@ -33,11 +33,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
             Expression<Func<TModel, TProp>> expression,
             string tag)
         {
-            return new HtmlTag(tag)
-                .IdFor(expression, _htmlHelper)
-                .NameFor(expression, _htmlHelper)
-                .ValueFor(expression, _htmlHelper)
-                .ValidationFor(expression, _htmlHelper);
+            return new HtmlTag(tag).InitFor(expression, _htmlHelper);
         }
 
         public virtual HtmlTag InputFor<TProp>(
@@ -90,6 +86,12 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
             bool isChecked = false)
         {
             return InputFor(expression, InputType.CheckBox).Checked(isChecked);
+        }
+
+        public virtual SelectTag SelectFor<TProp>(
+            Expression<Func<TModel, TProp>> expression)
+        {
+            return new SelectTag().InitFor(expression, _htmlHelper);
         }
     }
 }

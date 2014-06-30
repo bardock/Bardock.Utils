@@ -1,11 +1,9 @@
-﻿using Bardock.Utils.Web.Mvc.HtmlTags.Extensions;
-using System;
+﻿using System;
 using System.Linq;
-using System.Collections.Generic;
-using System.Web.Mvc.Html;
-using System.Web.Mvc;
-using HtmlTags;
 using System.Linq.Expressions;
+using System.Web.Mvc;
+using System.Web.Mvc.Html;
+using HtmlTags;
 
 namespace Bardock.Utils.Web.Mvc.HtmlTags.Extensions
 {
@@ -16,128 +14,145 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Extensions
             return new MvcHtmlString(tag.ToString());
         }
 
-        public static HtmlTag Value(this HtmlTag tag, object value)
+        public static THtmlTag Attrib<THtmlTag>(this THtmlTag tag, string attribute, object value) where THtmlTag : HtmlTag
         {
-            return tag.Attr("value", value.ToString());
+            return (THtmlTag)tag.Attr(attribute, value);
         }
 
-        public static HtmlTag Type(this HtmlTag tag, string type)
+        public static THtmlTag Value<THtmlTag>(this THtmlTag tag, object value) where THtmlTag : HtmlTag
         {
-            return tag.Attr("type", type);
+            return tag.Attrib("value", value.ToString());
         }
 
-        public static HtmlTag Type(this HtmlTag tag, InputType type)
+        public static THtmlTag Type<THtmlTag>(this THtmlTag tag, string type) where THtmlTag : HtmlTag
+        {
+            return tag.Attrib("type", type);
+        }
+
+        public static THtmlTag Type<THtmlTag>(this THtmlTag tag, InputType type) where THtmlTag : HtmlTag
         {
             return tag.Type(HtmlHelper.GetInputTypeString(type));
         }
 
-        public static bool BoolAttr(this HtmlTag tag, string name)
+        public static bool BoolAttr<THtmlTag>(this THtmlTag tag, string name) where THtmlTag : HtmlTag
         {
             return tag.HasAttr(name);
         }
 
-        public static HtmlTag BoolAttr(this HtmlTag tag, string name, bool value)
+        public static THtmlTag BoolAttr<THtmlTag>(this THtmlTag tag, string name, bool value) where THtmlTag : HtmlTag
         {
             return value
-                ? tag.BooleanAttr(name)
-                : tag.RemoveAttr(name);
+                ? (THtmlTag)tag.BooleanAttr(name)
+                : (THtmlTag)tag.RemoveAttr(name);
         }
 
-        public static bool Checked(this HtmlTag tag)
+        public static bool Checked<THtmlTag>(this THtmlTag tag) where THtmlTag : HtmlTag
         {
             return tag.BoolAttr("checked");
         }
 
-        public static HtmlTag Checked(this HtmlTag tag, bool value)
+        public static THtmlTag Checked<THtmlTag>(this THtmlTag tag, bool value) where THtmlTag : HtmlTag
         {
             return tag.BoolAttr("checked", value);
         }
 
-        public static bool Disabled(this HtmlTag tag)
+        public static bool Disabled<THtmlTag>(this THtmlTag tag) where THtmlTag : HtmlTag
         {
             return tag.BoolAttr("disabled");
         }
 
-        public static HtmlTag Disabled(this HtmlTag tag, bool value)
+        public static THtmlTag Disabled<THtmlTag>(this THtmlTag tag, bool value) where THtmlTag : HtmlTag
         {
             return tag.BoolAttr("disabled", value);
         }
 
-        public static bool ReadOnly(this HtmlTag tag)
+        public static bool ReadOnly<THtmlTag>(this THtmlTag tag) where THtmlTag : HtmlTag
         {
             return tag.BoolAttr("readonly");
         }
 
-        public static HtmlTag ReadOnly(this HtmlTag tag, bool value)
+        public static THtmlTag ReadOnly<THtmlTag>(this THtmlTag tag, bool value) where THtmlTag : HtmlTag
         {
             return tag.BoolAttr("readonly", value);
         }
 
-        public static HtmlTag NameFor<TModel, TProp>(
-            this HtmlTag tag, 
-            Expression<Func<TModel, TProp>> propExpression,
-            HtmlHelper<TModel> htmlHelper)
+        public static THtmlTag InitFor<THtmlTag, TModel, TProp>(
+            this THtmlTag tag,
+            Expression<Func<TModel, TProp>> expression,
+            HtmlHelper<TModel> htmlHelper) where THtmlTag : HtmlTag
         {
-            var name = htmlHelper.NameFor(propExpression).ToString();
-            return tag.Attr("name", name);
+            return tag
+                .IdFor(expression, htmlHelper)
+                .NameFor(expression, htmlHelper)
+                .ValueFor(expression, htmlHelper)
+                .ValidationFor(expression, htmlHelper);
         }
 
-        public static HtmlTag IdFor<TModel, TProp>(
-            this HtmlTag tag,
-            Expression<Func<TModel, TProp>> propExpression,
-            HtmlHelper<TModel> htmlHelper)
+        public static THtmlTag NameFor<THtmlTag, TModel, TProp>(
+            this THtmlTag tag, 
+            Expression<Func<TModel, TProp>> expression,
+            HtmlHelper<TModel> htmlHelper) where THtmlTag : HtmlTag
         {
-            var id = htmlHelper.IdFor(propExpression).ToString();
-            return tag.Attr("id", id);
+            var name = htmlHelper.NameFor(expression).ToString();
+            return tag.Attrib("name", name);
         }
 
-        public static HtmlTag ValueFor<TModel, TProp>(
-            this HtmlTag tag,
-            Expression<Func<TModel, TProp>> propExpression,
-            HtmlHelper<TModel> htmlHelper)
+        public static THtmlTag IdFor<THtmlTag, TModel, TProp>(
+            this THtmlTag tag,
+            Expression<Func<TModel, TProp>> expression,
+            HtmlHelper<TModel> htmlHelper) where THtmlTag : HtmlTag
         {
-            var value = htmlHelper.ValueFor(propExpression);
+            var id = htmlHelper.IdFor(expression).ToString();
+            return tag.Attrib("id", id);
+        }
+
+        public static THtmlTag ValueFor<THtmlTag, TModel, TProp>(
+            this THtmlTag tag,
+            Expression<Func<TModel, TProp>> expression,
+            HtmlHelper<TModel> htmlHelper) where THtmlTag : HtmlTag
+        {
+            var value = htmlHelper.ValueFor(expression);
             return tag.Value(value);
         }
 
-        public static HtmlTag ValueFor<TModel, TProp>(
-            this HtmlTag tag,
-            Expression<Func<TModel, TProp>> propExpression,
+        public static THtmlTag ValueFor<THtmlTag, TModel, TProp>(
+            this THtmlTag tag,
+            Expression<Func<TModel, TProp>> expression,
             string format,
-            HtmlHelper<TModel> htmlHelper)
+            HtmlHelper<TModel> htmlHelper) where THtmlTag : HtmlTag
         {
-            var value = htmlHelper.ValueFor(propExpression, format);
+            var value = htmlHelper.ValueFor(expression, format);
             return tag.Value(value);
         }
 
-        public static HtmlTag ValueFor(
-            this HtmlTag tag,
+        public static THtmlTag ValueFor<THtmlTag>(
+            this THtmlTag tag,
             string name,
-            HtmlHelper htmlHelper)
+            HtmlHelper htmlHelper) where THtmlTag : HtmlTag
         {
-            var value = htmlHelper.Value(name);
+            var value = htmlHelper.Value(name, null);
             return tag.Value(value);
         }
 
-        public static HtmlTag ValueFor<TModel, TProp>(
-            this HtmlTag tag,
+        public static THtmlTag ValueFor<THtmlTag>(
+            this THtmlTag tag,
             string name,
             string format,
-            HtmlHelper htmlHelper)
+            HtmlHelper htmlHelper) where THtmlTag : HtmlTag
         {
             var value = htmlHelper.Value(name, format);
             return tag.Value(value);
         }
 
-        public static HtmlTag ValidationFor<TModel, TProp>(
-            this HtmlTag tag,
-            Expression<Func<TModel, TProp>> propExpression,
-            HtmlHelper<TModel> htmlHelper)
+        public static THtmlTag ValidationFor<THtmlTag, TModel, TProp>(
+            this THtmlTag tag,
+            Expression<Func<TModel, TProp>> expression,
+            HtmlHelper<TModel> htmlHelper) where THtmlTag : HtmlTag
         {
-            var name = htmlHelper.NameFor(propExpression).ToString();
-            ModelMetadata metadata = ModelMetadata.FromLambdaExpression(propExpression, htmlHelper.ViewData);
+            var name = htmlHelper.NameFor(expression).ToString();
+            ModelMetadata metadata = ModelMetadata.FromLambdaExpression(expression, htmlHelper.ViewData);
             var rules = htmlHelper.GetUnobtrusiveValidationAttributes(name, metadata);
-            return rules.Aggregate(tag, (current, rule) => current.Attr(rule.Key, rule.Value));
+            return rules.Aggregate(tag, (current, rule) => current.Attrib(rule.Key, rule.Value));
         }
     }
 }

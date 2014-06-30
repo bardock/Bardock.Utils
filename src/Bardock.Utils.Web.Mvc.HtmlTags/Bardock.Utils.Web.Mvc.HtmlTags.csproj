@@ -74,6 +74,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\HtmlHelperExtensions.cs" />
+    <Compile Include="Extensions\SelectTagTagExtensions.cs" />
     <Compile Include="Extensions\HtmlTagExtensions.cs" />
     <Compile Include="HtmlTagHelperOfTModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
