@@ -1,4 +1,5 @@
-﻿using Bardock.Utils.Web.Mvc.HtmlTags.Extensions;
+﻿using Bardock.Utils.Extensions;
+using Bardock.Utils.Web.Mvc.HtmlTags.Extensions;
 using System;
 using System.Linq;
 using System.Collections.Generic;
@@ -57,11 +58,10 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Extensions
             Func<TItem, string> display,
             Func<TItem, object> value,
             Func<TItem, bool> isSelected = null,
-            Action<HtmlTag> configure = null) where TSelectTag : SelectTag
+            Expression<Action<TItem, HtmlTag>> configure = null) where TSelectTag : SelectTag
         {
-            // TODO configure should receive TItem
             var val = value(item);
-            tag.AddOption(display(item), val, configure);
+            tag.AddOption(display(item), val, configure.PartialApply(item).Compile());
 
             if (isSelected != null && isSelected(item))
                 tag.SelectValue(val);
@@ -75,9 +75,8 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Extensions
             Func<TItem, string> display,
             Func<TItem, object> value,
             Func<TItem, bool> isSelected = null,
-            Action<HtmlTag> configure = null) where TSelectTag : SelectTag
+            Expression<Action<TItem, HtmlTag>> configure = null) where TSelectTag : SelectTag
         {
-            // TODO configure should receive TItem
             foreach (var item in items)
             {
                 tag.AddOption(item, display, value, isSelected, configure);
@@ -88,7 +87,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Extensions
         public static TSelectTag AddOption<TSelectTag>(
             this TSelectTag tag,
             SelectListItem item,
-            Action<HtmlTag> configure = null) where TSelectTag : SelectTag
+            Expression<Action<SelectListItem, HtmlTag>> configure = null) where TSelectTag : SelectTag
         {
             // TODO configure should receive SelectListItem
             return tag.AddOption(
@@ -102,7 +101,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Extensions
         public static TSelectTag AddOptions<TSelectTag, TItem>(
             this TSelectTag tag,
             IEnumerable<SelectListItem> items,
-            Action<HtmlTag> configure = null) where TSelectTag : SelectTag
+            Expression<Action<SelectListItem, HtmlTag>> configure = null) where TSelectTag : SelectTag
         {
             // TODO configure should receive TItem
             foreach (var item in items)

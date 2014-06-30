@@ -200,7 +200,7 @@ namespace Bardock.Utils.Web.Mvc.SelectTags.Tests.Extensions
                     display: x => x.Display, 
                     value: x => x.Value, 
                     isSelected: x => x.IsSelected,
-                    configure: op => op.Data("customdata", 99));
+                    configure: (x, op) => op.Data("customdata", x.Value));
 
             Assert.Equal(3, tag.Children.Count());
 
@@ -211,15 +211,15 @@ namespace Bardock.Utils.Web.Mvc.SelectTags.Tests.Extensions
             Assert.Equal("display0", firstChild.Text());
             Assert.True(firstChild.ValueIsEqual(0));
             Assert.False(firstChild.HasAttr("selected"));
-            Assert.Equal(99, firstChild.Data("customdata"));
+            Assert.Equal(0, firstChild.Data("customdata"));
             Assert.Equal("display1", secondChild.Text());
             Assert.True(secondChild.ValueIsEqual(1));
             Assert.True(secondChild.HasAttr("selected"));
-            Assert.Equal(99, secondChild.Data("customdata"));
+            Assert.Equal(1, secondChild.Data("customdata"));
             Assert.Equal("display2", thirdChild.Text());
             Assert.True(thirdChild.ValueIsEqual(2));
             Assert.False(thirdChild.HasAttr("selected"));
-            Assert.Equal(99, thirdChild.Data("customdata"));
+            Assert.Equal(2, thirdChild.Data("customdata"));
         }
 
         [Fact]
@@ -233,7 +233,7 @@ namespace Bardock.Utils.Web.Mvc.SelectTags.Tests.Extensions
                     display: x => x.Display,
                     value: x => x.Value,
                     isSelected: x => x.IsSelected,
-                    configure: op => op.Data("customdata", 99));
+                    configure: (x, op) => op.Data("customdata", 99));
 
             Assert.Equal(0, tag.Children.Count());
         }
