@@ -90,6 +90,10 @@
       <Project>{f31f9ce5-994a-425a-861f-e122f801c67a}</Project>
       <Name>Bardock.Utils.Web.Mvc.HtmlTags</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\src\Bardock.Utils\Bardock.Utils.csproj">
+      <Project>{dff10396-c6b8-43f7-bbdd-d7ad9f57e4bf}</Project>
+      <Name>Bardock.Utils</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />

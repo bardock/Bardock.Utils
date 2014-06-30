@@ -43,69 +43,27 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Extensions
         public static TSelectTag AddDefaultOption<TSelectTag>(
             this TSelectTag tag,
             string display = "",
-            bool selected = true,
             Action<HtmlTag> configure = null) where TSelectTag : SelectTag
         {
-            tag.PrependOption(display, null, configure);
-            if (selected)
-                tag.SelectValue(null);
-            return tag;
-        }
-
-        public static TSelectTag AddOption<TSelectTag, TItem>(
-            this TSelectTag tag,
-            TItem item,
-            Func<TItem, string> display,
-            Func<TItem, object> value,
-            Func<TItem, bool> isSelected = null,
-            Expression<Action<TItem, HtmlTag>> configure = null) where TSelectTag : SelectTag
-        {
-            var val = value(item);
-            tag.AddOption(display(item), val, configure.PartialApply(item).Compile());
-
-            if (isSelected != null && isSelected(item))
-                tag.SelectValue(val);
-
-            return tag;
+            return tag.PrependOption(display, null, configure);
         }
 
         public static TSelectTag AddOptions<TSelectTag, TItem>(
             this TSelectTag tag,
-            IEnumerable<TItem> items,
-            Func<TItem, string> display,
-            Func<TItem, object> value,
-            Func<TItem, bool> isSelected = null,
-            Expression<Action<TItem, HtmlTag>> configure = null) where TSelectTag : SelectTag
+            OptionsList<TItem> options) where TSelectTag : SelectTag
         {
-            foreach (var item in items)
+            object selectedVal = null;
+            foreach (var item in options.Items)
             {
-                tag.AddOption(item, display, value, isSelected, configure);
-            }
-            return tag;
-        }
+                var val = options.Value(item);
+                tag.AddOption(options.Display(item), val, options.Configure.PartialApply(item).Compile());
 
-        public static TSelectTag AddOption<TSelectTag>(
-            this TSelectTag tag,
-            SelectListItem item,
-            Expression<Action<SelectListItem, HtmlTag>> configure = null) where TSelectTag : SelectTag
-        {
-            return tag.AddOption(
-                item, 
-                display: x => x.Text, 
-                value: x => x.Value,
-                isSelected: x => x.Selected,
-                configure: configure);
-        }
-
-        public static TSelectTag AddOptions<TSelectTag, TItem>(
-            this TSelectTag tag,
-            IEnumerable<SelectListItem> items,
-            Expression<Action<SelectListItem, HtmlTag>> configure = null) where TSelectTag : SelectTag
-        {
-            foreach (var item in items)
-            {
-                tag.AddOption(item, configure);
+                if (options.IsSelected != null && options.IsSelected(item))
+                    selectedVal = val;
             }
+            if (selectedVal != null)
+                tag.SelectValue(selectedVal);
+
             return tag;
         }
 

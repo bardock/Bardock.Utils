@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Bardock.Utils.Collections;
+using Bardock.Utils.Globalization;
+using Bardock.Utils.Web.Mvc.HtmlTags;
 using Bardock.Utils.Web.Mvc.HtmlTags.Extensions;
 using HtmlTags;
 using Xunit;
@@ -196,11 +199,12 @@ namespace Bardock.Utils.Web.Mvc.SelectTags.Tests.Extensions
 
             var tag = new SelectTag()
                 .AddOptions(
-                    items, 
-                    display: x => x.Display, 
-                    value: x => x.Value, 
-                    isSelected: x => x.IsSelected,
-                    configure: (x, op) => op.Data("customdata", x.Value));
+                    OptionsList.Create(
+                        items, 
+                        display: x => x.Display, 
+                        value: x => x.Value, 
+                        isSelected: x => x.IsSelected,
+                        configure: (x, op) => op.Data("customdata", x.Value)));
 
             Assert.Equal(3, tag.Children.Count());
 
@@ -229,13 +233,156 @@ namespace Bardock.Utils.Web.Mvc.SelectTags.Tests.Extensions
 
             var tag = new SelectTag()
                 .AddOptions(
-                    items,
-                    display: x => x.Display,
-                    value: x => x.Value,
-                    isSelected: x => x.IsSelected,
-                    configure: (x, op) => op.Data("customdata", 99));
+                    OptionsList.Create(
+                        items,
+                        display: x => x.Display,
+                        value: x => x.Value,
+                        isSelected: x => x.IsSelected,
+                        configure: (x, op) => op.Data("customdata", x.Value)));
 
             Assert.Equal(0, tag.Children.Count());
+        }
+
+        private enum Enum1
+        {
+            Option1 = 1,
+            Option2 = 2
+        }
+
+        [Fact]
+        public void AddOptions_Enum()
+        {
+            var tag = new SelectTag()
+                .AddOptions(
+                    OptionsList.CreateForEnum<Enum1>(
+                        isSelected: x => x.Value == 2,
+                        configure: (x, op) => op.Data("customdata", x.Value)));
+
+            Assert.Equal(2, tag.Children.Count());
+
+            var firstChild = tag.Children.First();
+            var secondChild = tag.Children.Skip(1).First();
+
+            Assert.Equal("Option1", firstChild.Text());
+            Assert.True(firstChild.ValueIsEqual(1));
+            Assert.False(firstChild.HasAttr("selected"));
+            Assert.Equal(1, firstChild.Data("customdata"));
+            Assert.Equal("Option2", secondChild.Text());
+            Assert.True(secondChild.ValueIsEqual(2));
+            Assert.True(secondChild.HasAttr("selected"));
+            Assert.Equal(2, secondChild.Data("customdata"));
+        }
+
+        [Fact]
+        public void AddOptions_Enum_Display()
+        {
+            var tag = new SelectTag()
+                .AddOptions(
+                    OptionsList.CreateForEnum<Enum1>(
+                        isSelected: x => x.Value == 2,
+                        display: x => x.Name + "-" + x.Value,
+                        configure: (x, op) => op.Data("customdata", x.Value)));
+
+            Assert.Equal(2, tag.Children.Count());
+
+            var firstChild = tag.Children.First();
+            var secondChild = tag.Children.Skip(1).First();
+
+            Assert.Equal("Option1-1", firstChild.Text());
+            Assert.True(firstChild.ValueIsEqual(1));
+            Assert.False(firstChild.HasAttr("selected"));
+            Assert.Equal(1, firstChild.Data("customdata"));
+            Assert.Equal("Option2-2", secondChild.Text());
+            Assert.True(secondChild.ValueIsEqual(2));
+            Assert.True(secondChild.HasAttr("selected"));
+            Assert.Equal(2, secondChild.Data("customdata"));
+        }
+
+        public static class Enum1Resources
+        {
+            public static string Option1 { get { return "Option 1"; } }
+        }
+
+        [Fact]
+        public void AddOptions_Enum_Localized()
+        {
+            var prevResource = Resources.Current;
+            try
+            {
+                Resources.Register(new TypedClassResourceProvider(typeof(Enum1Resources)));
+
+                var tag = new SelectTag()
+                    .AddOptions(
+                        OptionsList.CreateForEnum<Enum1>(
+                            isSelected: x => x.Value == 2,
+                            configure: (x, op) => op.Data("customdata", x.Value)));
+
+                Assert.Equal(2, tag.Children.Count());
+
+                var firstChild = tag.Children.First();
+                var secondChild = tag.Children.Skip(1).First();
+
+                Assert.Equal("Option 1", firstChild.Text());
+                Assert.True(firstChild.ValueIsEqual(1));
+                Assert.False(firstChild.HasAttr("selected"));
+                Assert.Equal(1, firstChild.Data("customdata"));
+                Assert.Equal("Option2", secondChild.Text());
+                Assert.True(secondChild.ValueIsEqual(2));
+                Assert.True(secondChild.HasAttr("selected"));
+                Assert.Equal(2, secondChild.Data("customdata"));
+            }
+            finally
+            {
+                Resources.Register(prevResource);
+            }
+        }
+
+        [Fact]
+        public void AddOptions_Enum_SelectedValue()
+        {
+            var tag = new SelectTag()
+                .AddOptions(
+                    OptionsList.CreateForEnum<Enum1>(
+                        selectedValue: 2,
+                        configure: (x, op) => op.Data("customdata", x.Value)));
+
+            Assert.Equal(2, tag.Children.Count());
+
+            var firstChild = tag.Children.First();
+            var secondChild = tag.Children.Skip(1).First();
+
+            Assert.Equal("Option1", firstChild.Text());
+            Assert.True(firstChild.ValueIsEqual(1));
+            Assert.False(firstChild.HasAttr("selected"));
+            Assert.Equal(1, firstChild.Data("customdata"));
+            Assert.Equal("Option2", secondChild.Text());
+            Assert.True(secondChild.ValueIsEqual(2));
+            Assert.True(secondChild.HasAttr("selected"));
+            Assert.Equal(2, secondChild.Data("customdata"));
+        }
+
+        [Fact]
+        public void AddOptions_Enum_SelectedValues()
+        {
+            var tag = new SelectTag()
+                .AddOptions(
+                    OptionsList.CreateForEnum<Enum1>(
+                        selectedValues: Coll.Array(2),
+                        configure: (x, op) => op.Data("customdata", x.Value)));
+
+            Assert.Equal(2, tag.Children.Count());
+
+            var firstChild = tag.Children.First();
+            var secondChild = tag.Children.Skip(1).First();
+
+            Assert.Equal("Option1", firstChild.Text());
+            Assert.True(firstChild.ValueIsEqual(1));
+            Assert.False(firstChild.HasAttr("selected"));
+            Assert.Equal(1, firstChild.Data("customdata"));
+            Assert.Equal("Option2", secondChild.Text());
+            Assert.True(secondChild.ValueIsEqual(2));
+            Assert.True(secondChild.HasAttr("selected"));
+            Assert.Equal(2, secondChild.Data("customdata"));
         }
     }
 }
