@@ -23,7 +23,8 @@ namespace Bardock.Utils.Types
 
             this.Options = Enum.GetValues(typeof(TEnum))
                 .Cast<TValue>()
-                .Select(val => EnumOption.Create<TEnum, TValue>((TEnum)Enum.ToObject(typeof(TEnum), val)));
+                .Select(val => (TEnum)Enum.ToObject(typeof(TEnum), val))
+                .Select(@enum => EnumOption.Create<TEnum, TValue>(@enum));
         }
 
         public IEnumerator<EnumOption<TEnum, TValue>> GetEnumerator()
