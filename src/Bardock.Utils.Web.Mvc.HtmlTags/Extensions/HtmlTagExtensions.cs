@@ -102,6 +102,11 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Extensions
             return parent;
         }
 
+        public static THtmlTag Label<THtmlTag>(this THtmlTag tag, string text) where THtmlTag : HtmlTag
+        {
+            return (THtmlTag)new HtmlTag("label").Append(tag).Text(text);
+        }
+
         public static THtmlTag InitFor<THtmlTag>(
             this THtmlTag tag,
             string name,
