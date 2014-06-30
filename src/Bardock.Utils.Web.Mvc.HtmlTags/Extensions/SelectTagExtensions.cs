@@ -89,7 +89,6 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Extensions
             SelectListItem item,
             Expression<Action<SelectListItem, HtmlTag>> configure = null) where TSelectTag : SelectTag
         {
-            // TODO configure should receive SelectListItem
             return tag.AddOption(
                 item, 
                 display: x => x.Text, 
@@ -103,7 +102,6 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Extensions
             IEnumerable<SelectListItem> items,
             Expression<Action<SelectListItem, HtmlTag>> configure = null) where TSelectTag : SelectTag
         {
-            // TODO configure should receive TItem
             foreach (var item in items)
             {
                 tag.AddOption(item, configure);
