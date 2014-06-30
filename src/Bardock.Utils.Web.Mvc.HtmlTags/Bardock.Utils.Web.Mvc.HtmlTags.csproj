@@ -74,11 +74,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\HtmlHelperExtensions.cs" />
-    <Compile Include="Extensions\SelectTagTagExtensions.cs" />
+    <Compile Include="Extensions\SelectTagExtensions.cs" />
     <Compile Include="Extensions\HtmlTagExtensions.cs" />
     <Compile Include="HtmlTagHelperOfTModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="HtmlTagHelper.cs" />
+    <Compile Include="ValueSerializer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

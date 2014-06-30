@@ -19,9 +19,19 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Extensions
             return (THtmlTag)tag.Attr(attribute, value);
         }
 
-        public static THtmlTag Value<THtmlTag>(this THtmlTag tag, object value) where THtmlTag : HtmlTag
+        public static string Val(this HtmlTag tag)
         {
-            return tag.Attrib("value", value.ToString());
+            return tag.Attr("value");
+        }
+
+        public static THtmlTag Val<THtmlTag>(this THtmlTag tag, object value, string format = null) where THtmlTag : HtmlTag
+        {
+            return tag.Attrib("value", ValueSerializer.Serialize(value, format));
+        }
+
+        public static bool ValueIsEqual(this HtmlTag tag, object value, string format = null)
+        {
+            return tag.Val().Equals(ValueSerializer.Serialize(value, format));
         }
 
         public static THtmlTag Type<THtmlTag>(this THtmlTag tag, string type) where THtmlTag : HtmlTag
@@ -76,6 +86,22 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Extensions
             return tag.BoolAttr("readonly", value);
         }
 
+        public static bool Selected<THtmlTag>(this THtmlTag tag) where THtmlTag : HtmlTag
+        {
+            return tag.BoolAttr("selected");
+        }
+
+        public static THtmlTag Selected<THtmlTag>(this THtmlTag tag, bool value) where THtmlTag : HtmlTag
+        {
+            return tag.BoolAttr("selected", value);
+        }
+
+        public static THtmlTag Prepend<THtmlTag>(this THtmlTag parent, HtmlTag child) where THtmlTag : HtmlTag
+        {
+            parent.InsertFirst(child);
+            return parent;
+        }
+
         public static THtmlTag InitFor<THtmlTag, TModel, TProp>(
             this THtmlTag tag,
             Expression<Func<TModel, TProp>> expression,
@@ -112,7 +138,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Extensions
             HtmlHelper<TModel> htmlHelper) where THtmlTag : HtmlTag
         {
             var value = htmlHelper.ValueFor(expression);
-            return tag.Value(value);
+            return tag.Val(value);
         }
 
         public static THtmlTag ValueFor<THtmlTag, TModel, TProp>(
@@ -122,7 +148,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Extensions
             HtmlHelper<TModel> htmlHelper) where THtmlTag : HtmlTag
         {
             var value = htmlHelper.ValueFor(expression, format);
-            return tag.Value(value);
+            return tag.Val(value);
         }
 
         public static THtmlTag ValueFor<THtmlTag>(
@@ -130,8 +156,8 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Extensions
             string name,
             HtmlHelper htmlHelper) where THtmlTag : HtmlTag
         {
-            var value = htmlHelper.Value(name, null);
-            return tag.Value(value);
+            var value = htmlHelper.Value(name);
+            return tag.Val(value);
         }
 
         public static THtmlTag ValueFor<THtmlTag>(
@@ -141,7 +167,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Extensions
             HtmlHelper htmlHelper) where THtmlTag : HtmlTag
         {
             var value = htmlHelper.Value(name, format);
-            return tag.Value(value);
+            return tag.Val(value);
         }
 
         public static THtmlTag ValidationFor<THtmlTag, TModel, TProp>(
