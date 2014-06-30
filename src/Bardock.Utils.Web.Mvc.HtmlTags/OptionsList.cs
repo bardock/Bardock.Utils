@@ -101,11 +101,11 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
 
     public class OptionsList<TItem>
     {
-        public IEnumerable<TItem> Items { get; private set; }
-        public Func<TItem, string> Display { get; private set; }
-        public Func<TItem, object> Value { get; private set; }
-        public Func<TItem, bool> IsSelected { get; private set; }
-        public Expression<Action<TItem, HtmlTag>> Configure { get; private set; }
+        public IEnumerable<TItem> Items { get; set; }
+        public Func<TItem, string> Display { get; set; }
+        public Func<TItem, object> Value { get; set; }
+        public Func<TItem, bool> IsSelected { get; set; }
+        public Expression<Action<TItem, HtmlTag>> Configure { get; set; }
 
         public OptionsList(
             IEnumerable<TItem> items,

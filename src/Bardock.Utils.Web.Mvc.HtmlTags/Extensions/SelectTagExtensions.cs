@@ -50,17 +50,23 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Extensions
 
         public static TSelectTag AddOptions<TSelectTag, TItem>(
             this TSelectTag tag,
-            OptionsList<TItem> options) where TSelectTag : SelectTag
+            OptionsList<TItem> options,
+            object defaultValue = null) where TSelectTag : SelectTag
         {
             object selectedVal = null;
             foreach (var item in options.Items)
             {
                 var val = options.Value(item);
-                tag.AddOption(options.Display(item), val, options.Configure.PartialApply(item).Compile());
+                var configure = options.Configure == null ? null : options.Configure.PartialApply(item).Compile();
+
+                tag.AddOption(options.Display(item), val, configure);
 
                 if (options.IsSelected != null && options.IsSelected(item))
                     selectedVal = val;
             }
+            if (selectedVal == null)
+                selectedVal = defaultValue;
+
             if (selectedVal != null)
                 tag.SelectValue(selectedVal);
 

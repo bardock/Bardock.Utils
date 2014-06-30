@@ -283,5 +283,97 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
             AssertValid(tag, "input", "PropBool", type: "checkbox", value: model.PropBool);
             Assert.True(tag.Checked());
         }
+
+        private enum Enum1
+        {
+            Option1 = 1,
+            Option2 = 2,
+            Option3 = 3
+        }
+
+        [Fact]
+        public void SelectFor()
+        {
+            var model = new Model1() { PropInt = 2 };
+            var helper = new HtmlTagHelper<Model1>(model);
+
+            var propExpression = Expr((Model1 m) => m.PropInt);
+            var tag = helper.SelectFor(
+                propExpression, 
+                OptionsList.CreateForEnum<Enum1>());
+
+            AssertValid(tag, "select", "PropInt");
+
+            var firstChild = tag.Children.First();
+            var secondChild = tag.Children.Skip(1).First();
+            var thirdChild = tag.Children.Skip(2).First();
+
+            Assert.Equal("Option1", firstChild.Text());
+            Assert.True(firstChild.ValueIsEqual(1));
+            Assert.False(firstChild.HasAttr("selected"));
+            Assert.Equal("Option2", secondChild.Text());
+            Assert.True(secondChild.ValueIsEqual(2));
+            Assert.True(secondChild.HasAttr("selected"));
+            Assert.Equal("Option3", thirdChild.Text());
+            Assert.True(thirdChild.ValueIsEqual(3));
+            Assert.False(thirdChild.HasAttr("selected"));
+        }
+
+        [Fact]
+        public void SelectFor_Null()
+        {
+            var model = new Model1() { PropInt = null };
+            var helper = new HtmlTagHelper<Model1>(model);
+
+            var propExpression = Expr((Model1 m) => m.PropInt);
+            var tag = helper.SelectFor(
+                propExpression,
+                OptionsList.CreateForEnum<Enum1>());
+
+            AssertValid(tag, "select", "PropInt");
+
+            var firstChild = tag.Children.First();
+            var secondChild = tag.Children.Skip(1).First();
+            var thirdChild = tag.Children.Skip(2).First();
+
+            Assert.Equal("Option1", firstChild.Text());
+            Assert.True(firstChild.ValueIsEqual(1));
+            Assert.False(firstChild.HasAttr("selected"));
+            Assert.Equal("Option2", secondChild.Text());
+            Assert.True(secondChild.ValueIsEqual(2));
+            Assert.False(secondChild.HasAttr("selected"));
+            Assert.Equal("Option3", thirdChild.Text());
+            Assert.True(thirdChild.ValueIsEqual(3));
+            Assert.False(thirdChild.HasAttr("selected"));
+        }
+
+        [Fact]
+        public void SelectFor_Null_DefaultValue()
+        {
+            var model = new Model1() { PropInt = null };
+            var helper = new HtmlTagHelper<Model1>(model);
+
+            var propExpression = Expr((Model1 m) => m.PropInt);
+            var tag = helper.SelectFor(
+                propExpression,
+                OptionsList.CreateForEnum<Enum1>(),
+                defaultValue: 2);
+
+            AssertValid(tag, "select", "PropInt");
+
+            var firstChild = tag.Children.First();
+            var secondChild = tag.Children.Skip(1).First();
+            var thirdChild = tag.Children.Skip(2).First();
+
+            Assert.Equal("Option1", firstChild.Text());
+            Assert.True(firstChild.ValueIsEqual(1));
+            Assert.False(firstChild.HasAttr("selected"));
+            Assert.Equal("Option2", secondChild.Text());
+            Assert.True(secondChild.ValueIsEqual(2));
+            Assert.True(secondChild.HasAttr("selected"));
+            Assert.Equal("Option3", thirdChild.Text());
+            Assert.True(thirdChild.ValueIsEqual(3));
+            Assert.False(thirdChild.HasAttr("selected"));
+        }
     }
 }

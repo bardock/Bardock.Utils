@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 using System.Web.Mvc;
+using Bardock.Utils.Types;
 using Bardock.Utils.Web.Mvc.Helpers;
 using Bardock.Utils.Web.Mvc.HtmlTags.Extensions;
 using HtmlTags;
@@ -91,7 +92,22 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
         public virtual SelectTag SelectFor<TProp>(
             Expression<Func<TModel, TProp>> expression)
         {
-            return new SelectTag().InitFor(expression, _htmlHelper);
+            return (SelectTag)new SelectTag()
+                .InitFor(expression, _htmlHelper)
+                .RemoveAttr("value");
+        }
+
+        public virtual SelectTag SelectFor<TProp, TItem>(
+            Expression<Func<TModel, TProp>> expression,
+            OptionsList<TItem> options,
+            object defaultValue = null)
+        {
+            object value = expression.Compile().Invoke(_htmlHelper.ViewData.Model);
+            if (options.IsSelected == null && value != null)
+                options.IsSelected = x => value.Equals(options.Value(x));
+
+            return this.SelectFor(expression)
+                .AddOptions(options, defaultValue);
         }
     }
 }
