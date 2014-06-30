@@ -102,6 +102,17 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Extensions
             return parent;
         }
 
+        public static THtmlTag InitFor<THtmlTag>(
+            this THtmlTag tag,
+            string name,
+            HtmlHelper htmlHelper) where THtmlTag : HtmlTag
+        {
+            return tag
+                .Attrib("id", htmlHelper.Id(name))
+                .Attrib("name", name)
+                .ValueFor(name, htmlHelper);
+        }
+
         public static THtmlTag InitFor<THtmlTag, TModel, TProp>(
             this THtmlTag tag,
             Expression<Func<TModel, TProp>> expression,

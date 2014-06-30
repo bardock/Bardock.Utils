@@ -30,10 +30,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
 
         public virtual HtmlTag HtmlTag(string tag, string name)
         {
-            return new HtmlTag(tag)
-                .Attr("id", _htmlHelper.Id(name))
-                .Attr("name", name)
-                .ValueFor(name, _htmlHelper);
+            return new HtmlTag(tag).InitFor(name, _htmlHelper);
         }
 
         public virtual HtmlTag TextArea(string name)
@@ -74,6 +71,13 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
         public virtual HtmlTag CheckBox(string name, bool isChecked = false)
         {
             return Input(InputType.CheckBox, name).Checked(isChecked);
+        }
+
+        public virtual SelectTag Select(string name)
+        {
+            return (SelectTag)new SelectTag()
+                .InitFor(name, _htmlHelper)
+                .RemoveAttr("value");
         }
     }
 }
