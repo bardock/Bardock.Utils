@@ -79,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseController.cs" />
+    <Compile Include="Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="Extensions\HtmlHelperTagBuilderExtensions.cs" />
     <Compile Include="Filters\AccessCodeAttribute.cs" />
     <Compile Include="Filters\RequireAuthorizationAttribute.cs" />

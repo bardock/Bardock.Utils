@@ -6,7 +6,7 @@ using System;
 
 namespace Bardock.Utils.Web.Mvc.Extensions
 {
-	public static class HtmlHelperModelConversionExtensions
+	public static class HtmlHelperModelExtensions
 	{
         public static HtmlHelper<TModel> ToModel<TModel>(this HtmlHelper htmlHelper, TModel model = default(TModel), bool defaultModel = false)
 		{

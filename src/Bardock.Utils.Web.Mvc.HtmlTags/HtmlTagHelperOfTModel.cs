@@ -5,6 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
+using Bardock.Utils.Web.Mvc.Extensions;
 using Bardock.Utils.Web.Mvc.Helpers;
 using Bardock.Utils.Web.Mvc.HtmlTags.Extensions;
 using HtmlTags;
@@ -105,7 +106,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
             OptionsList<TItem> options,
             object defaultValue = null)
         {
-            object value = expression.Compile().Invoke(_htmlHelper.ViewData.Model);
+            var value = _htmlHelper.GetValueFor(expression);
             if (options.IsSelected == null && value != null)
                 options.IsSelected = x => value.Equals(options.Value(x));
 
@@ -121,20 +122,17 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
             return new CheckBoxListTag(name, cssClass);
         }
 
-        public virtual CheckBoxListTag CheckBoxListFor<TProp, TItem>(
-            Expression<Func<TModel, TProp>> expression,
+        public virtual CheckBoxListTag CheckBoxListFor<TPropItem, TItem>(
+            Expression<Func<TModel, IEnumerable<TPropItem>>> expression,
             OptionsList<TItem> options,
             IEnumerable defaultValues = null,
             string cssClass = CheckBoxListTag.DEFAULT_CSS_CLASS)
         {
-            var modelValue = expression.Compile().Invoke(_htmlHelper.ViewData.Model);
-            if (modelValue != null)
-            {
-                var values = ((IEnumerable)modelValue).Cast<object>();
-                if (options.IsSelected == null && values.Any())
-                    options.IsSelected = x => values.Contains(options.Value(x));
-            }
-            return this.CheckBoxListFor(expression)
+            var values = _htmlHelper.GetValueFor(expression);
+            if (options.IsSelected == null && values != null && values.Any())
+                options.IsSelected = x => values.Cast<object>().Contains(options.Value(x));
+
+            return this.CheckBoxListFor(expression, cssClass)
                 .AddOptions(options, defaultValues);
         }
     }

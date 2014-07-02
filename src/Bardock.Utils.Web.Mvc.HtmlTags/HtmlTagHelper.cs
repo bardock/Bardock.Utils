@@ -1,5 +1,8 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections;
+using System.Linq;
+using System.Web.Mvc;
 using System.Web.Mvc.Html;
+using Bardock.Utils.Web.Mvc.Extensions;
 using Bardock.Utils.Web.Mvc.Helpers;
 using Bardock.Utils.Web.Mvc.HtmlTags.Extensions;
 using HtmlTags;
@@ -80,9 +83,36 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
                 .RemoveAttr("value");
         }
 
+        public virtual SelectTag Select<TItem>(
+            string name,
+            OptionsList<TItem> options,
+            object defaultValue = null)
+        {
+            var value = _htmlHelper.GetValueFor(name);
+            if (options.IsSelected == null && value != null)
+                options.IsSelected = x => value.Equals(options.Value(x));
+
+            return this.Select(name)
+                .AddOptions(options, defaultValue);
+        }
+
         public virtual CheckBoxListTag CheckBoxList(string name, string cssClass = CheckBoxListTag.DEFAULT_CSS_CLASS)
         {
             return new CheckBoxListTag(name, cssClass);
+        }
+
+        public virtual CheckBoxListTag CheckBoxList<TItem>(
+            string name,
+            OptionsList<TItem> options,
+            IEnumerable defaultValues = null,
+            string cssClass = CheckBoxListTag.DEFAULT_CSS_CLASS)
+        {
+            var values = (IEnumerable)_htmlHelper.GetValueFor(name);
+            if (options.IsSelected == null && values != null)
+                options.IsSelected = x => values.Cast<object>().Contains(options.Value(x));
+
+            return this.CheckBoxList(name, cssClass)
+                .AddOptions(options, defaultValues);
         }
     }
 }

@@ -1,12 +1,12 @@
-﻿using Bardock.Utils.Web.Mvc.HtmlTags.Extensions;
-using System;
-using System.Linq;
-using Xunit;
-using HtmlTags;
-using System.Web.Mvc;
-using System.Linq.Expressions;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Web.Mvc;
 using Bardock.Utils.Collections;
+using Bardock.Utils.Web.Mvc.HtmlTags.Extensions;
+using HtmlTags;
+using Xunit;
 
 namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
 {
