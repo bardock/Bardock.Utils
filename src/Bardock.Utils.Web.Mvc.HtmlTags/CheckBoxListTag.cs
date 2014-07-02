@@ -10,13 +10,17 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
 {
     public class CheckBoxListTag : HtmlTag
     {
+        public const string DEFAULT_CSS_CLASS = "checkboxList";
+
         public string Name { get; protected set; }
 
-        public CheckBoxListTag(string name, string cssClass = "checkboxList")
+        public CheckBoxListTag(string name, string cssClass = DEFAULT_CSS_CLASS)
             : base("div")
         {
             this.Name = name;
-            this.AddClass(cssClass);
+
+            if (!string.IsNullOrWhiteSpace(cssClass))
+                this.AddClass(cssClass);
         }
 
         protected virtual HtmlTag BuildOption(
@@ -36,6 +40,11 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
                 configure(option);
 
             return option;
+        }
+
+        public virtual IEnumerable<HtmlTag> Inputs
+        {
+            get { return this.Children.Select(label => label.FirstChild()); }
         }
 
         public virtual CheckBoxListTag PrependOption(
@@ -58,14 +67,6 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
             return (CheckBoxListTag)this.Append(option);
         }
 
-        public virtual CheckBoxListTag AddDefaultOption(
-            string display = "",
-            bool isChecked = false,
-            Action<HtmlTag> configure = null)
-        {
-            return this.PrependOption(display, null, isChecked, configure);
-        }
-
         public virtual CheckBoxListTag AddOptions<TItem>(
             OptionsList<TItem> options,
             IEnumerable<object> defaultValues = null)
@@ -80,7 +81,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
 
                 this.AddOption(options.Display(item), val, isChecked, configure);
             }
-            if (!anyIsChecked)
+            if (!anyIsChecked && defaultValues != null)
                 this.CheckValues(defaultValues);
 
             return this;
@@ -90,21 +91,27 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
             object value,
             string format = null)
         {
-            var toCheck = this.Children.FirstOrDefault(x => x.ValueIsEqual(value, format));
-            if (toCheck != null)
-                toCheck.Checked(true);
+            this.Inputs
+                .Where(x => x.ValueIsEqual(value, format)).ToList()
+                .ForEach(x => x.Checked(true));
             return this;
         }
 
-        public virtual CheckBoxListTag CheckValues(
-            IEnumerable<object> values,
+        public virtual CheckBoxListTag CheckValues<TValue>(
+            IEnumerable<TValue> values,
             string format = null)
         {
             foreach (var value in values)
             {
-                this.CheckValue(value);
+                this.CheckValue(value, format);
             }
             return this;
+        }
+
+        public virtual CheckBoxListTag CheckValues(
+            params object[] values)
+        {
+            return this.CheckValues(values, format: null);
         }
     }
 }

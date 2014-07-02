@@ -79,5 +79,10 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
                 .InitFor(name, _htmlHelper)
                 .RemoveAttr("value");
         }
+
+        public virtual CheckBoxListTag CheckBoxList(string name, string cssClass = CheckBoxListTag.DEFAULT_CSS_CLASS)
+        {
+            return new CheckBoxListTag(name, cssClass);
+        }
     }
 }

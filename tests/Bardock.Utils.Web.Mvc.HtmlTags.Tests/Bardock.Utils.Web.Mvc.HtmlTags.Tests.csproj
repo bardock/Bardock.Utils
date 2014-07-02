@@ -81,6 +81,7 @@
     <Compile Include="HtmlTagHelperOfTModelTest.cs" />
     <Compile Include="HtmlTagHelperTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="CheckBoxListTagTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

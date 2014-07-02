@@ -83,9 +83,9 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Extensions
                 .ToList()
                 .ForEach(x => x.Selected(false));
 
-            var toSelect = tag.Children.FirstOrDefault(x => x.ValueIsEqual(value, format));
-            if (toSelect != null)
-                toSelect.Selected(true);
+            tag.Children
+                .Where(x => x.ValueIsEqual(value, format)).ToList()
+                .ForEach(x => x.Selected(true));
 
             return tag;
         }
