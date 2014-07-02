@@ -5,6 +5,8 @@ using Xunit;
 using HtmlTags;
 using System.Web.Mvc;
 using System.Linq.Expressions;
+using System.Collections.Generic;
+using Bardock.Utils.Collections;
 
 namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
 {
@@ -15,6 +17,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
             public int? PropInt { get; set; }
             public DateTime? PropDate { get; set; }
             public bool PropBool { get; set; }
+            public IEnumerable<int> PropIntList { get; set; }
         }
 
         /// <summary>
@@ -374,6 +377,105 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
             Assert.Equal("Option3", thirdChild.Text());
             Assert.True(thirdChild.ValueIsEqual(3));
             Assert.False(thirdChild.HasAttr("selected"));
+        }
+
+        [Fact]
+        public void SelectFor_NotNull_DefaultValue()
+        {
+            var model = new Model1() { PropInt = 1 };
+            var helper = new HtmlTagHelper<Model1>(model);
+
+            var propExpression = Expr((Model1 m) => m.PropInt);
+            var tag = helper.SelectFor(
+                propExpression,
+                OptionsList.CreateForEnum<Enum1>(),
+                defaultValue: 2);
+
+            AssertValid(tag, "select", "PropInt");
+
+            var firstChild = tag.Children.First();
+            var secondChild = tag.Children.Skip(1).First();
+            var thirdChild = tag.Children.Skip(2).First();
+
+            Assert.Equal("Option1", firstChild.Text());
+            Assert.True(firstChild.ValueIsEqual(1));
+            Assert.True(firstChild.HasAttr("selected"));
+            Assert.Equal("Option2", secondChild.Text());
+            Assert.True(secondChild.ValueIsEqual(2));
+            Assert.False(secondChild.HasAttr("selected"));
+            Assert.Equal("Option3", thirdChild.Text());
+            Assert.True(thirdChild.ValueIsEqual(3));
+            Assert.False(thirdChild.HasAttr("selected"));
+        }
+
+        [Fact]
+        public void CheckBoxListFor()
+        {
+            var model = new Model1() { PropIntList = Coll.Array(2, 3) };
+            var helper = new HtmlTagHelper<Model1>(model);
+
+            var propExpression = Expr((Model1 m) => m.PropIntList);
+            var tag = helper.CheckBoxListFor(
+                propExpression,
+                OptionsList.CreateForEnum<Enum1>());
+
+            Assert.Equal(3, tag.Children.Count());
+            CheckBoxListTagTest.AssertValidChild(tag.Children.Skip(0).First(), name: "PropIntList", display: "Option1", value: 1, isChecked: false);
+            CheckBoxListTagTest.AssertValidChild(tag.Children.Skip(1).First(), name: "PropIntList", display: "Option2", value: 2, isChecked: true);
+            CheckBoxListTagTest.AssertValidChild(tag.Children.Skip(2).First(), name: "PropIntList", display: "Option3", value: 3, isChecked: true);
+        }
+
+        [Fact]
+        public void CheckBoxListFor_Null()
+        {
+            var model = new Model1() { PropIntList = null };
+            var helper = new HtmlTagHelper<Model1>(model);
+
+            var propExpression = Expr((Model1 m) => m.PropIntList);
+            var tag = helper.CheckBoxListFor(
+                propExpression,
+                OptionsList.CreateForEnum<Enum1>());
+
+            Assert.Equal(3, tag.Children.Count());
+            CheckBoxListTagTest.AssertValidChild(tag.Children.Skip(0).First(), name: "PropIntList", display: "Option1", value: 1, isChecked: false);
+            CheckBoxListTagTest.AssertValidChild(tag.Children.Skip(1).First(), name: "PropIntList", display: "Option2", value: 2, isChecked: false);
+            CheckBoxListTagTest.AssertValidChild(tag.Children.Skip(2).First(), name: "PropIntList", display: "Option3", value: 3, isChecked: false);
+        }
+
+        [Fact]
+        public void CheckBoxListFor_Null_DefaultValue()
+        {
+            var model = new Model1() { PropIntList = null };
+            var helper = new HtmlTagHelper<Model1>(model);
+
+            var propExpression = Expr((Model1 m) => m.PropIntList);
+            var tag = helper.CheckBoxListFor(
+                propExpression,
+                OptionsList.CreateForEnum<Enum1>(),
+                defaultValues: Coll.Array(1, 2, 4));
+
+            Assert.Equal(3, tag.Children.Count());
+            CheckBoxListTagTest.AssertValidChild(tag.Children.Skip(0).First(), name: "PropIntList", display: "Option1", value: 1, isChecked: true);
+            CheckBoxListTagTest.AssertValidChild(tag.Children.Skip(1).First(), name: "PropIntList", display: "Option2", value: 2, isChecked: true);
+            CheckBoxListTagTest.AssertValidChild(tag.Children.Skip(2).First(), name: "PropIntList", display: "Option3", value: 3, isChecked: false);
+        }
+
+        [Fact]
+        public void CheckBoxListFor_NotNull_DefaultValue()
+        {
+            var model = new Model1() { PropIntList = Coll.Array(2, 3) };
+            var helper = new HtmlTagHelper<Model1>(model);
+
+            var propExpression = Expr((Model1 m) => m.PropIntList);
+            var tag = helper.CheckBoxListFor(
+                propExpression,
+                OptionsList.CreateForEnum<Enum1>(),
+                defaultValues: Coll.Array(1, 2, 4));
+
+            Assert.Equal(3, tag.Children.Count());
+            CheckBoxListTagTest.AssertValidChild(tag.Children.Skip(0).First(), name: "PropIntList", display: "Option1", value: 1, isChecked: false);
+            CheckBoxListTagTest.AssertValidChild(tag.Children.Skip(1).First(), name: "PropIntList", display: "Option2", value: 2, isChecked: true);
+            CheckBoxListTagTest.AssertValidChild(tag.Children.Skip(2).First(), name: "PropIntList", display: "Option3", value: 3, isChecked: true);
         }
     }
 }

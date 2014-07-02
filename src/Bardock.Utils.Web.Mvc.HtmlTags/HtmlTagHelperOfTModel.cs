@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
-using Bardock.Utils.Types;
 using Bardock.Utils.Web.Mvc.Helpers;
 using Bardock.Utils.Web.Mvc.HtmlTags.Extensions;
 using HtmlTags;
@@ -124,13 +124,16 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
         public virtual CheckBoxListTag CheckBoxListFor<TProp, TItem>(
             Expression<Func<TModel, TProp>> expression,
             OptionsList<TItem> options,
-            IEnumerable<object> defaultValues = null,
+            IEnumerable defaultValues = null,
             string cssClass = CheckBoxListTag.DEFAULT_CSS_CLASS)
         {
-            var values = (IEnumerable<object>)expression.Compile().Invoke(_htmlHelper.ViewData.Model);
-            if (options.IsSelected == null && values != null && values.Any())
-                options.IsSelected = x => values.Contains(options.Value(x));
-
+            var modelValue = expression.Compile().Invoke(_htmlHelper.ViewData.Model);
+            if (modelValue != null)
+            {
+                var values = ((IEnumerable)modelValue).Cast<object>();
+                if (options.IsSelected == null && values.Any())
+                    options.IsSelected = x => values.Contains(options.Value(x));
+            }
             return this.CheckBoxListFor(expression)
                 .AddOptions(options, defaultValues);
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -69,7 +70,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
 
         public virtual CheckBoxListTag AddOptions<TItem>(
             OptionsList<TItem> options,
-            IEnumerable<object> defaultValues = null)
+            IEnumerable defaultValues = null)
         {
             var anyIsChecked = false;
             foreach (var item in options.Items)
@@ -97,8 +98,8 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
             return this;
         }
 
-        public virtual CheckBoxListTag CheckValues<TValue>(
-            IEnumerable<TValue> values,
+        public virtual CheckBoxListTag CheckValues(
+            IEnumerable values,
             string format = null)
         {
             foreach (var value in values)
