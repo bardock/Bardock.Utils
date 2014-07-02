@@ -2,14 +2,12 @@
 using System.Linq;
 using Bardock.Utils.Collections;
 using Bardock.Utils.Globalization;
-using Bardock.Utils.Web.Mvc.HtmlTags;
 using Bardock.Utils.Web.Mvc.HtmlTags.Extensions;
-using HtmlTags;
 using Xunit;
 
-namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests.Extensions
+namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
 {
-    public class SelectTagExtensionsTest
+    public class SelectTagTest
     {
         [Fact]
         public void PrependOption_Empty()

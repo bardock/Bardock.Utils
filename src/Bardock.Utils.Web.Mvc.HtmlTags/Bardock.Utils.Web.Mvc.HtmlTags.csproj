@@ -73,9 +73,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SelectTag.cs" />
     <Compile Include="CheckBoxListTag.cs" />
     <Compile Include="Extensions\HtmlHelperExtensions.cs" />
-    <Compile Include="Extensions\SelectTagExtensions.cs" />
     <Compile Include="Extensions\HtmlTagExtensions.cs" />
     <Compile Include="HtmlTagHelperOfTModel.cs" />
     <Compile Include="OptionsList.cs" />
