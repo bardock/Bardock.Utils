@@ -51,7 +51,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
         public static void AssertValidChild(HtmlTag child, string name, string display, object value, bool isChecked = false)
         {
             Assert.Equal("label", child.TagName());
-            Assert.Equal(display, child.Text());
+            Assert.Equal(display, child.Children.Skip(1).First().Text());
 
             var input = child.FirstChild();
             Assert.Equal("input", input.TagName());

@@ -73,6 +73,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LabeledTag.cs" />
     <Compile Include="SelectTag.cs" />
     <Compile Include="CheckBoxListTag.cs" />
     <Compile Include="Extensions\HtmlHelperExtensions.cs" />

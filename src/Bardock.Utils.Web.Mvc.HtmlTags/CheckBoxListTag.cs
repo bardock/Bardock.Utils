@@ -24,18 +24,19 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
                 this.AddClass(cssClass);
         }
 
-        protected virtual HtmlTag BuildOption(
+        protected virtual LabeledTag BuildOption(
             string display, 
             object value, 
             bool isChecked = false,
-            Action<HtmlTag> configure = null)
+            Action<LabeledTag> configure = null)
         {
-            var option = new HtmlTag("input")
-                .Attr("name", this.Name)
-                .Type(InputType.CheckBox)
-                .Val(value)
-                .Checked(isChecked)
-                .Label(display);
+            var option = new LabeledTag(
+                display, 
+                innerTag: new HtmlTag("input")
+                    .Attr("name", this.Name)
+                    .Type(InputType.CheckBox)
+                    .Val(value)
+                    .Checked(isChecked));
 
             if (configure != null)
                 configure(option);
@@ -43,9 +44,14 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
             return option;
         }
 
+        public virtual IEnumerable<LabeledTag> Options
+        {
+            get { return this.Children.OfType<LabeledTag>(); }
+        }
+
         public virtual IEnumerable<HtmlTag> Inputs
         {
-            get { return this.Children.Select(label => label.FirstChild()); }
+            get { return this.Options.Select(label => label.InnerTag); }
         }
 
         public virtual CheckBoxListTag PrependOption(
@@ -62,7 +68,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
             string display,
             object value,
             bool isChecked = false,
-            Action<HtmlTag> configure = null)
+            Action<LabeledTag> configure = null)
         {
             var option = BuildOption(display, value, isChecked, configure);
             return (CheckBoxListTag)this.Append(option);

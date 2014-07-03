@@ -54,16 +54,16 @@ namespace Bardock.Utils.Web.Mvc.Extensions
             return helper.ViewContext.ViewData.Eval(name);
         }
 
-        public static TProp GetValueFor<TModel, TProp>(
+        public static object GetValueFor<TModel, TProp>(
             this HtmlHelper<TModel> helper,
             Expression<Func<TModel, TProp>> expression)
         {
             var attemptedValue = helper.GetAttemptedValueFor(expression);
             if (attemptedValue != null)
-                return (TProp)attemptedValue;
+                return attemptedValue;
 
             ModelMetadata metadata = ModelMetadata.FromLambdaExpression(expression, helper.ViewData);
-            return (TProp)metadata.Model;
+            return metadata.Model;
         }
 	}
 }

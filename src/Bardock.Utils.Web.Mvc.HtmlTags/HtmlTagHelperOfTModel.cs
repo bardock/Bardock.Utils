@@ -128,9 +128,10 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
             IEnumerable defaultValues = null,
             string cssClass = CheckBoxListTag.DEFAULT_CSS_CLASS)
         {
-            var values = _htmlHelper.GetValueFor(expression);
-            if (options.IsSelected == null && values != null && values.Any())
-                options.IsSelected = x => values.Cast<object>().Contains(options.Value(x));
+            var values = (IEnumerable)_htmlHelper.GetValueFor(expression);
+            if (options.IsSelected == null && values != null)
+                options.IsSelected = x => 
+                    values.Cast<object>().Any(value => ValueSerializer.Serialize(value) == ValueSerializer.Serialize(options.Value(x)));
 
             return this.CheckBoxListFor(expression, cssClass)
                 .AddOptions(options, defaultValues);
