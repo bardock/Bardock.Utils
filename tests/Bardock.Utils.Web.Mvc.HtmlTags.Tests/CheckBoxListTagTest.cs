@@ -17,7 +17,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
         {
             var tag = new CheckBoxListTag(DEFAULT_NAME, cssClass: "class1");
 
-            Assert.Equal(0, tag.Children.Count());
+            Assert.Equal(0, tag.Options.Count());
             Assert.True(tag.HasClass("class1"));
         }
 
@@ -26,7 +26,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
         {
             var tag = new CheckBoxListTag(DEFAULT_NAME);
 
-            Assert.Equal(0, tag.Children.Count());
+            Assert.Equal(0, tag.Options.Count());
             Assert.True(tag.HasClass(CheckBoxListTag.DEFAULT_CSS_CLASS));
         }
 
@@ -35,7 +35,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
         {
             var tag = new CheckBoxListTag(DEFAULT_NAME, cssClass: null);
 
-            Assert.Equal(0, tag.Children.Count());
+            Assert.Equal(0, tag.Options.Count());
             Assert.False(tag.HasClass(CheckBoxListTag.DEFAULT_CSS_CLASS));
         }
 
@@ -44,16 +44,18 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
         {
             var tag = new CheckBoxListTag(DEFAULT_NAME, cssClass: "");
 
-            Assert.Equal(0, tag.Children.Count());
+            Assert.Equal(0, tag.Options.Count());
             Assert.False(tag.HasClass(CheckBoxListTag.DEFAULT_CSS_CLASS));
         }
 
-        public static void AssertValidChild(HtmlTag child, string name, string display, object value, bool isChecked = false)
+        public static void AssertValidOption(LabeledTag option, string name, string display, object value, bool isChecked = false)
         {
-            Assert.Equal("label", child.TagName());
-            Assert.Equal(display, child.Children.Skip(1).First().Text());
+            Assert.Equal("label", option.TagName());
+            Assert.Equal(display, option.Children.Skip(1).First().Text());
+            Assert.Equal(display, option.Display);
 
-            var input = child.FirstChild();
+            var input = option.InnerTag;
+            Assert.Equal(option.FirstChild(), input);
             Assert.Equal("input", input.TagName());
             Assert.Equal("checkbox", input.Attr("type"));
             Assert.Equal(name, input.Attr("name"));
@@ -67,8 +69,8 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
             var tag = new CheckBoxListTag(DEFAULT_NAME)
                 .PrependOption("display0", 0);
 
-            Assert.Equal(1, tag.Children.Count());
-            AssertValidChild(tag.Children.First(), name: DEFAULT_NAME, display: "display0", value: 0);
+            Assert.Equal(1, tag.Options.Count());
+            AssertValidOption(tag.Options.First(), name: DEFAULT_NAME, display: "display0", value: 0);
         }
 
         [Fact]
@@ -78,9 +80,9 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
                 .AddOption("display1", 1)
                 .PrependOption("display0", 0);
 
-            Assert.Equal(2, tag.Children.Count());
-            AssertValidChild(tag.Children.Skip(0).First(), name: DEFAULT_NAME, display: "display0", value: 0);
-            AssertValidChild(tag.Children.Skip(1).First(), name: DEFAULT_NAME, display: "display1", value: 1);
+            Assert.Equal(2, tag.Options.Count());
+            AssertValidOption(tag.Options.Skip(0).First(), name: DEFAULT_NAME, display: "display0", value: 0);
+            AssertValidOption(tag.Options.Skip(1).First(), name: DEFAULT_NAME, display: "display1", value: 1);
         }
 
         [Fact]
@@ -89,8 +91,8 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
             var tag = new CheckBoxListTag(DEFAULT_NAME)
                 .AddOption("display0", 0);
 
-            Assert.Equal(1, tag.Children.Count());
-            AssertValidChild(tag.Children.Skip(0).First(), name: DEFAULT_NAME, display: "display0", value: 0);
+            Assert.Equal(1, tag.Options.Count());
+            AssertValidOption(tag.Options.Skip(0).First(), name: DEFAULT_NAME, display: "display0", value: 0);
         }
 
         [Fact]
@@ -100,9 +102,9 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
                 .AddOption("display0", 0)
                 .AddOption("display1", 1);
 
-            Assert.Equal(2, tag.Children.Count());
-            AssertValidChild(tag.Children.Skip(0).First(), name: DEFAULT_NAME, display: "display0", value: 0);
-            AssertValidChild(tag.Children.Skip(1).First(), name: DEFAULT_NAME, display: "display1", value: 1);
+            Assert.Equal(2, tag.Options.Count());
+            AssertValidOption(tag.Options.Skip(0).First(), name: DEFAULT_NAME, display: "display0", value: 0);
+            AssertValidOption(tag.Options.Skip(1).First(), name: DEFAULT_NAME, display: "display1", value: 1);
         }
 
         [Fact]
@@ -110,7 +112,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
         {
             var tag = new CheckBoxListTag(DEFAULT_NAME).CheckValue(1);
 
-            Assert.Equal(0, tag.Children.Count());
+            Assert.Equal(0, tag.Options.Count());
         }
 
         [Fact]
@@ -120,8 +122,8 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
                 .AddOption("display0", 0)
                 .CheckValue(1);
 
-            Assert.Equal(1, tag.Children.Count());
-            AssertValidChild(tag.Children.Skip(0).First(), name: DEFAULT_NAME, display: "display0", value: 0, isChecked: false);
+            Assert.Equal(1, tag.Options.Count());
+            AssertValidOption(tag.Options.Skip(0).First(), name: DEFAULT_NAME, display: "display0", value: 0, isChecked: false);
         }
 
         [Fact]
@@ -131,8 +133,8 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
                 .AddOption("display0", 0)
                 .CheckValue(0);
 
-            Assert.Equal(1, tag.Children.Count());
-            AssertValidChild(tag.Children.Skip(0).First(), name: DEFAULT_NAME, display: "display0", value: 0, isChecked: true);
+            Assert.Equal(1, tag.Options.Count());
+            AssertValidOption(tag.Options.Skip(0).First(), name: DEFAULT_NAME, display: "display0", value: 0, isChecked: true);
         }
 
         [Fact]
@@ -143,9 +145,9 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
                 .AddOption("display1", 1)
                 .CheckValue(0);
 
-            Assert.Equal(2, tag.Children.Count());
-            AssertValidChild(tag.Children.Skip(0).First(), name: DEFAULT_NAME, display: "display0", value: 0, isChecked: true);
-            AssertValidChild(tag.Children.Skip(1).First(), name: DEFAULT_NAME, display: "display1", value: 1, isChecked: false);
+            Assert.Equal(2, tag.Options.Count());
+            AssertValidOption(tag.Options.Skip(0).First(), name: DEFAULT_NAME, display: "display0", value: 0, isChecked: true);
+            AssertValidOption(tag.Options.Skip(1).First(), name: DEFAULT_NAME, display: "display1", value: 1, isChecked: false);
         }
 
         [Fact]
@@ -157,9 +159,9 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
                 .CheckValue(1)
                 .CheckValue(0);
 
-            Assert.Equal(2, tag.Children.Count());
-            AssertValidChild(tag.Children.Skip(0).First(), name: DEFAULT_NAME, display: "display0", value: 0, isChecked: true);
-            AssertValidChild(tag.Children.Skip(1).First(), name: DEFAULT_NAME, display: "display1", value: 1, isChecked: true);
+            Assert.Equal(2, tag.Options.Count());
+            AssertValidOption(tag.Options.Skip(0).First(), name: DEFAULT_NAME, display: "display0", value: 0, isChecked: true);
+            AssertValidOption(tag.Options.Skip(1).First(), name: DEFAULT_NAME, display: "display1", value: 1, isChecked: true);
         }
 
         [Fact]
@@ -171,9 +173,9 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
                 .CheckValue(0)
                 .CheckValue(0);
 
-            Assert.Equal(2, tag.Children.Count());
-            AssertValidChild(tag.Children.Skip(0).First(), name: DEFAULT_NAME, display: "display0", value: 0, isChecked: true);
-            AssertValidChild(tag.Children.Skip(1).First(), name: DEFAULT_NAME, display: "display1", value: 1, isChecked: false);
+            Assert.Equal(2, tag.Options.Count());
+            AssertValidOption(tag.Options.Skip(0).First(), name: DEFAULT_NAME, display: "display0", value: 0, isChecked: true);
+            AssertValidOption(tag.Options.Skip(1).First(), name: DEFAULT_NAME, display: "display1", value: 1, isChecked: false);
         }
 
         [Fact]
@@ -185,10 +187,10 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
                 .AddOption("display2", 2)
                 .CheckValues(1,2,3);
 
-            Assert.Equal(3, tag.Children.Count());
-            AssertValidChild(tag.Children.Skip(0).First(), name: DEFAULT_NAME, display: "display0", value: 0, isChecked: false);
-            AssertValidChild(tag.Children.Skip(1).First(), name: DEFAULT_NAME, display: "display1", value: 1, isChecked: true);
-            AssertValidChild(tag.Children.Skip(2).First(), name: DEFAULT_NAME, display: "display2", value: 2, isChecked: true);
+            Assert.Equal(3, tag.Options.Count());
+            AssertValidOption(tag.Options.Skip(0).First(), name: DEFAULT_NAME, display: "display0", value: 0, isChecked: false);
+            AssertValidOption(tag.Options.Skip(1).First(), name: DEFAULT_NAME, display: "display1", value: 1, isChecked: true);
+            AssertValidOption(tag.Options.Skip(2).First(), name: DEFAULT_NAME, display: "display2", value: 2, isChecked: true);
         }
 
         private class CustomItem
@@ -217,15 +219,15 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
                         isSelected: x => x.IsSelected,
                         configure: (x, op) => op.Data("customdata", x.Value)));
 
-            Assert.Equal(3, tag.Children.Count());
+            Assert.Equal(3, tag.Options.Count());
 
-            var firstChild = tag.Children.First();
-            var secondChild = tag.Children.Skip(1).First();
-            var thirdChild = tag.Children.Skip(2).First();
+            var firstChild = tag.Options.First();
+            var secondChild = tag.Options.Skip(1).First();
+            var thirdChild = tag.Options.Skip(2).First();
 
-            AssertValidChild(firstChild, name: DEFAULT_NAME, display: "display0", value: 0, isChecked: false);
-            AssertValidChild(secondChild, name: DEFAULT_NAME, display: "display1", value: 1, isChecked: true);
-            AssertValidChild(thirdChild, name: DEFAULT_NAME, display: "display2", value: 2, isChecked: false);
+            AssertValidOption(firstChild, name: DEFAULT_NAME, display: "display0", value: 0, isChecked: false);
+            AssertValidOption(secondChild, name: DEFAULT_NAME, display: "display1", value: 1, isChecked: true);
+            AssertValidOption(thirdChild, name: DEFAULT_NAME, display: "display2", value: 2, isChecked: false);
 
             Assert.Equal(0, firstChild.Data("customdata"));
             Assert.Equal(1, secondChild.Data("customdata"));
@@ -246,7 +248,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
                         isSelected: x => x.IsSelected,
                         configure: (x, op) => op.Data("customdata", x.Value)));
 
-            Assert.Equal(0, tag.Children.Count());
+            Assert.Equal(0, tag.Options.Count());
         }
 
         private enum Enum1
@@ -264,13 +266,13 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
                         isSelected: x => x.Value == 2,
                         configure: (x, op) => op.Data("customdata", x.Value)));
 
-            Assert.Equal(2, tag.Children.Count());
+            Assert.Equal(2, tag.Options.Count());
 
-            var firstChild = tag.Children.First();
-            var secondChild = tag.Children.Skip(1).First();
+            var firstChild = tag.Options.First();
+            var secondChild = tag.Options.Skip(1).First();
 
-            AssertValidChild(firstChild, name: DEFAULT_NAME, display: "Option1", value: 1, isChecked: false);
-            AssertValidChild(secondChild, name: DEFAULT_NAME, display: "Option2", value: 2, isChecked: true);
+            AssertValidOption(firstChild, name: DEFAULT_NAME, display: "Option1", value: 1, isChecked: false);
+            AssertValidOption(secondChild, name: DEFAULT_NAME, display: "Option2", value: 2, isChecked: true);
 
             Assert.Equal(1, firstChild.Data("customdata"));
             Assert.Equal(2, secondChild.Data("customdata"));
@@ -286,13 +288,13 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
                         display: x => x.Name + "-" + x.Value,
                         configure: (x, op) => op.Data("customdata", x.Value)));
 
-            Assert.Equal(2, tag.Children.Count());
+            Assert.Equal(2, tag.Options.Count());
 
-            var firstChild = tag.Children.First();
-            var secondChild = tag.Children.Skip(1).First();
+            var firstChild = tag.Options.First();
+            var secondChild = tag.Options.Skip(1).First();
 
-            AssertValidChild(firstChild, name: DEFAULT_NAME, display: "Option1-1", value: 1, isChecked: false);
-            AssertValidChild(secondChild, name: DEFAULT_NAME, display: "Option2-2", value: 2, isChecked: true);
+            AssertValidOption(firstChild, name: DEFAULT_NAME, display: "Option1-1", value: 1, isChecked: false);
+            AssertValidOption(secondChild, name: DEFAULT_NAME, display: "Option2-2", value: 2, isChecked: true);
 
             Assert.Equal(1, firstChild.Data("customdata"));
             Assert.Equal(2, secondChild.Data("customdata"));
@@ -317,13 +319,13 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
                             isSelected: x => x.Value == 2,
                             configure: (x, op) => op.Data("customdata", x.Value)));
 
-                Assert.Equal(2, tag.Children.Count());
+                Assert.Equal(2, tag.Options.Count());
 
-                var firstChild = tag.Children.First();
-                var secondChild = tag.Children.Skip(1).First();
+                var firstChild = tag.Options.First();
+                var secondChild = tag.Options.Skip(1).First();
 
-                AssertValidChild(firstChild, name: DEFAULT_NAME, display: "Option 1", value: 1, isChecked: false);
-                AssertValidChild(secondChild, name: DEFAULT_NAME, display: "Option2", value: 2, isChecked: true);
+                AssertValidOption(firstChild, name: DEFAULT_NAME, display: "Option 1", value: 1, isChecked: false);
+                AssertValidOption(secondChild, name: DEFAULT_NAME, display: "Option2", value: 2, isChecked: true);
 
                 Assert.Equal(1, firstChild.Data("customdata"));
                 Assert.Equal(2, secondChild.Data("customdata"));
@@ -343,13 +345,13 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
                         selectedValue: 2,
                         configure: (x, op) => op.Data("customdata", x.Value)));
 
-            Assert.Equal(2, tag.Children.Count());
+            Assert.Equal(2, tag.Options.Count());
 
-            var firstChild = tag.Children.First();
-            var secondChild = tag.Children.Skip(1).First();
+            var firstChild = tag.Options.First();
+            var secondChild = tag.Options.Skip(1).First();
 
-            AssertValidChild(firstChild, name: DEFAULT_NAME, display: "Option1", value: 1, isChecked: false);
-            AssertValidChild(secondChild, name: DEFAULT_NAME, display: "Option2", value: 2, isChecked: true);
+            AssertValidOption(firstChild, name: DEFAULT_NAME, display: "Option1", value: 1, isChecked: false);
+            AssertValidOption(secondChild, name: DEFAULT_NAME, display: "Option2", value: 2, isChecked: true);
 
             Assert.Equal(1, firstChild.Data("customdata"));
             Assert.Equal(2, secondChild.Data("customdata"));
@@ -364,13 +366,13 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
                         selectedValues: Coll.Array(2),
                         configure: (x, op) => op.Data("customdata", x.Value)));
 
-            Assert.Equal(2, tag.Children.Count());
+            Assert.Equal(2, tag.Options.Count());
 
-            var firstChild = tag.Children.First();
-            var secondChild = tag.Children.Skip(1).First();
+            var firstChild = tag.Options.First();
+            var secondChild = tag.Options.Skip(1).First();
 
-            AssertValidChild(firstChild, name: DEFAULT_NAME, display: "Option1", value: 1, isChecked: false);
-            AssertValidChild(secondChild, name: DEFAULT_NAME, display: "Option2", value: 2, isChecked: true);
+            AssertValidOption(firstChild, name: DEFAULT_NAME, display: "Option1", value: 1, isChecked: false);
+            AssertValidOption(secondChild, name: DEFAULT_NAME, display: "Option2", value: 2, isChecked: true);
 
             Assert.Equal(1, firstChild.Data("customdata"));
             Assert.Equal(2, secondChild.Data("customdata"));

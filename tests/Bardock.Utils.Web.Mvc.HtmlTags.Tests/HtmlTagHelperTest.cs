@@ -344,9 +344,9 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
                 OptionsList.CreateForEnum<Enum1>());
 
             Assert.Equal(3, tag.Children.Count());
-            CheckBoxListTagTest.AssertValidChild(tag.Children.Skip(0).First(), name: name, display: "Option1", value: 1, isChecked: false);
-            CheckBoxListTagTest.AssertValidChild(tag.Children.Skip(1).First(), name: name, display: "Option2", value: 2, isChecked: true);
-            CheckBoxListTagTest.AssertValidChild(tag.Children.Skip(2).First(), name: name, display: "Option3", value: 3, isChecked: true);
+            CheckBoxListTagTest.AssertValidOption(tag.Options.Skip(0).First(), name: name, display: "Option1", value: 1, isChecked: false);
+            CheckBoxListTagTest.AssertValidOption(tag.Options.Skip(1).First(), name: name, display: "Option2", value: 2, isChecked: true);
+            CheckBoxListTagTest.AssertValidOption(tag.Options.Skip(2).First(), name: name, display: "Option3", value: 3, isChecked: true);
         }
 
         [Fact]
@@ -361,9 +361,9 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
                 OptionsList.CreateForEnum<Enum1>());
 
             Assert.Equal(3, tag.Children.Count());
-            CheckBoxListTagTest.AssertValidChild(tag.Children.Skip(0).First(), name: name, display: "Option1", value: 1, isChecked: false);
-            CheckBoxListTagTest.AssertValidChild(tag.Children.Skip(1).First(), name: name, display: "Option2", value: 2, isChecked: false);
-            CheckBoxListTagTest.AssertValidChild(tag.Children.Skip(2).First(), name: name, display: "Option3", value: 3, isChecked: false);
+            CheckBoxListTagTest.AssertValidOption(tag.Options.Skip(0).First(), name: name, display: "Option1", value: 1, isChecked: false);
+            CheckBoxListTagTest.AssertValidOption(tag.Options.Skip(1).First(), name: name, display: "Option2", value: 2, isChecked: false);
+            CheckBoxListTagTest.AssertValidOption(tag.Options.Skip(2).First(), name: name, display: "Option3", value: 3, isChecked: false);
         }
 
         [Fact]
@@ -379,9 +379,9 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
                 defaultValues: Coll.Array(1, 2, 4));
 
             Assert.Equal(3, tag.Children.Count());
-            CheckBoxListTagTest.AssertValidChild(tag.Children.Skip(0).First(), name: name, display: "Option1", value: 1, isChecked: true);
-            CheckBoxListTagTest.AssertValidChild(tag.Children.Skip(1).First(), name: name, display: "Option2", value: 2, isChecked: true);
-            CheckBoxListTagTest.AssertValidChild(tag.Children.Skip(2).First(), name: name, display: "Option3", value: 3, isChecked: false);
+            CheckBoxListTagTest.AssertValidOption(tag.Options.Skip(0).First(), name: name, display: "Option1", value: 1, isChecked: true);
+            CheckBoxListTagTest.AssertValidOption(tag.Options.Skip(1).First(), name: name, display: "Option2", value: 2, isChecked: true);
+            CheckBoxListTagTest.AssertValidOption(tag.Options.Skip(2).First(), name: name, display: "Option3", value: 3, isChecked: false);
         }
 
         [Fact]
@@ -397,9 +397,9 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
                 defaultValues: Coll.Array(1, 2, 4));
 
             Assert.Equal(3, tag.Children.Count());
-            CheckBoxListTagTest.AssertValidChild(tag.Children.Skip(0).First(), name: name, display: "Option1", value: 1, isChecked: false);
-            CheckBoxListTagTest.AssertValidChild(tag.Children.Skip(1).First(), name: name, display: "Option2", value: 2, isChecked: true);
-            CheckBoxListTagTest.AssertValidChild(tag.Children.Skip(2).First(), name: name, display: "Option3", value: 3, isChecked: true);
+            CheckBoxListTagTest.AssertValidOption(tag.Options.Skip(0).First(), name: name, display: "Option1", value: 1, isChecked: false);
+            CheckBoxListTagTest.AssertValidOption(tag.Options.Skip(1).First(), name: name, display: "Option2", value: 2, isChecked: true);
+            CheckBoxListTagTest.AssertValidOption(tag.Options.Skip(2).First(), name: name, display: "Option3", value: 3, isChecked: true);
         }
     }
 }
