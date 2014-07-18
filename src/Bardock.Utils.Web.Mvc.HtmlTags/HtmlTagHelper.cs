@@ -65,6 +65,11 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
             return Input(InputType.Hidden, name);
         }
 
+        public virtual HtmlTag File(string name)
+        {
+            return Input("file", name);
+        }
+
         public virtual HtmlTag Radio(string name, bool isChecked = false)
         {
             return Input(InputType.Radio, name).Checked(isChecked);

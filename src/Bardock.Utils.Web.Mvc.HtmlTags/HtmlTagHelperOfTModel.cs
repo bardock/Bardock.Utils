@@ -79,6 +79,12 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
             return InputFor(expression, InputType.Hidden);
         }
 
+        public virtual HtmlTag FileFor<TProp>(
+            Expression<Func<TModel, TProp>> expression)
+        {
+            return InputFor(expression, "file").Val(null);
+        }
+
         public virtual HtmlTag RadioFor<TProp>(
             Expression<Func<TModel, TProp>> expression,
             bool isChecked = false)

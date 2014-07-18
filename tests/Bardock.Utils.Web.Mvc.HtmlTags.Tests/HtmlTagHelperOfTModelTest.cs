@@ -212,6 +212,18 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
         }
 
         [Fact]
+        public void FileFor_Value_Int()
+        {
+            var model = new Model1() { PropInt = 1 };
+            var helper = new HtmlTagHelper<Model1>(model);
+
+            var propExpression = Expr((Model1 m) => m.PropInt);
+            var tag = helper.FileFor(propExpression);
+
+            AssertValid(tag, "input", "PropInt", type: "file", value: null);
+        }
+
+        [Fact]
         public void RadioFor_Value_Int()
         {
             var model = new Model1() { PropInt = 1 };

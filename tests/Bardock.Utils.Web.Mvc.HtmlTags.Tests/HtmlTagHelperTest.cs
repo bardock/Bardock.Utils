@@ -168,6 +168,16 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
         }
 
         [Fact]
+        public void File()
+        {
+            var helper = new HtmlTagHelper();
+            var name = "name1";
+            var tag = helper.File(name);
+
+            AssertValid(tag, "input", name, "file");
+        }
+
+        [Fact]
         public void Radio()
         {
             var helper = new HtmlTagHelper();
