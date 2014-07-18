@@ -48,21 +48,27 @@ namespace Bardock.Utils.Extensions
 			var resultList = new List<List<TSource>>();
 			var currentList = new List<TSource>();
 
-			foreach (var x in source) {
-				if ((condition(x))) {
+			foreach (var x in source) 
+            {
+				if (condition(x)) 
+                {
 					// If item satisfies condition, ignore it and 
 					// add current list to results
-					if ((!clearEmpty || currentList.Count > 0)) {
+					if (!clearEmpty || currentList.Count > 0) 
+                    {
 						resultList.Add(currentList);
 					}
 					currentList = new List<TSource>();
-				} else {
+				} 
+                else 
+                {
 					// Otherwise, add item to current list
 					currentList.Add(x);
 				}
 			}
 
-			if ((!clearEmpty || currentList.Count > 0)) {
+			if (!clearEmpty || currentList.Count > 0) 
+            {
 				resultList.Add(currentList);
 			}
 

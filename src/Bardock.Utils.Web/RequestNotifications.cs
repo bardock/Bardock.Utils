@@ -21,9 +21,8 @@ namespace Bardock.Utils.Web
         {
 			get 
             {
-				if ((HttpContext.Current.Items[KEY] == null)) {
+				if (HttpContext.Current.Items[KEY] == null)
 					HttpContext.Current.Items[KEY] = new RequestNotifications();
-				}
 				return (RequestNotifications)HttpContext.Current.Items[KEY];
 			}
 		}

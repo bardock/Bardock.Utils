@@ -30,9 +30,8 @@ namespace Bardock.Utils.Web
             
 			bool.TryParse(ConfigurationManager.AppSettings["mvc:UseDefaultPortForRemoteRequests"], out useDefaultPort);
 
-			if ((!Request.IsLocal && useDefaultPort)) {
+			if (!Request.IsLocal && useDefaultPort)
 				port = string.Equals(Request.Url.Scheme, "http", StringComparison.InvariantCultureIgnoreCase) ? 80 : 443;
-			}
             
 			return port;
 		}

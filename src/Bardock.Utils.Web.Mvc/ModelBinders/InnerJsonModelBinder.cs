@@ -24,11 +24,11 @@ namespace Bardock.Utils.Web.Mvc.ModelBinders
 		public override object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
 		{
 			var ret = base.BindModel(controllerContext, bindingContext);
-			foreach (var fieldName in _fieldNames) {
+			foreach (var fieldName in _fieldNames) 
+            {
 				object val = bindingContext.ValueProvider.GetValue(fieldName);
-				if ((val == null)) {
+				if (val == null)
 					continue;
-				}
 				var json = bindingContext.ValueProvider.GetValue(fieldName).AttemptedValue;
 				var prop = ret.GetType().GetProperty(fieldName);
 				prop.GetSetMethod().Invoke(ret, new object[] { JsonConvert.DeserializeObject(json, prop.PropertyType) });

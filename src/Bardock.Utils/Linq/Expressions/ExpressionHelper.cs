@@ -16,9 +16,12 @@ namespace Bardock.Utils.Linq.Expressions
         /// </summary>
 		public static string GetMemberName<T>(Expression<System.Func<T, object>> expression)
 		{
-			if (expression.Body is MemberExpression) {
+			if (expression.Body is MemberExpression) 
+            {
 				return ((MemberExpression)expression.Body).Member.Name;
-			} else {
+			} 
+            else 
+            {
 				var op = (((UnaryExpression)expression.Body).Operand);
 				return ((MemberExpression)op).Member.Name;
 			}

@@ -27,19 +27,25 @@ namespace Bardock.Utils.Web.Mvc.Extensions
         
         public static string Api(this UrlHelper helper, string controllerName, string action = null, object values = null)
 		{
-			RouteValueDictionary routeValues = new RouteValueDictionary {
+			RouteValueDictionary routeValues = new RouteValueDictionary 
+            {
 				{ "httproute", "" },
                 { "controller", controllerName }
 			};
-			if (values != null) {
-				foreach (var prop in values.GetType().GetProperties()) {
+			if (values != null) 
+            {
+				foreach (var prop in values.GetType().GetProperties()) 
+                {
 					routeValues.Add(prop.Name, prop.GetValue(values));
 				}
 			}
-			if ((action != null)) {
+			if (action != null) 
+            {
 				routeValues.Add("action", action);
 				return helper.RouteUrl("DefaultApiAction", routeValues);
-			} else {
+			} 
+            else 
+            {
 				return helper.RouteUrl("DefaultApi", routeValues);
 			}
 		}

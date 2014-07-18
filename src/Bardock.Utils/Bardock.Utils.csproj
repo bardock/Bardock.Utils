@@ -57,7 +57,6 @@
     <Compile Include="Linq\Expressions\ExpressionHelper.cs" />
     <Compile Include="Extensions\DateExtensions.cs" />
     <Compile Include="Extensions\DecimalFormatExtensions.cs" />
-    <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Extensions\NullableExtensions.cs" />
     <Compile Include="Extensions\NumberBaseExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />

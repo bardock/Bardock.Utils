@@ -10,17 +10,16 @@ namespace Bardock.Utils.Logger.Extensions
 			try {
 				object ret = f();
 
-				if ((logSuccess)) {
+				if (logSuccess) 
 					log.Info(ret);
-				}
 
-			} catch (Exception ex) {
+			} 
+            catch (Exception ex) 
+            {
 				log.Error(ex);
 
-				if ((!ignoreError)) {
+				if (!ignoreError) 
 					throw ex;
-				}
-
 			}
 		}
 
