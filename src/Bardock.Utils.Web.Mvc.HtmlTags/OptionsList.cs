@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -32,7 +33,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
                 items,
                 display: display,
                 value: value,
-                isSelected: x => value(x) == selectedValue,
+                isSelected: x => value(x) == null && selectedValue == null || value(x) != null && value(x).Equals(selectedValue),
                 configure: configure);
         }
 
@@ -40,14 +41,14 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
             IEnumerable<TItem> items,
             Func<TItem, string> display,
             Func<TItem, object> value,
-            IEnumerable<object> selectedValues,
+            IEnumerable selectedValues,
             Expression<Action<TItem, HtmlTag>> configure = null)
         {
             return Create(
                 items,
                 display: display,
                 value: value,
-                isSelected: x => selectedValues.Contains(value(x)),
+                isSelected: x => selectedValues != null && selectedValues.Cast<object>().Contains(value(x)),
                 configure: configure);
         }
 
@@ -93,7 +94,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
             Expression<Action<EnumOption<TEnum, int>, HtmlTag>> configure = null) where TEnum : struct, IConvertible
         {
             return CreateForEnum<TEnum>(
-                isSelected: x => selectedValues.Contains(x.Value),
+                isSelected: x => selectedValues != null && selectedValues.Contains(x.Value),
                 display: display,
                 configure: configure);
         }
