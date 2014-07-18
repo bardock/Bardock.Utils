@@ -6,6 +6,7 @@ using System.Linq.Expressions;
 using System.Web.Mvc;
 using Bardock.Utils.Globalization;
 using Bardock.Utils.Types;
+using Bardock.Utils.Extensions;
 using HtmlTags;
 
 namespace Bardock.Utils.Web.Mvc.HtmlTags
@@ -100,7 +101,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
         }
     }
 
-    public class OptionsList<TItem>
+    public class OptionsList<TItem> : IEnumerable<OptionItem>
     {
         public IEnumerable<TItem> Items { get; set; }
         public Func<TItem, string> Display { get; set; }
@@ -115,11 +116,45 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
             Func<TItem, bool> isSelected = null,
             Expression<Action<TItem, HtmlTag>> configure = null)
         {
+            if (items == null)
+                throw new ArgumentException("items cannot be null");
+            if (display == null)
+                throw new ArgumentException("display cannot be null");
+            if (value == null)
+                throw new ArgumentException("value cannot be null");
+
             this.Items = items;
             this.Display = display;
             this.Value = value;
             this.IsSelected = isSelected;
             this.Configure = configure;
         }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
+
+        public IEnumerator<OptionItem> GetEnumerator()
+        {
+            foreach (var item in this.Items)
+            {
+                yield return new OptionItem() 
+                {
+                    Display = this.Display(item),
+                    Value = this.Value(item),
+                    IsSelected = this.IsSelected == null ? false : this.IsSelected(item),
+                    Configure = this.Configure == null ? null : this.Configure.PartialApply(item).Compile(),
+                };
+            }
+        }
+    }
+
+    public class OptionItem
+    {
+        public string Display { get; set; }
+        public object Value { get; set; }
+        public bool IsSelected { get; set; }
+        public Action<HtmlTag> Configure { get; set; }
     }
 }

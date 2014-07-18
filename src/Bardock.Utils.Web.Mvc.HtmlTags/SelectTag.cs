@@ -51,15 +51,12 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
             object defaultValue = null)
         {
             object selectedVal = null;
-            foreach (var item in options.Items)
+            foreach (var item in options)
             {
-                var val = options.Value(item);
-                var configure = options.Configure == null ? null : options.Configure.PartialApply(item).Compile();
+                this.AddOption(item.Display, item.Value, item.Configure);
 
-                this.AddOption(options.Display(item), val, configure);
-
-                if (options.IsSelected != null && options.IsSelected(item))
-                    selectedVal = val;
+                if (options.IsSelected != null && item.IsSelected)
+                    selectedVal = item.Value;
             }
             if (selectedVal == null)
                 selectedVal = defaultValue;

@@ -26,9 +26,10 @@ namespace Bardock.Utils.Web.Mvc.Extensions
         public static HtmlHelper<TInnerModel> ToInnerModel<TModel, TInnerModel>(this HtmlHelper<TModel> htmlHelper, Func<TModel, TInnerModel> modelExpression)
 		{
 			var model = htmlHelper.ViewDataContainer.ViewData.Model;
-			if ((model == null)) {
-				model = Activator.CreateInstance<TModel>();
-			}
+            if (model == null)
+            {
+                model = Activator.CreateInstance<TModel>();
+            }
 			var innerModel = modelExpression.Invoke((TModel)model);
 			return htmlHelper.ToModel<TInnerModel>(innerModel);
 		}
@@ -42,12 +43,16 @@ namespace Bardock.Utils.Web.Mvc.Extensions
 
 			public CustomViewDataContainer(ViewDataDictionary initialData, TModel model = default(TModel), bool defaultModel = false)
 			{
-				if ((defaultModel)) {
+				if (defaultModel) 
+                {
 					ViewData = new ViewDataDictionary(Activator.CreateInstance<TModel>());
-				} else {
+				} 
+                else 
+                {
 					ViewData = new ViewDataDictionary(model);
 				}
-				foreach (var item in initialData) {
+				foreach (var item in initialData) 
+                {
 					ViewData.Add(item);
 				}
 			}

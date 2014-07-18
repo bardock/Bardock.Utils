@@ -79,14 +79,10 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
             IEnumerable defaultValues = null)
         {
             var anyIsChecked = false;
-            foreach (var item in options.Items)
+            foreach (var item in options)
             {
-                var val = options.Value(item);
-                var configure = options.Configure == null ? null : options.Configure.PartialApply(item).Compile();
-                var isChecked = (options.IsSelected != null && options.IsSelected(item));
-                anyIsChecked = anyIsChecked || isChecked;
-
-                this.AddOption(options.Display(item), val, isChecked, configure);
+                anyIsChecked = anyIsChecked || item.IsSelected;
+                this.AddOption(item.Display, item.Value, item.IsSelected, item.Configure);
             }
             if (!anyIsChecked && defaultValues != null)
                 this.CheckValues(defaultValues);

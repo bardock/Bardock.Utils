@@ -39,7 +39,8 @@ namespace Bardock.Utils.Web.Mvc
 		public string RenderViewToString(string viewName, object model)
 		{
 			ViewData.Model = model;
-			using (var sw = new StringWriter()) {
+			using (var sw = new StringWriter()) 
+            {
 				var viewResult = ViewEngines.Engines.FindPartialView(ControllerContext, viewName);
 				var viewContext = new ViewContext(ControllerContext, viewResult.View, ViewData, TempData, sw);
 				viewResult.View.Render(viewContext, sw);
