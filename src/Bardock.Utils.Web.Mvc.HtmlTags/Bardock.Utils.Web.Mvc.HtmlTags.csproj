@@ -85,6 +85,8 @@
     <Compile Include="ValueSerializer.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Bardock.Utils.Web.Mvc.HtmlTags.nuspec" />
+    <None Include="Bardock.Utils.Web.Mvc.HtmlTags.pub.bat" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
