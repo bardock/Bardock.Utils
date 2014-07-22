@@ -109,12 +109,15 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
         public Func<TItem, bool> IsSelected { get; set; }
         public Expression<Action<TItem, HtmlTag>> Configure { get; set; }
 
+        protected Func<TItem, object> _groupedBy;
+
         public OptionsList(
             IEnumerable<TItem> items,
             Func<TItem, string> display,
             Func<TItem, object> value,
             Func<TItem, bool> isSelected = null,
-            Expression<Action<TItem, HtmlTag>> configure = null)
+            Expression<Action<TItem, HtmlTag>> configure = null,
+            Func<TItem, object> groupedBy = null)
         {
             if (items == null)
                 throw new ArgumentException("items cannot be null");
@@ -128,6 +131,18 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
             this.Value = value;
             this.IsSelected = isSelected;
             this.Configure = configure;
+            this.GroupedBy(groupedBy);
+        }
+
+        public Func<TItem, object> GroupedBy()
+        {
+            return this._groupedBy;
+        }
+
+        public OptionsList<TItem> GroupedBy(Func<TItem, object> value)
+        {
+            this._groupedBy = value;
+            return this;
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -145,6 +160,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
                     Value = this.Value(item),
                     IsSelected = this.IsSelected == null ? false : this.IsSelected(item),
                     Configure = this.Configure == null ? null : this.Configure.PartialApply(item).Compile(),
+                    GroupBy = this.GroupedBy() == null ? null : this.GroupedBy()(item),
                 };
             }
         }
@@ -156,5 +172,6 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
         public object Value { get; set; }
         public bool IsSelected { get; set; }
         public Action<HtmlTag> Configure { get; set; }
+        public object GroupBy { get; set; }
     }
 }
