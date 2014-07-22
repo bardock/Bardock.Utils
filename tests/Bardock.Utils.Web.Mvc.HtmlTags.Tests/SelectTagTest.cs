@@ -200,9 +200,9 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
                     OptionsList.Create(
                         items, 
                         display: x => x.Display, 
-                        value: x => x.Value, 
-                        isSelected: x => x.IsSelected,
-                        configure: (x, op) => op.Data("customdata", x.Value)));
+                        value: x => x.Value)
+                        .IsSelected(x => x.IsSelected)
+                        .Configure((x, op) => op.Data("customdata", x.Value)));
 
             Assert.Equal(3, tag.Children.Count());
 
@@ -234,9 +234,9 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
                     OptionsList.Create(
                         items,
                         display: x => x.Display,
-                        value: x => x.Value,
-                        isSelected: x => x.IsSelected,
-                        configure: (x, op) => op.Data("customdata", x.Value)));
+                        value: x => x.Value)
+                        .IsSelected(x => x.IsSelected)
+                        .Configure((x, op) => op.Data("customdata", x.Value)));
 
             Assert.Equal(0, tag.Children.Count());
         }
@@ -252,9 +252,9 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
         {
             var tag = new SelectTag()
                 .AddOptions(
-                    OptionsList.CreateForEnum<Enum1>(
-                        isSelected: x => x.Value == 2,
-                        configure: (x, op) => op.Data("customdata", x.Value)));
+                    OptionsList.CreateForEnum<Enum1>()
+                        .SelectedValue(2)
+                        .Configure((x, op) => op.Data("customdata", x.Value)));
 
             Assert.Equal(2, tag.Children.Count());
 
@@ -276,10 +276,9 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
         {
             var tag = new SelectTag()
                 .AddOptions(
-                    OptionsList.CreateForEnum<Enum1>(
-                        isSelected: x => x.Value == 2,
-                        display: x => x.Name + "-" + x.Value,
-                        configure: (x, op) => op.Data("customdata", x.Value)));
+                    OptionsList.CreateForEnum<Enum1>(display: x => x.Name + "-" + x.Value)
+                        .SelectedValue(2)
+                        .Configure((x, op) => op.Data("customdata", x.Value)));
 
             Assert.Equal(2, tag.Children.Count());
 
@@ -311,9 +310,9 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
 
                 var tag = new SelectTag()
                     .AddOptions(
-                        OptionsList.CreateForEnum<Enum1>(
-                            isSelected: x => x.Value == 2,
-                            configure: (x, op) => op.Data("customdata", x.Value)));
+                        OptionsList.CreateForEnum<Enum1>()
+                        .SelectedValue(2)
+                        .Configure((x, op) => op.Data("customdata", x.Value)));
 
                 Assert.Equal(2, tag.Children.Count());
 
@@ -340,9 +339,9 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
         {
             var tag = new SelectTag()
                 .AddOptions(
-                    OptionsList.CreateForEnum<Enum1>(
-                        selectedValue: 2,
-                        configure: (x, op) => op.Data("customdata", x.Value)));
+                    OptionsList.CreateForEnum<Enum1>()
+                        .SelectedValue(2)
+                        .Configure((x, op) => op.Data("customdata", x.Value)));
 
             Assert.Equal(2, tag.Children.Count());
 
@@ -364,9 +363,9 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
         {
             var tag = new SelectTag()
                 .AddOptions(
-                    OptionsList.CreateForEnum<Enum1>(
-                        selectedValues: Coll.Array(2),
-                        configure: (x, op) => op.Data("customdata", x.Value)));
+                    OptionsList.CreateForEnum<Enum1>()
+                        .SelectedValues(Coll.Array(2))
+                        .Configure((x, op) => op.Data("customdata", x.Value)));
 
             Assert.Equal(2, tag.Children.Count());
 

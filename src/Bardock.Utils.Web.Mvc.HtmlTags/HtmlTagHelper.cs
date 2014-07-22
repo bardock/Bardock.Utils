@@ -93,8 +93,8 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
             object defaultValue = null)
         {
             var value = _htmlHelper.GetValueFor(name);
-            if (options.IsSelected == null && value != null)
-                options.IsSelected = x => value.Equals(options.Value(x));
+            if (options.IsSelected() == null && value != null)
+                options.SelectedValue(value);
 
             return this.Select(name)
                 .AddOptions(options, defaultValue);
@@ -112,8 +112,8 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
             string cssClass = CheckBoxListTag.DEFAULT_CSS_CLASS)
         {
             var values = (IEnumerable)_htmlHelper.GetValueFor(name);
-            if (options.IsSelected == null && values != null)
-                options.IsSelected = x => values.Cast<object>().Contains(options.Value(x));
+            if (options.IsSelected() == null && values != null)
+                options.SelectedValues(values);
 
             return this.CheckBoxList(name, cssClass)
                 .AddOptions(options, defaultValues);

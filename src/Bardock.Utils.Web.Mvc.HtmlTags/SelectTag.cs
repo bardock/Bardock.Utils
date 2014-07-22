@@ -111,7 +111,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
             {
                 this.AddOption(item.Display, item.Value, item.Configure, item.GroupBy);
 
-                if (options.IsSelected != null && item.IsSelected)
+                if (options.IsSelected() != null && item.IsSelected)
                     selectedVal = item.Value;
             }
             if (selectedVal == null)

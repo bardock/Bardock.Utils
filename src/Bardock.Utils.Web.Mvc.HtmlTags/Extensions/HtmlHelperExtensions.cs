@@ -24,20 +24,16 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Extensions
         {
             return new HtmlTagHelper<TModel>(helper);
         }
-
-
+        
         public static OptionsList<EnumOption<TEnum, int>> GetOptionsListFor<TModel, TEnum>(
             this HtmlHelper<TModel> helper,
             Expression<System.Func<TModel, TEnum[]>> nameExpression,
-            Func<EnumOption<TEnum, int>, string> display = null,
-            Expression<Action<EnumOption<TEnum, int>, HtmlTag>> configure = null) where TEnum : struct, IConvertible
+            Func<EnumOption<TEnum, int>, string> display = null) where TEnum : struct, IConvertible
         {
             var selectedValues = nameExpression.Compile().Invoke(helper.ViewData.Model);
             var selectedValuesInt = selectedValues == null ? null : selectedValues.Cast<int>();
-            return OptionsList.CreateForEnum<TEnum>(
-                selectedValues: selectedValuesInt,
-                display: display,
-                configure: configure);
+            return OptionsList.CreateForEnum<TEnum>(display: display)
+                .SelectedValues(selectedValuesInt);
         }
     }
 }
