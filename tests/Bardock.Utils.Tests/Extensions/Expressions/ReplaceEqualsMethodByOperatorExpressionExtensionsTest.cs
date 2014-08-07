@@ -17,6 +17,14 @@ namespace Bardock.Utils.Tests.Extensions
         }
 
         [Fact]
+        public void ReplaceEqualsMethodByOperator_Right_Constant_2Params()
+        {
+            Expression<Func<string, int, bool>> exp = ((x, y) => new DateTime(2000, 1, 1).Year.Equals(2000) || y == 1);
+            var r = exp.ReplaceEqualsMethodByOperator();
+            Assert.Equal("(x, y) => ((new DateTime(2000, 1, 1).Year == 2000) OrElse (y == 1))", r.ToString());
+        }
+
+        [Fact]
         public void ReplaceEqualsMethodByOperator_Right_Variable()
         {
             var rightValue = 2000;

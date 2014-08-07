@@ -6,7 +6,7 @@ using System.Reflection;
 namespace Bardock.Utils.Extensions
 {
     /// <summary>
-    /// Replaces System.Object.Equals methods by '==' operator
+    /// Replaces Equals methods by '==' operator
     /// </summary>
     public class ReplaceEqualsMethodByOperatorExpressionVisitor : ExpressionVisitor
     {
@@ -29,6 +29,28 @@ namespace Bardock.Utils.Extensions
             this Expression<Func<A1, R>> expr)
         {
             return Expression.Lambda<Func<A1, R>>(
+                new ReplaceEqualsMethodByOperatorExpressionVisitor().Visit(expr.Body),
+                expr.Parameters);
+        }
+
+        /// <summary>
+        /// Replaces Equals methods by '==' operator
+        /// </summary>
+        public static Expression<Func<A1, A2, R>> ReplaceEqualsMethodByOperator<A1, A2, R>(
+            this Expression<Func<A1, A2, R>> expr)
+        {
+            return Expression.Lambda<Func<A1, A2, R>>(
+                new ReplaceEqualsMethodByOperatorExpressionVisitor().Visit(expr.Body),
+                expr.Parameters);
+        }
+
+        /// <summary>
+        /// Replaces Equals methods by '==' operator
+        /// </summary>
+        public static Expression<Func<A1, A2, A3, R>> ReplaceEqualsMethodByOperator<A1, A2, A3, R>(
+            this Expression<Func<A1, A2, A3, R>> expr)
+        {
+            return Expression.Lambda<Func<A1, A2, A3, R>>(
                 new ReplaceEqualsMethodByOperatorExpressionVisitor().Visit(expr.Body),
                 expr.Parameters);
         }

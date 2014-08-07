@@ -16,6 +16,14 @@ namespace Bardock.Utils.Tests.Extensions
         }
 
         [Fact]
+        public void ReduceConstants_AllConstants_2Params()
+        {
+            Expression<Func<string, int, bool>> exp = ((x, y) => new DateTime(2000, 1, 1).Year == 2000);
+            var r = exp.ReduceConstants();
+            Assert.Equal("(x, y) => True", r.ToString());
+        }
+
+        [Fact]
         public void ReduceConstants_WithVariable()
         {
             Expression<Func<string, bool>> exp = (x => new DateTime(2000, 1, 1).Year == 2000 || x == "asd");
