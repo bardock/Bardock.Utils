@@ -39,6 +39,7 @@
     <Compile Include="Collections\Coll.cs" />
     <Compile Include="DataAnnotations\EmailAttribute.cs" />
     <Compile Include="Extensions\ByteExtensions.cs" />
+    <Compile Include="Extensions\Expressions\ConstantExpressionExtensions.cs" />
     <Compile Include="Extensions\Expressions\ReplaceEqualsMethodByOperatorExpressionExtensions.cs" />
     <Compile Include="Extensions\Expressions\ReduceConstantsExpressionExtensions.cs" />
     <Compile Include="Extensions\Expressions\PartialApplyExpressionExtensions.cs" />
