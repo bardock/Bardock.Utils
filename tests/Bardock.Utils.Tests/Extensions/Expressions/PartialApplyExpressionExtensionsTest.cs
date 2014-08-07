@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Bardock.Utils.Tests.Extensions
 {
-    public class ExpressionExtensionsTest
+    public class PartialApplyExpressionExtensionsTest
     {
         [Fact]
         public void PartialApply_Func_1Args()
