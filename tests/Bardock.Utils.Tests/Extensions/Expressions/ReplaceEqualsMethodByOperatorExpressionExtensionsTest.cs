@@ -8,6 +8,20 @@ namespace Bardock.Utils.Tests.Extensions
 {
     public class ReplaceEqualsMethodByOperatorExpressionExtensionsTest
     {
+        private Expression<Func<T, bool>> GetGenericExpr<T>()
+        {
+            var val = default(T);
+            return x => x.Equals(val);
+        }
+
+        [Fact]
+        public void ReplaceEqualsMethodByOperator_Generic()
+        {
+            var exp = GetGenericExpr<DateTime>();
+            var r = exp.ReplaceEqualsMethodByOperator();
+            Assert.Equal("x => (x == val)", SerializeExpression(r));
+        }
+
         [Fact]
         public void ReplaceEqualsMethodByOperator_Right_Constant()
         {

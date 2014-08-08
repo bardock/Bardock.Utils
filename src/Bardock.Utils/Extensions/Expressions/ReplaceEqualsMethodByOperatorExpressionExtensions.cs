@@ -14,7 +14,9 @@ namespace Bardock.Utils.Extensions
         {
             if (node.Method.Name == "Equals" && node.Method.GetParameters().Count() == 1)
             {
-                return Expression.Equal(node.Object, node.Arguments.First());
+                var left = node.Object;
+                var right = node.Arguments.First().RemoveConvert();
+                return Expression.Equal(left, right);
             }
             return base.VisitMethodCall(node);
         }
