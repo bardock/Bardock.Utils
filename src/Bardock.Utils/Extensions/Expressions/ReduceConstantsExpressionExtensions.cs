@@ -16,7 +16,7 @@ namespace Bardock.Utils.Extensions
             try
             {
                 var value = Expression.Lambda(node, null).Compile().DynamicInvoke();
-                return Expression.Constant(value);
+                return Expression.Constant(value, node.Type);
             }
             catch (Exception)
             {

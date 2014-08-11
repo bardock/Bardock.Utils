@@ -26,7 +26,7 @@ namespace Bardock.Utils.Extensions
         {
             if (node.Equals(this._paramToApply))
             {
-                return Expression.Constant(_arg1);
+                return Expression.Constant(_arg1, node.Type);
             }
             return base.VisitParameter(node);
         }
