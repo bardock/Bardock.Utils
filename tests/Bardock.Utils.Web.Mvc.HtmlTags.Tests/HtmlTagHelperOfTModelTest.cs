@@ -268,22 +268,36 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
             var helper = new HtmlTagHelper<Model1>(model);
 
             var propExpression = Expr((Model1 m) => m.PropInt);
-            var tag = helper.CheckBoxFor(propExpression);
+            var tag = helper.CheckBoxFor(propExpression, isChecked: false);
 
             AssertValid(tag, "input", "PropInt", type: "checkbox", value: model.PropInt);
+            Assert.False(tag.Checked());
+        }
+
+        [Fact]
+        public void CheckBoxFor_Value_Int_Checked()
+        {
+            var model = new Model1() { PropInt = 1 };
+            var helper = new HtmlTagHelper<Model1>(model);
+
+            var propExpression = Expr((Model1 m) => m.PropInt);
+            var tag = helper.CheckBoxFor(propExpression, isChecked: true);
+
+            AssertValid(tag, "input", "PropInt", type: "checkbox", value: model.PropInt);
+            Assert.True(tag.Checked());
         }
 
         [Fact]
         public void CheckBoxFor_Value_Bool()
         {
-            var model = new Model1() { PropBool = true };
+            var model = new Model1() { PropBool = false };
             var helper = new HtmlTagHelper<Model1>(model);
 
             var propExpression = Expr((Model1 m) => m.PropBool);
             var tag = helper.CheckBoxFor(propExpression);
 
-            AssertValid(tag, "input", "PropBool", type: "checkbox", value: model.PropBool);
-            Assert.False(tag.Checked());
+            AssertValid(tag, "input", "PropBool", type: "checkbox", value: "true");
+            Assert.Equal(tag.Checked(), model.PropBool);
         }
 
         [Fact]
@@ -293,10 +307,10 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
             var helper = new HtmlTagHelper<Model1>(model);
 
             var propExpression = Expr((Model1 m) => m.PropBool);
-            var tag = helper.CheckBoxFor(propExpression, isChecked: true);
+            var tag = helper.CheckBoxFor(propExpression);
 
-            AssertValid(tag, "input", "PropBool", type: "checkbox", value: model.PropBool);
-            Assert.True(tag.Checked());
+            AssertValid(tag, "input", "PropBool", type: "checkbox", value: "true");
+            Assert.Equal(tag.Checked(), model.PropBool);
         }
 
         private enum Enum1

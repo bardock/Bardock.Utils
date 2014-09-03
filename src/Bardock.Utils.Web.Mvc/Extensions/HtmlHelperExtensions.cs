@@ -6,6 +6,15 @@ namespace Bardock.Utils.Web.Mvc.Extensions
 {
 	public static class HtmlHelperExtensions
     {
+        public static TProp GetModelValueFor<TModel, TProp>(
+            this HtmlHelper<TModel> helper,
+            Expression<Func<TModel, TProp>> expression)
+        {
+            if (helper.ViewData.Model == null)
+                return default(TProp);
+            return expression.Compile().Invoke(helper.ViewData.Model);
+        }
+
         public static object GetModelStateRawValue(this HtmlHelper helper, string key)
         {
             ModelState modelState;

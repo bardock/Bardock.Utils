@@ -99,6 +99,27 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
             return InputFor(expression, InputType.CheckBox).Checked(isChecked);
         }
 
+        protected virtual HtmlTag CheckBoxBoolFor<TProp>(
+            Expression<Func<TModel, TProp>> expression,
+            bool isChecked = false)
+        {
+            return CheckBoxFor(expression, isChecked: isChecked).Val("true");
+        }
+
+        public virtual HtmlTag CheckBoxFor(
+            Expression<Func<TModel, bool>> expression)
+        {
+            var isChecked = this._htmlHelper.GetModelValueFor(expression);
+            return CheckBoxBoolFor(expression, isChecked: isChecked);
+        }
+
+        public virtual HtmlTag CheckBoxFor(
+            Expression<Func<TModel, bool?>> expression)
+        {
+            var isChecked = this._htmlHelper.GetModelValueFor(expression) ?? false;
+            return CheckBoxBoolFor(expression, isChecked: isChecked);
+        }
+
         public virtual SelectTag SelectFor<TProp>(
             Expression<Func<TModel, TProp>> expression)
         {
