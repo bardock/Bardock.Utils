@@ -111,7 +111,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
             IEnumerable defaultValues = null,
             string cssClass = CheckBoxListTag.DEFAULT_CSS_CLASS)
         {
-            var values = (IEnumerable)_htmlHelper.GetValueFor(name);
+            var values = (IEnumerable)_htmlHelper.GetValueFor(name, typeof(IEnumerable));
             if (options.IsSelected() == null && values != null)
                 options.SelectedValues(values);
 

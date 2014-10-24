@@ -15,23 +15,26 @@ namespace Bardock.Utils.Web.Mvc.Extensions
             return expression.Compile().Invoke(helper.ViewData.Model);
         }
 
-        public static object GetModelStateRawValue(this HtmlHelper helper, string key)
+        public static object GetModelStateRawValue(this HtmlHelper helper, string key, Type destinationType = null)
         {
             ModelState modelState;
             if (helper.ViewContext.ViewData.ModelState.TryGetValue(key, out modelState))
             {
                 if (modelState.Value != null)
                 {
-                    return modelState.Value.RawValue;
+                    if (destinationType != null)
+                        return modelState.Value.ConvertTo(destinationType, culture: null);
+                    else
+                        return modelState.Value.AttemptedValue;
                 }
             }
             return null;
         }
 
-        internal static object GetAttemptedValueFor(this HtmlHelper helper, string name)
+        internal static object GetAttemptedValueFor(this HtmlHelper helper, string name, Type destinationType = null)
         {
             string fullName = helper.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldName(name);
-            return helper.GetModelStateRawValue(fullName);
+            return helper.GetModelStateRawValue(fullName, destinationType);
         }
 
         internal static object GetAttemptedValueFor<TModel, TProp>(
@@ -39,7 +42,7 @@ namespace Bardock.Utils.Web.Mvc.Extensions
             Expression<Func<TModel, TProp>> expression)
         {
             var name = ExpressionHelper.GetExpressionText(expression);
-            return helper.GetAttemptedValueFor(name);
+            return helper.GetAttemptedValueFor(name, expression.ReturnType);
         }
 
         public static object GetValueForModel(this HtmlHelper helper)
@@ -47,9 +50,9 @@ namespace Bardock.Utils.Web.Mvc.Extensions
             return helper.GetValueFor(string.Empty);
         }
 
-        public static object GetValueFor(this HtmlHelper helper, string name)
+        public static object GetValueFor(this HtmlHelper helper, string name, Type destinationType = null)
         {
-            var attemptedValue = helper.GetAttemptedValueFor(name);
+            var attemptedValue = helper.GetAttemptedValueFor(name, destinationType);
             if(attemptedValue != null)
                 return attemptedValue;
             
