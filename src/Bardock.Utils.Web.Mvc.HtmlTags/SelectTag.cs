@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Bardock.Utils.Web.Mvc.HtmlTags.Extensions;
 using HtmlTags;
+using System.Collections;
 
 namespace Bardock.Utils.Web.Mvc.HtmlTags
 {
@@ -106,19 +107,20 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
             OptionsList<TItem> options,
             object defaultValue = null)
         {
-            object selectedVal = null;
             foreach (var item in options)
             {
                 this.AddOption(item.Display, item.Value, item.Configure, item.GroupBy);
-
-                if (options.IsSelected() != null && item.IsSelected)
-                    selectedVal = item.Value;
             }
-            if (selectedVal == null)
-                selectedVal = defaultValue;
 
-            if (selectedVal != null)
-                this.SelectValue(selectedVal);
+            var selectedVals = options.Where(x => x.IsSelected).Select(x => x.Value);
+            if (!selectedVals.Any() && defaultValue != null)
+            {
+                selectedVals = typeof(IEnumerable<object>).IsAssignableFrom(defaultValue.GetType())
+                    ? (IEnumerable<object>)defaultValue
+                    : new[] { defaultValue };
+            }
+
+            this.SelectValues(selectedVals);
 
             return this;
         }
@@ -127,13 +129,20 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
             object value,
             string format = null)
         {
+            return this.SelectValues(new[] { value }, format);
+        }
+
+        public virtual SelectTag SelectValues(
+            IEnumerable<object> values,
+            string format = null)
+        {
             this.Options
                 .Where(x => x.Selected())
                 .ToList()
                 .ForEach(x => x.Selected(false));
 
             this.Options
-                .Where(x => x.ValueIsEqual(value, format)).ToList()
+                .Where(x => values.Any(value => x.ValueIsEqual(value, format))).ToList()
                 .ForEach(x => x.Selected(true));
 
             return this;

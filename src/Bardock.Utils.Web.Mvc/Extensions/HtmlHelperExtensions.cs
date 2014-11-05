@@ -70,10 +70,6 @@ namespace Bardock.Utils.Web.Mvc.Extensions
             this HtmlHelper<TModel> helper,
             Expression<Func<TModel, TProp>> expression)
         {
-            var attemptedValue = helper.GetAttemptedValueFor(expression);
-            if (attemptedValue != null)
-                return attemptedValue;
-
             ModelMetadata metadata = ModelMetadata.FromLambdaExpression(expression, helper.ViewData);
             return metadata.Model;
         }
