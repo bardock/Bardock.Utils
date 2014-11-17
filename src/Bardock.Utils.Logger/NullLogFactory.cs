@@ -7,7 +7,7 @@ namespace Bardock.Utils.Logger
     /// </summary>
     public class NullLogFactory : ILogFactory
     {
-        public ILog GetLog(Type t)
+        public ILog GetLog(string name)
         {
             return new NullLog();
         }

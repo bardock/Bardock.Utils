@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+
 namespace Bardock.Utils.Logger
 {
     /// <summary>
@@ -8,8 +9,8 @@ namespace Bardock.Utils.Logger
     /// </summary>
     public class LogManager
     {
-        private Dictionary<Type, ILog> _logs = new Dictionary<Type, ILog>();
-
+        private Dictionary<string, ILog> _logs = new Dictionary<string, ILog>();
+        private object _syncLock = new object();        
 
         private static LogManager _default = new LogManager();
 
@@ -70,11 +71,22 @@ namespace Bardock.Utils.Logger
 
         public ILog GetLog(Type t)
         {
-            if ((!_logs.ContainsKey(t)))
+            return GetLog(t.FullName);
+        }
+
+        public ILog GetLog(string name)
+        {
+            if (!_logs.ContainsKey(name))
             {
-                _logs[t] = Factory.GetLog(t);
+                lock (_syncLock)
+                {
+                    if (!_logs.ContainsKey(name))
+                    {
+                        _logs[name] = Factory.GetLog(name);
+                    }
+                }
             }
-            return _logs[t];
+            return _logs[name];
         }
 
     }

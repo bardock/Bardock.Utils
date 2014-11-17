@@ -10,10 +10,10 @@ namespace Bardock.Utils.Logger.Log4net
             XmlConfigurator.Configure();
         }
 
-        public ILog GetLog(Type t)
+        public ILog GetLog(string name)
         {
             return new Log(
-                log4net.LogManager.GetLogger(t)
+                log4net.LogManager.GetLogger(name)
             );
         }
     }
