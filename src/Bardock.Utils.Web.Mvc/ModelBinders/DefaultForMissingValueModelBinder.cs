@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace Bardock.Utils.Web.Mvc.ModelBinders
@@ -16,7 +17,7 @@ namespace Bardock.Utils.Web.Mvc.ModelBinders
         /// <param name="field">KeyValuePair with field name and default value</param>
         /// <param name="controllerContext">Controller context</param>
         /// <param name="bindingContext">Binding context</param>
-        protected override bool RequiresDefaultValue(T model, KeyValuePair<string, object> field, ControllerContext controllerContext, ModelBindingContext bindingContext)
+        protected override bool RequiresDefaultValue(T model, KeyValuePair<string, Func<object>> field, ControllerContext controllerContext, ModelBindingContext bindingContext)
         {
             var val = bindingContext.ValueProvider.GetValue(field.Key);
             return val == null;
