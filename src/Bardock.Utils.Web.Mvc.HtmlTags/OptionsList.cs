@@ -42,11 +42,13 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
 
     public class OptionsList<TItem> : IEnumerable<OptionItem>
     {
-        public IEnumerable<TItem> Items { get; set; }
+        public IEnumerable<TItem> Items { get; protected set; }
 
-        public Func<TItem, string> Display { get; set; }
+        public Func<TItem, string> Display { get; protected set; }
 
-        public Func<TItem, object> Value { get; set; }
+        public Func<TItem, object> Value { get; protected set; }
+
+        protected List<OptionItem> _options = null;
 
         protected Func<TItem, bool> _isSelected;
 
@@ -58,6 +60,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
         public OptionsList<TItem> IsSelected(Func<TItem, bool> value)
         {
             this._isSelected = value;
+            this.Reset();
             return this;
         }
 
@@ -96,6 +99,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
         public OptionsList<TItem> Configure(Expression<Action<TItem, HtmlTag>> value)
         {
             this._configure = value;
+            this.Reset();
             return this;
         }
 
@@ -109,6 +113,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
         public OptionsList<TItem> GroupedBy(Func<TItem, object> value)
         {
             this._groupedBy = value;
+            this.Reset();
             return this;
         }
 
@@ -135,24 +140,33 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
             this.GroupedBy(groupedBy);
         }
 
+        protected void Reset()
+        {
+            this._options = null;
+        }
+
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
         }
 
+
         public IEnumerator<OptionItem> GetEnumerator()
         {
-            foreach (var item in this.Items)
+            if (_options == null)
             {
-                yield return new OptionItem() 
-                {
-                    Display = this.Display(item),
-                    Value = this.Value(item),
-                    IsSelected = this.IsSelected() == null ? false : this.IsSelected()(item),
-                    Configure = this.Configure() == null ? null : this.Configure().PartialApply(item).Compile(),
-                    GroupBy = this.GroupedBy() == null ? null : this.GroupedBy()(item),
-                };
+                _options = this.Items
+                    .Select(item => new OptionItem()
+                    {
+                        Display = this.Display(item),
+                        Value = this.Value(item),
+                        IsSelected = this.IsSelected() == null ? false : this.IsSelected()(item),
+                        Configure = this.Configure() == null ? null : this.Configure().PartialApply(item).Compile(),
+                        GroupBy = this.GroupedBy() == null ? null : this.GroupedBy()(item),
+                    })
+                    .ToList();
             }
+            return _options.GetEnumerator();
         }
     }
 
