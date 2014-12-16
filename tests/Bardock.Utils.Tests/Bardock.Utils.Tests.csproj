@@ -47,6 +47,7 @@
     <Compile Include="Collections\CollTest.cs" />
     <Compile Include="Collections\DisposableListTest.cs" />
     <Compile Include="Extensions\ArrayExtensionsTest.cs" />
+    <Compile Include="Extensions\Expressions\MemberInitExpressionExtensionsTest.cs" />
     <Compile Include="Extensions\Expressions\ConstantExpressionExtensionsTest.cs" />
     <Compile Include="Extensions\Expressions\ReduceEvaluationsExpressionExtensionsTest.cs" />
     <Compile Include="Extensions\Expressions\ReplaceEqualsMethodByOperatorExpressionExtensionsTest.cs" />

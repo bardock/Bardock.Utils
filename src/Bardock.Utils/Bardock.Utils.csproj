@@ -41,6 +41,7 @@
     <Compile Include="Extensions\ByteExtensions.cs" />
     <Compile Include="Extensions\Expressions\ConvertExpressionExtensions.cs" />
     <Compile Include="Extensions\Expressions\ConstantExpressionExtensions.cs" />
+    <Compile Include="Extensions\Expressions\MemberInitExpressionExtensions.cs" />
     <Compile Include="Extensions\Expressions\ReduceEvaluationsExpressionExtensions.cs" />
     <Compile Include="Extensions\Expressions\ReplaceEqualsMethodByOperatorExpressionExtensions.cs" />
     <Compile Include="Extensions\Expressions\ReduceConstantsExpressionExtensions.cs" />
