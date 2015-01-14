@@ -41,7 +41,7 @@ namespace Bardock.Utils.Logger
                     }
                     else
                     {
-                        _factory = (ILogFactory)TypeActivator.CreateFromFullName(ConfigSection.Default.LogFactory);
+                        _factory = (ILogFactory)TypeActivator.CreateFromTypeName(ConfigSection.Default.LogFactory);
                     }
                 }
                 return _factory;

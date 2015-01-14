@@ -1,16 +1,19 @@
 ﻿using System;
-using System.Reflection;
 
 namespace Bardock.Utils.Types
 {
     public static class TypeActivator
     {
-        public static object CreateFromFullName(string fullName)
+        /// <summary>
+        /// Gets an instance of the Type with the specified name, performing a case-sensitive search.
+        /// </summary>
+        /// <param name="typeName">
+        /// The assembly-qualified name of the type to get.
+        /// If the type is in the currently executing assembly or in Mscorlib.dll, it is sufficient to supply the type name qualified by its namespace.
+        /// </param>
+        public static object CreateFromTypeName(string typeName)
         {
-            string[] assemblyAndTypeNames = fullName.Split(',');
-            var assembly = Assembly.Load(assemblyAndTypeNames[1].Trim());
-            var type = assembly.GetType(assemblyAndTypeNames[0].Trim());
-            return Activator.CreateInstance(type);
+            return Activator.CreateInstance(Type.GetType(typeName));
         }
     }
 }
