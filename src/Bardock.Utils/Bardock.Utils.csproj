@@ -71,6 +71,7 @@
     <Compile Include="Sync\StringLocker.cs" />
     <Compile Include="Types\EnumOption.cs" />
     <Compile Include="Types\EnumType.cs" />
+    <Compile Include="Types\TypeActivator.cs" />
     <Compile Include="Validation\EmailValidator.cs" />
   </ItemGroup>
   <ItemGroup>

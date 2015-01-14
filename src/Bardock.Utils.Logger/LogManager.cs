@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using Bardock.Utils.Types;
 
 namespace Bardock.Utils.Logger
 {
@@ -40,7 +41,7 @@ namespace Bardock.Utils.Logger
                     }
                     else
                     {
-                        _factory = GetConfiguredLogFactory();
+                        _factory = (ILogFactory)TypeActivator.CreateFromFullName(ConfigSection.Default.LogFactory);
                     }
                 }
                 return _factory;
@@ -49,14 +50,6 @@ namespace Bardock.Utils.Logger
             {
                 _factory = value;
             }
-        }
-
-        private ILogFactory GetConfiguredLogFactory()
-        {
-            string[] assemblyAndTypeNames = ConfigSection.Default.LogFactory.Split(new char[] { ',' });
-            var assembly = Assembly.Load(assemblyAndTypeNames[1].Trim());
-            var type = assembly.GetType(assemblyAndTypeNames[0].Trim());
-            return (ILogFactory)Activator.CreateInstance(type);
         }
 
         public ILog GetLog<T>()
