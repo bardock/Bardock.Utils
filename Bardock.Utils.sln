@@ -34,6 +34,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bardock.Utils.UnitTest.Data
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bardock.Utils.UnitTest.Data.EF", "src\Bardock.Utils.UnitTest.Data.EF\Bardock.Utils.UnitTest.Data.EF.csproj", "{19961FB9-5E3B-4E6C-B03A-5573D80FF891}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders", "src\Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders\Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders.csproj", "{B0F8231C-0F0B-4A2D-940E-5303344848EE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -88,6 +90,10 @@ Global
 		{19961FB9-5E3B-4E6C-B03A-5573D80FF891}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19961FB9-5E3B-4E6C-B03A-5573D80FF891}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19961FB9-5E3B-4E6C-B03A-5573D80FF891}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0F8231C-0F0B-4A2D-940E-5303344848EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0F8231C-0F0B-4A2D-940E-5303344848EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0F8231C-0F0B-4A2D-940E-5303344848EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0F8231C-0F0B-4A2D-940E-5303344848EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
