@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Globalization;
 using System.Text;
+using System.Linq;
 
 namespace Bardock.Utils.Extensions
 {
@@ -28,6 +30,21 @@ namespace Bardock.Utils.Extensions
         public static bool Contains(this string source, string toCheck, StringComparison comp)
         {
             return source.IndexOf(toCheck, comp) >= 0;
+        }
+
+        /// <summary>
+        /// Returns a value indicating whether the specified System.String object occurs
+        /// within this string using specified CultureInfo.CurrentCulture.CompareInfo.
+        /// </summary>
+        public static bool IsLike(
+            this string str,
+            string query,
+            bool IgnoreDiacritics = true,
+            bool IgnoreCase = true)
+        {
+            return CultureInfo.CurrentCulture.CompareInfo.IndexOf(str,
+                query,
+                (IgnoreDiacritics ? CompareOptions.IgnoreNonSpace : CompareOptions.None) | (IgnoreCase ? CompareOptions.IgnoreCase : CompareOptions.None)) != -1;
         }
 	}
 }

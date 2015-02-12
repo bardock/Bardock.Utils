@@ -143,5 +143,75 @@ namespace Bardock.Utils.Tests.Extensions
             var r = "asd".Contains("S", StringComparison.CurrentCultureIgnoreCase);
             Assert.True(r);
         }
+
+        [Fact]
+        public void IsLike_SourceWithDiacritcs_IgnoreDiacritics() 
+        {
+            var r = "tést".IsLike("e", IgnoreDiacritics: true);
+            Assert.True(r);
+        }
+
+        [Fact]
+        public void IsLike_QueryWithDiacritcs_IgnoreDiacritics()
+        {
+            var r = "test".IsLike("té", IgnoreDiacritics: true);
+            Assert.True(r);
+        }
+
+        [Fact]
+        public void IsLike_Source_IgnoreCase()
+        {
+            var r = "tést".IsLike("E", IgnoreCase: true);
+            Assert.True(r);
+        }
+
+        [Fact]
+        public void IsLike_Query_IgnoreCase()
+        {
+            var r = "TÉST".IsLike("te",  IgnoreCase: true);
+            Assert.True(r);
+        }
+
+        [Fact]
+        public void IsLike_SourceWithDiacritcs_IgnoreDiacritics_Fail()
+        {
+            var r = "tést".IsLike("a", IgnoreDiacritics: true);
+            Assert.False(r);
+        }
+
+        [Fact]
+        public void IsLike_QueryWithDiacritcs_IgnoreDiacritics_Fail()
+        {
+            var r = "test".IsLike("tá", IgnoreDiacritics: true);
+            Assert.False(r);
+        }
+
+        [Fact]
+        public void IsLike_Source_IgnoreCase_Fail()
+        {
+            var r = "tést".IsLike("A", IgnoreCase: true);
+            Assert.False(r);
+        }
+
+        [Fact]
+        public void IsLike_Query_IgnoreCase_Fail()
+        {
+            var r = "TÉST".IsLike("ta",  IgnoreCase: true);
+            Assert.False(r);
+        }
+
+        [Fact]
+        public void IsLike_SourceWithDiacritcs_NoIgnoreDiacritics_Fail()
+        {
+            var r = "tést".IsLike("e", IgnoreDiacritics: false);
+            Assert.False(r);
+        }
+
+        [Fact]
+        public void IsLike_Source_NoIgnoreCase_Fail()
+        {
+            var r = "TEST".IsLike("e", IgnoreCase: false);
+            Assert.False(r);
+        }
     }
 }
