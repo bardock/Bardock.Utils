@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Bardock.Utils.UnitTest.Data.EntityFramework
@@ -16,20 +13,20 @@ namespace Bardock.Utils.UnitTest.Data.EntityFramework
             _db = db;
         }
 
-        public IQueryable<T> GetQuery<T>() 
+        public IQueryable<T> GetQuery<T>()
             where T : class
         {
             return _db.Set<T>().AsQueryable();
         }
 
-        public IDataContextWrapper Add<T>(T e) 
+        public IDataContextWrapper Add<T>(T e)
             where T : class
         {
             _db.Entry(e).State = EntityState.Added;
             return this;
         }
 
-        public IDataContextWrapper Update<T>(T e) 
+        public IDataContextWrapper Update<T>(T e)
             where T : class
         {
             _db.Entry(e).State = EntityState.Modified;

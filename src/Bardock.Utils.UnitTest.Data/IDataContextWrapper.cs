@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Threading.Tasks;
 
 namespace Bardock.Utils.UnitTest.Data
 {
     public interface IDataContextWrapper
     {
-        IQueryable<T> GetQuery<T>() 
+        IQueryable<T> GetQuery<T>()
             where T : class;
 
-        IDataContextWrapper Add<T>(T e) 
+        IDataContextWrapper Add<T>(T e)
             where T : class;
 
-        IDataContextWrapper Update<T>(T e) 
+        IDataContextWrapper Update<T>(T e)
             where T : class;
 
         IDataContextWrapper Save();
