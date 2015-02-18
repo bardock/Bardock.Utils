@@ -25,5 +25,10 @@ namespace Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders
                                                     .GetValue(obj))
                                     .ToArray());
         }
+
+        internal IEntityDataLoader<object> GetEntityDataLoader()
+        {
+            return _loader;
+        }
     }
 }

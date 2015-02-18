@@ -1,4 +1,6 @@
 ﻿using Effort.DataLoaders;
+using System;
+using System.Linq;
 
 namespace Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders
 {
@@ -10,12 +12,32 @@ namespace Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders
 
         public EntityObjectDataLoader(EntityObjectDataLoaderBindingsBuilder builder)
         {
+            if (builder == null)
+                throw new ArgumentNullException("builder");
+
             _builder = builder;
         }
 
         public ITableDataLoaderFactory CreateTableDataLoaderFactory()
         {
-            return new EntityObjectDataLoaderFactory(_builder.GetBindings());
+            var bindings = _builder.GetBindings();
+
+            if (bindings == null || !bindings.Any())
+                throw new NotValidBindingsException("Bindings null or empty");
+
+            return new EntityObjectDataLoaderFactory(bindings);
+        }
+
+        public class NotValidBindingsException : Exception
+        {
+            public NotValidBindingsException()
+                : base() { }
+
+            public NotValidBindingsException(string message)
+                : base(message) { }
+
+            public NotValidBindingsException(string message, Exception innerException)
+                : base(message, innerException) { }
         }
     }
 }
