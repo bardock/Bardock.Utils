@@ -1,10 +1,6 @@
 ﻿using Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders.Tests.DataLoaders;
 using Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders.Tests.Entities;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders.Tests

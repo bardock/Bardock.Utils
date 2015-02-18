@@ -1,7 +1,7 @@
 ﻿using Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders.Tests.DataLoaders;
 using Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders.Tests.Entities;
-using Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders.Tests.Helpers;
 using Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders.Tests.Extensions;
+using Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders.Tests.Helpers;
 using Effort.DataLoaders;
 using System;
 using System.Linq;
