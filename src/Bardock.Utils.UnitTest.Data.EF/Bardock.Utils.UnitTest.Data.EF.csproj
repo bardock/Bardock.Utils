@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataContextScope.cs" />
     <Compile Include="DataContextWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -58,6 +59,10 @@
     <ProjectReference Include="..\Bardock.Utils.UnitTest.Data\Bardock.Utils.UnitTest.Data.csproj">
       <Project>{df4a40f2-af0c-4107-9a1c-35952555f3fa}</Project>
       <Name>Bardock.Utils.UnitTest.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Bardock.Utils\Bardock.Utils.csproj">
+      <Project>{dff10396-c6b8-43f7-bbdd-d7ad9f57e4bf}</Project>
+      <Name>Bardock.Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

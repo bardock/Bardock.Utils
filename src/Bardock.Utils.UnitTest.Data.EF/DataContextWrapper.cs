@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -6,7 +7,7 @@ namespace Bardock.Utils.UnitTest.Data.EntityFramework
 {
     public class DataContextWrapper : IDataContextWrapper
     {
-        private DbContext _db;
+        internal DbContext _db;
 
         public DataContextWrapper(DbContext db)
         {
@@ -26,10 +27,60 @@ namespace Bardock.Utils.UnitTest.Data.EntityFramework
             return this;
         }
 
+        public IDataContextWrapper Add<T>(IEnumerable<T> e)
+            where T : class
+        {
+            foreach (var i in e)
+                this.Add(i);
+
+            return this;
+        }
+
         public IDataContextWrapper Update<T>(T e)
             where T : class
         {
             _db.Entry(e).State = EntityState.Modified;
+            return this;
+        }
+
+        public IDataContextWrapper Update<T>(IEnumerable<T> e)
+            where T : class
+        {
+            foreach (var i in e)
+                this.Update(i);
+
+            return this;
+        }
+
+        public IDataContextWrapper Delete<T>(T e)
+            where T : class
+        {
+            _db.Entry(e).State = EntityState.Deleted;
+            return this;
+        }
+
+        public IDataContextWrapper Delete<T>(IEnumerable<T> e)
+            where T : class
+        {
+            foreach (var i in e)
+                this.Delete(i);
+
+            return this;
+        }
+
+        public IDataContextWrapper Detach<T>(T e)
+            where T : class
+        {
+            _db.Entry(e).State = EntityState.Detached;
+            return this;
+        }
+
+        public IDataContextWrapper Detach<T>(IEnumerable<T> e)
+            where T : class
+        {
+            foreach (var i in e)
+                this.Detach(i);
+
             return this;
         }
 

@@ -36,7 +36,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bardock.Utils.UnitTest.Data
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders", "src\Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders\Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders.csproj", "{B0F8231C-0F0B-4A2D-940E-5303344848EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders.Tests", "src\Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders.Tests\Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders.Tests.csproj", "{B77170E5-B61D-41AB-87AF-B2989891ABF8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders.Tests", "tests\Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders.Tests\Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders.Tests.csproj", "{B77170E5-B61D-41AB-87AF-B2989891ABF8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
