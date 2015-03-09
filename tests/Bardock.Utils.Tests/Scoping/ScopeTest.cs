@@ -33,17 +33,6 @@ namespace Bardock.Utils.Tests.Scoping
         }
 
         [Fact]
-        public void Constructor_ValidArgumentsEmptyMapping_ScopesValues()
-        {
-            var e = new Model();
-            using (var scope = Scope.Create(e, b => b))
-            {
-                Assert.Equal(false, e.Activated);
-            }
-            Assert.Equal(false, e.Activated);
-        }
-
-        [Fact]
         public void Constructor_NullInstanceParam_ThrowsArgumentNullException()
         {
             Model e = null;
@@ -63,16 +52,6 @@ namespace Bardock.Utils.Tests.Scoping
                 using (var scope = Scope.Create(e, null)) { }
             });
             Assert.Equal("factoryFunc", ex.ParamName);
-        }
-
-        [Fact]
-        public void Constructor_FactoryFuncParamReturnsNull_ThrowsNullReferenceException()
-        {
-            var e = new Model();
-            Assert.Throws<NullReferenceException>(() =>
-            {
-                using (var scope = Scope.Create(e, b => null)) { }
-            });
         }
     }
 }

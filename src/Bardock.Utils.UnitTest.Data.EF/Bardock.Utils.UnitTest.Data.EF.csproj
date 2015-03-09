@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataContextScope.cs" />
+    <Compile Include="DataContextScopeFactory.cs" />
     <Compile Include="DataContextWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

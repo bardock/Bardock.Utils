@@ -10,9 +10,9 @@ namespace Bardock.Utils.Scoping
     {
         private T _instance;
 
-        private IDictionary<string, Tuple<object, object>> _values;
+        private IDictionary<Expression<Func<T, object>>, object> _values;
 
-        public Scope(T instance, Func<Builder, Builder> factoryFunc)
+        public Scope(T instance, Action<Builder> factoryFunc)
         {
             if (instance == null)
                 throw new ArgumentNullException("instance");
@@ -20,43 +20,44 @@ namespace Bardock.Utils.Scoping
             if (factoryFunc == null)
                 throw new ArgumentNullException("factoryFunc");
 
-            var builder = factoryFunc(new Builder());
-            if (builder == null)
-                throw new NullReferenceException();
+
+            var builder = new Builder();
+            
+            factoryFunc(builder);
 
             _instance = instance;
-            _values = new Dictionary<string, Tuple<object, object>>();
+            _values = new Dictionary<Expression<Func<T,object>>, object>();
 
             var scopeConfig = builder.Build();
             foreach (var p in scopeConfig)
             {
-                var propInfo = typeof(T).GetProperty(p.Key);
-                _values.Add(p.Key, Tuple.Create(propInfo.GetValue(instance), p.Value));
-                propInfo.SetValue(instance, p.Value);
+                _values.Add(p.Key, p.Key.Compile().Invoke(instance));
+                //propInfo.SetValue(instance, p.Value);
             }
         }
 
         public virtual void Dispose()
         {
-            foreach (var p in _values)
-                typeof(T).GetProperty(p.Key).SetValue(_instance, p.Value.Item1);
+            //foreach (var p in _values)
+            //    typeof(T).GetProperty(p.Key).SetValue(_instance, p.Value);
         }
 
         public class Builder
         {
-            private IDictionary<string, object> _mappings;
+            private IDictionary<Expression<Func<T,object>>, object> _mappings;
 
             public Builder()
             {
-                _mappings = new Dictionary<string, object>();
+                _mappings = new Dictionary<Expression<Func<T, object>>, object>();
             }
 
-            public void AddValue<TReturn>(Expression<Func<T, TReturn>> expr, TReturn value)
+            public Builder Add<TReturn>(Expression<Func<T, TReturn>> expr, TReturn value)
             {
-                _mappings.Add(ExpressionHelper.GetExpressionText(expr), (object)value);
+                //_mappings.Add(ExpressionHelper.GetExpressionText(expr), (object)value);
+                return this;
             }
 
-            public IDictionary<string, object> Build()
+            public IDictionary<Expression<Func<T, object>>, object> Build()
             {
                 return _mappings.ToDictionary(x => x.Key, x => x.Value);
             }
@@ -65,18 +66,9 @@ namespace Bardock.Utils.Scoping
 
     public class Scope
     {
-        public static Scope<T> Create<T>(T instance, Func<Scope<T>.Builder, Scope<T>.Builder> factoryFunc)
+        public static Scope<T> Create<T>(T instance, Action<Scope<T>.Builder> factoryFunc)
         {
             return new Scope<T>(instance, factoryFunc);
-        }
-    }
-
-    public static class ScopeBuilderExtensions
-    {
-        public static Scope<T>.Builder Add<T, TProperty>(this Scope<T>.Builder @this, Expression<Func<T, TProperty>> expr, TProperty value)
-        {
-            @this.AddValue(expr, value);
-            return @this;
         }
     }
 }

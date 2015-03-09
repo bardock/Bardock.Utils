@@ -27,12 +27,10 @@ namespace Bardock.Utils.UnitTest.Data
         IDataContextWrapper Delete<T>(IEnumerable<T> e)
             where T : class;
 
-        IDataContextWrapper Detach<T>(T e)
-            where T : class;
-
-        IDataContextWrapper Detach<T>(IEnumerable<T> e)
-            where T : class;
-
+        /// <summary>
+        /// This method applies all the changes to the database and detachs all related entities.
+        /// </summary>
+        /// <returns>Self</returns>
         IDataContextWrapper Save();
 
         Task<IDataContextWrapper> SaveAsync();

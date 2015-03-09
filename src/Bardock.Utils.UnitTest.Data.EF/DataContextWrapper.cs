@@ -3,15 +3,17 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Bardock.Utils.UnitTest.Data.EntityFramework
+namespace Bardock.Utils.UnitTest.Data.EF
 {
     public class DataContextWrapper : IDataContextWrapper
     {
         internal DbContext _db;
+        private IList<object> _entries;
 
         public DataContextWrapper(DbContext db)
         {
             _db = db;
+            _entries = new List<object>();
         }
 
         public IQueryable<T> GetQuery<T>()
@@ -24,6 +26,10 @@ namespace Bardock.Utils.UnitTest.Data.EntityFramework
             where T : class
         {
             _db.Entry(e).State = EntityState.Added;
+
+            if (!_entries.Contains(e))
+                _entries.Add(e);
+
             return this;
         }
 
@@ -40,6 +46,10 @@ namespace Bardock.Utils.UnitTest.Data.EntityFramework
             where T : class
         {
             _db.Entry(e).State = EntityState.Modified;
+
+            if (!_entries.Contains(e))
+                _entries.Add(e);
+
             return this;
         }
 
@@ -56,6 +66,10 @@ namespace Bardock.Utils.UnitTest.Data.EntityFramework
             where T : class
         {
             _db.Entry(e).State = EntityState.Deleted;
+
+            if (!_entries.Contains(e))
+                _entries.Add(e);
+
             return this;
         }
 
@@ -68,14 +82,17 @@ namespace Bardock.Utils.UnitTest.Data.EntityFramework
             return this;
         }
 
-        public IDataContextWrapper Detach<T>(T e)
+        private DataContextWrapper Detach<T>(T e)
             where T : class
         {
             _db.Entry(e).State = EntityState.Detached;
+
+            _entries.Remove(e);
+
             return this;
         }
 
-        public IDataContextWrapper Detach<T>(IEnumerable<T> e)
+        private DataContextWrapper Detach<T>(IEnumerable<T> e)
             where T : class
         {
             foreach (var i in e)
@@ -87,6 +104,9 @@ namespace Bardock.Utils.UnitTest.Data.EntityFramework
         public IDataContextWrapper Save()
         {
             _db.SaveChanges();
+
+            this.Detach(_entries);
+
             return this;
         }
 
