@@ -10,12 +10,12 @@ namespace Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders.Tests
         [Fact]
         public void AddOfTEntity()
         {
-            var builder = new EntityObjectDataLoaderBindingsBuilder();
+            var builder = new EntityObjectDataLoader.BindingsBuilder();
             var dataLoader = new ModelDataLoader();
 
             builder.Add(dataLoader);
 
-            var bindings = builder.GetBindings();
+            var bindings = builder.Build();
 
             Assert.True(dataLoader == bindings[typeof(Model).Name], "Bindings must contain a ModelDataLoader instance");
         }
@@ -24,12 +24,12 @@ namespace Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders.Tests
         public void Add()
         {
             var bindingName = "Model";
-            var builder = new EntityObjectDataLoaderBindingsBuilder();
+            var builder = new EntityObjectDataLoader.BindingsBuilder();
             var dataLoader = new ModelDataLoader();
 
             builder.Add(bindingName, dataLoader);
 
-            var bindings = builder.GetBindings();
+            var bindings = builder.Build();
 
             Assert.True(dataLoader == bindings[bindingName], "Bindings must contain a ModelDataLoader instance");
         }
@@ -38,12 +38,12 @@ namespace Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders.Tests
         public void GetBindings()
         {
             var bindingName = "Model";
-            var builder = new EntityObjectDataLoaderBindingsBuilder();
+            var builder = new EntityObjectDataLoader.BindingsBuilder();
             var dataLoader = new ModelDataLoader();
 
             builder.Add(bindingName, dataLoader);
 
-            var bindings = builder.GetBindings();
+            var bindings = builder.Build();
 
             Assert.True(bindings.Count() == 1, "Bindings count should be 1");
         }
@@ -51,10 +51,10 @@ namespace Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders.Tests
         [Fact]
         public void GetBindings_Empty()
         {
-            var builder = new EntityObjectDataLoaderBindingsBuilder();
+            var builder = new EntityObjectDataLoader.BindingsBuilder();
             var dataLoader = new ModelDataLoader();
 
-            var bindings = builder.GetBindings();
+            var bindings = builder.Build();
 
             Assert.True(!bindings.Any(), "Bindings count should be 0");
         }

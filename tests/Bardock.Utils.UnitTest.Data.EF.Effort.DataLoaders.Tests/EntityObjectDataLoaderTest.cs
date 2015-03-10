@@ -21,28 +21,11 @@ namespace Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders.Tests
         }
 
         [Fact]
-        public void Ctor_Builder_Empty()
-        {
-            var bindings = new EntityObjectDataLoaderBindingsBuilder();
-
-            var loader = new EntityObjectDataLoader(bindings);
-
-            Assert.Throws<EntityObjectDataLoader.NotValidBindingsException>(() =>
-            {
-                loader.CreateTableDataLoaderFactory();
-            });
-        }
-
-        [Fact]
         public void CreateTableDataLoaderFactory()
         {
-            var bindings = new EntityObjectDataLoaderBindingsBuilder();
-
             var modelLoader = new ModelDataLoader();
 
-            bindings.Add(modelLoader);
-
-            var loader = new EntityObjectDataLoader(bindings);
+            var loader = new EntityObjectDataLoader(bindings => bindings.Add(modelLoader));
 
             var factory = loader.CreateTableDataLoaderFactory();
 
@@ -56,13 +39,9 @@ namespace Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders.Tests
         [Fact]
         public void GetData()
         {
-            var bindings = new EntityObjectDataLoaderBindingsBuilder();
-
             var modelLoader = new ModelDataLoader();
 
-            bindings.Add(modelLoader);
-
-            var loader = new EntityObjectDataLoader(bindings);
+            var loader = new EntityObjectDataLoader(bindings => bindings.Add(modelLoader));
 
             var factory = loader.CreateTableDataLoaderFactory();
 

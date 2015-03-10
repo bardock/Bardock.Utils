@@ -6,8 +6,8 @@ namespace Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders
 {
     internal class EntityObjectDataLoaderWrapper : ITableDataLoader
     {
-        private IEntityDataLoader<object> _loader;
         private IReadOnlyCollection<ColumnDescription> _columns;
+        private IEntityDataLoader<object> _loader;
 
         public EntityObjectDataLoaderWrapper(IEntityDataLoader<object> loader, IReadOnlyCollection<ColumnDescription> columns)
         {

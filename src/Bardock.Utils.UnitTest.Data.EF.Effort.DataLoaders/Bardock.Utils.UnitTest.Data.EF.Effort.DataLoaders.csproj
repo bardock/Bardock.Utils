@@ -57,7 +57,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EntityObjectDataLoader.cs" />
-    <Compile Include="EntityObjectDataLoaderBindingsBuilder.cs" />
     <Compile Include="EntityObjectDataLoaderFactory.cs" />
     <Compile Include="EntityObjectDataLoaderWrapper.cs" />
     <Compile Include="IEntityDataLoader.cs" />

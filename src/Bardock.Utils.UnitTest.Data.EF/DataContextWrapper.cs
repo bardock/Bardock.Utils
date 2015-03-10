@@ -16,12 +16,6 @@ namespace Bardock.Utils.UnitTest.Data.EF
             _entries = new List<object>();
         }
 
-        public IQueryable<T> GetQuery<T>()
-            where T : class
-        {
-            return _db.Set<T>().AsQueryable();
-        }
-
         public IDataContextWrapper Add<T>(T e)
             where T : class
         {
@@ -38,26 +32,6 @@ namespace Bardock.Utils.UnitTest.Data.EF
         {
             foreach (var i in e)
                 this.Add(i);
-
-            return this;
-        }
-
-        public IDataContextWrapper Update<T>(T e)
-            where T : class
-        {
-            _db.Entry(e).State = EntityState.Modified;
-
-            if (!_entries.Contains(e))
-                _entries.Add(e);
-
-            return this;
-        }
-
-        public IDataContextWrapper Update<T>(IEnumerable<T> e)
-            where T : class
-        {
-            foreach (var i in e)
-                this.Update(i);
 
             return this;
         }
@@ -82,6 +56,47 @@ namespace Bardock.Utils.UnitTest.Data.EF
             return this;
         }
 
+        public IQueryable<T> GetQuery<T>()
+            where T : class
+        {
+            return _db.Set<T>().AsQueryable();
+        }
+
+        public IDataContextWrapper Save()
+        {
+            _db.SaveChanges();
+
+            this.Detach(_entries);
+
+            return this;
+        }
+
+        public async Task<IDataContextWrapper> SaveAsync()
+        {
+            await _db.SaveChangesAsync();
+            return this;
+        }
+
+        public IDataContextWrapper Update<T>(T e)
+            where T : class
+        {
+            _db.Entry(e).State = EntityState.Modified;
+
+            if (!_entries.Contains(e))
+                _entries.Add(e);
+
+            return this;
+        }
+
+        public IDataContextWrapper Update<T>(IEnumerable<T> e)
+            where T : class
+        {
+            foreach (var i in e)
+                this.Update(i);
+
+            return this;
+        }
+
         private DataContextWrapper Detach<T>(T e)
             where T : class
         {
@@ -98,21 +113,6 @@ namespace Bardock.Utils.UnitTest.Data.EF
             foreach (var i in e)
                 this.Detach(i);
 
-            return this;
-        }
-
-        public IDataContextWrapper Save()
-        {
-            _db.SaveChanges();
-
-            this.Detach(_entries);
-
-            return this;
-        }
-
-        public async Task<IDataContextWrapper> SaveAsync()
-        {
-            await _db.SaveChangesAsync();
             return this;
         }
     }
