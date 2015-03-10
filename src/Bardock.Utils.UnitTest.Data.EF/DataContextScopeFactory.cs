@@ -14,8 +14,8 @@
             return new DataContextScope(
                 _wrapper,
                 b => b
-                    .Add(x => x.Configuration.AutoDetectChangesEnabled, false)
-                    .Add(x => x.Configuration.ValidateOnSaveEnabled, false));
+                    .Set(x => x.Configuration.AutoDetectChangesEnabled, false)
+                    .Set(x => x.Configuration.ValidateOnSaveEnabled, false));
         }
     }
 }

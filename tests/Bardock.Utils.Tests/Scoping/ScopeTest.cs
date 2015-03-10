@@ -15,9 +15,17 @@ namespace Bardock.Utils.Tests.Scoping
         {
             public bool Activated { get; set; }
 
+            public _Inner Inner { get; set; }
+
             public Model(bool activated = false)
             {
                 Activated = activated;
+                Inner = new _Inner();
+            }
+
+            public class _Inner
+            {
+                public bool AutoDisable { get; set; }
             }
         }
 
@@ -25,11 +33,14 @@ namespace Bardock.Utils.Tests.Scoping
         public void Constructor_ValidArguments_ScopesValues()
         {
             var e = new Model();
-            using (var scope = Scope.Create(e, b => b.Add(x => x.Activated, true)))
+            using (var scope = Scope.Create(e, b => b.Set(x => x.Activated, true)
+                                                    .Set(x => x.Inner.AutoDisable, true)))
             {
                 Assert.Equal(true, e.Activated);
+                Assert.Equal(true, e.Inner.AutoDisable);
             }
             Assert.Equal(false, e.Activated);
+            Assert.Equal(false, e.Inner.AutoDisable);
         }
 
         [Fact]
@@ -38,7 +49,7 @@ namespace Bardock.Utils.Tests.Scoping
             Model e = null;
             var ex = Assert.Throws<ArgumentNullException>(() =>
             {
-                using (var scope = Scope.Create(e, b => b.Add(x => x.Activated, true))) { }
+                using (var scope = Scope.Create(e, b => b.Set(x => x.Activated, true))) { }
             });
             Assert.Equal("instance", ex.ParamName);
         }
@@ -51,7 +62,7 @@ namespace Bardock.Utils.Tests.Scoping
             {
                 using (var scope = Scope.Create(e, null)) { }
             });
-            Assert.Equal("factoryFunc", ex.ParamName);
+            Assert.Equal("config", ex.ParamName);
         }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace Bardock.Utils.Scoping
 {
@@ -12,52 +13,76 @@ namespace Bardock.Utils.Scoping
 
         private IDictionary<Expression<Func<T, object>>, object> _values;
 
-        public Scope(T instance, Action<Builder> factoryFunc)
+        public Scope(T instance, Action<Builder> config)
         {
             if (instance == null)
                 throw new ArgumentNullException("instance");
 
-            if (factoryFunc == null)
-                throw new ArgumentNullException("factoryFunc");
-
+            if (config == null)
+                throw new ArgumentNullException("config");
 
             var builder = new Builder();
-            
-            factoryFunc(builder);
+
+            config(builder);
 
             _instance = instance;
-            _values = new Dictionary<Expression<Func<T,object>>, object>();
+            _values = new Dictionary<Expression<Func<T, object>>, object>();
 
-            var scopeConfig = builder.Build();
-            foreach (var p in scopeConfig)
-            {
-                _values.Add(p.Key, p.Key.Compile().Invoke(instance));
-                //propInfo.SetValue(instance, p.Value);
-            }
+            Init(builder);
         }
 
         public virtual void Dispose()
         {
-            //foreach (var p in _values)
-            //    typeof(T).GetProperty(p.Key).SetValue(_instance, p.Value);
+            foreach (var p in _values)
+                SetPropertyValue(p.Key, p.Value);
+        }
+
+        private void Init(Builder builder)
+        {
+            var scopeConfig = builder.Build();
+            foreach (var p in scopeConfig)
+            {
+                _values.Add(p.Key, p.Key.Compile().Invoke(_instance));
+                SetPropertyValue(p.Key, p.Value);
+            }
+        }
+
+        private void SetPropertyValue(Expression<Func<T, object>> expr, object value)
+        {
+            var memberExpr = (MemberExpression)ExpressionHelper.RemoveConvert(expr).Body;
+
+            var target = Expression.Lambda<Func<T, object>>(
+                Expression.Convert(
+                    memberExpr.Expression, typeof(object)),
+                    expr.Parameters
+                )
+                .Compile()
+                .Invoke(_instance);
+
+            ((PropertyInfo)memberExpr.Member)
+                .GetSetMethod()
+                .Invoke(target, new object[] { value });
         }
 
         public class Builder
         {
-            private IDictionary<Expression<Func<T,object>>, object> _mappings;
+            private IDictionary<Expression<Func<T, object>>, object> _mappings;
 
             public Builder()
             {
                 _mappings = new Dictionary<Expression<Func<T, object>>, object>();
             }
 
-            public Builder Add<TReturn>(Expression<Func<T, TReturn>> expr, TReturn value)
+            public Builder Set<TReturn>(Expression<Func<T, TReturn>> expr, TReturn value)
             {
-                //_mappings.Add(ExpressionHelper.GetExpressionText(expr), (object)value);
+                _mappings.Add(
+                    Expression.Lambda<Func<T, object>>(Expression.Convert(expr.Body, typeof(object)), expr.Parameters),
+                    (object)value);
+
                 return this;
             }
 
-            public IDictionary<Expression<Func<T, object>>, object> Build()
+            internal IDictionary<Expression<Func<T, object>>, object> Build()
             {
                 return _mappings.ToDictionary(x => x.Key, x => x.Value);
             }
@@ -66,9 +91,9 @@ namespace Bardock.Utils.Scoping
 
     public class Scope
     {
-        public static Scope<T> Create<T>(T instance, Action<Scope<T>.Builder> factoryFunc)
+        public static Scope<T> Create<T>(T instance, Action<Scope<T>.Builder> config)
         {
-            return new Scope<T>(instance, factoryFunc);
+            return new Scope<T>(instance, config);
         }
     }
 }
