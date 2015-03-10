@@ -213,5 +213,21 @@ namespace Bardock.Utils.Tests.Extensions
             var r = "TEST".IsLike("e", IgnoreCase: false);
             Assert.False(r);
         }
+
+        [Fact]
+        public void IsLike_Source_Array()
+        {
+            string[] values = { "ESTé", "eba" };
+            var r = "Esteesun Nombredepruebá".IsLike(values);
+            Assert.True(r);
+        }
+
+        [Fact]
+        public void IsLike_Source_Array_Fail()
+        {
+            string[] values = { "este", "ebas" };
+            var r = "Esteesun Nombredeprueba".IsLike(values);
+            Assert.False(r);
+        }
     }
 }

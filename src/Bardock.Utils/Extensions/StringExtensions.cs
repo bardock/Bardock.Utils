@@ -24,27 +24,46 @@ namespace Bardock.Utils.Extensions
 		}
 
         /// <summary>
-        /// Returns a value indicating whether the specified System.String object occurs
-        /// within this string using specified StringComparison.
+        /// Indicates whether the specified value occurs
+        /// within the source string using specified StringComparison.
         /// </summary>
-        public static bool Contains(this string source, string toCheck, StringComparison comp)
+        public static bool Contains(this string source, string value, StringComparison comp)
         {
-            return source.IndexOf(toCheck, comp) >= 0;
+            return source.IndexOf(value, comp) >= 0;
         }
 
         /// <summary>
-        /// Returns a value indicating whether the specified System.String object occurs
-        /// within this string using specified CultureInfo.CurrentCulture.CompareInfo.
+        /// Indicates whether the specified value occurs
+        /// within the source string ignoring diacritics and casing (configurable).
         /// </summary>
         public static bool IsLike(
-            this string str,
-            string query,
+            this string source,
+            string value,
             bool IgnoreDiacritics = true,
             bool IgnoreCase = true)
         {
-            return CultureInfo.CurrentCulture.CompareInfo.IndexOf(str,
-                query,
-                (IgnoreDiacritics ? CompareOptions.IgnoreNonSpace : CompareOptions.None) | (IgnoreCase ? CompareOptions.IgnoreCase : CompareOptions.None)) != -1;
+            var compareOptions = (IgnoreDiacritics ? CompareOptions.IgnoreNonSpace : CompareOptions.None) 
+                | (IgnoreCase ? CompareOptions.IgnoreCase : CompareOptions.None);
+
+            return CultureInfo.CurrentCulture.CompareInfo.IndexOf(source, value, compareOptions) != -1;
+        }
+
+        /// <summary>
+        /// Indicates whether all specified values occur
+        /// within the source string ignoring diacritics and casing (configurable).
+        /// </summary>
+        public static bool IsLike(
+            this string source,
+            string[] values,
+            bool IgnoreDiacritics = true,
+            bool IgnoreCase = true)
+        {
+            foreach (string q in values)
+            {
+                if (!source.IsLike(q, IgnoreDiacritics, IgnoreCase))
+                    return false;
+            }
+            return true;
         }
 	}
 }
