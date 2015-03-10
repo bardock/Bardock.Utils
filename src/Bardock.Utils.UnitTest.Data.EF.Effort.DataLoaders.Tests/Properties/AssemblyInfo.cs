@@ -1,15 +1,14 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders")]
-[assembly: AssemblyDescription("Typed class implementation of Effort IDataLoader")]
+[assembly: AssemblyTitle("Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders.Tests")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("bardock")]
-[assembly: AssemblyProduct("Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders.Tests")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +19,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("445a29e9-68a8-476f-b62f-ab782f4dc6f2")]
+[assembly: Guid("1e7d2f5f-d869-40ac-bd34-449aabb0471b")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -32,6 +31,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0")]
-[assembly: AssemblyFileVersion("1.0.0")]
-[assembly: InternalsVisibleTo("Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders.Tests")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]
