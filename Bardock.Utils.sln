@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31010.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bardock.Utils", "src\Bardock.Utils\Bardock.Utils.csproj", "{DFF10396-C6B8-43F7-BBDD-D7AD9F57E4BF}"
 EndProject
@@ -37,6 +37,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders", "src\Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders\Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders.csproj", "{B0F8231C-0F0B-4A2D-940E-5303344848EE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders.Tests", "src\Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders.Tests\Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders.Tests.csproj", "{B77170E5-B61D-41AB-87AF-B2989891ABF8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bardock.Utils.UnitTest.Samples", "src\Bardock.Utils.UnitTest.Samples\Bardock.Utils.UnitTest.Samples.csproj", "{F27675F1-5FEA-4E8C-9900-AB7C6EC21E00}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -100,6 +102,10 @@ Global
 		{B77170E5-B61D-41AB-87AF-B2989891ABF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B77170E5-B61D-41AB-87AF-B2989891ABF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B77170E5-B61D-41AB-87AF-B2989891ABF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F27675F1-5FEA-4E8C-9900-AB7C6EC21E00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F27675F1-5FEA-4E8C-9900-AB7C6EC21E00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F27675F1-5FEA-4E8C-9900-AB7C6EC21E00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F27675F1-5FEA-4E8C-9900-AB7C6EC21E00}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
