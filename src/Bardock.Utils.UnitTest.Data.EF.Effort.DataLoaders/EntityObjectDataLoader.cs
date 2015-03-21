@@ -1,31 +1,69 @@
 ﻿using Effort.DataLoaders;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders
 {
     public class EntityObjectDataLoader : IDataLoader
     {
-        private EntityObjectDataLoaderBindingsBuilder _builder;
+        private IDictionary<string, IEntityDataLoader<object>> _bindings;
+
+        public EntityObjectDataLoader(Action<BindingsBuilder> config)
+        {
+            if (config == null)
+                throw new ArgumentNullException("config");
+
+            var builder = new BindingsBuilder();
+
+            config(builder);
+
+            _bindings = builder.Build();
+
+            if (_bindings == null || !_bindings.Any())
+                throw new NotValidBindingsException("Bindings null or empty");
+        }
 
         public string Argument { get; set; }
 
-        public EntityObjectDataLoader(EntityObjectDataLoaderBindingsBuilder builder)
-        {
-            if (builder == null)
-                throw new ArgumentNullException("builder");
-
-            _builder = builder;
-        }
-
         public ITableDataLoaderFactory CreateTableDataLoaderFactory()
         {
-            var bindings = _builder.GetBindings();
+            return new EntityObjectDataLoaderFactory(_bindings);
+        }
 
-            if (bindings == null || !bindings.Any())
-                throw new NotValidBindingsException("Bindings null or empty");
+        public class BindingsBuilder
+        {
+            private IDictionary<string, IEntityDataLoader<object>> _bindings;
 
-            return new EntityObjectDataLoaderFactory(bindings);
+            public BindingsBuilder()
+            {
+                _bindings = new Dictionary<string, IEntityDataLoader<object>>();
+            }
+
+            public BindingsBuilder Add<TEntity>(string tableName, IEntityDataLoader<TEntity> loader)
+                where TEntity : class
+            {
+                AddBinding(tableName, loader);
+                return this;
+            }
+
+            public BindingsBuilder Add<TEntity>(IEntityDataLoader<TEntity> loader)
+                where TEntity : class
+            {
+                AddBinding(typeof(TEntity).Name, loader);
+                return this;
+            }
+
+            internal IDictionary<string, IEntityDataLoader<object>> Build()
+            {
+                return _bindings;
+            }
+
+            private void AddBinding<TEntity>(string tableName, IEntityDataLoader<TEntity> loader)
+                where TEntity : class
+            {
+                _bindings.Add(tableName, loader);
+            }
         }
 
         public class NotValidBindingsException : Exception
