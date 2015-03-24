@@ -9,6 +9,7 @@ namespace Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders
     {
         private IDictionary<string, IEntityDataLoader<object>> _bindings;
 
+        // TODO FIXME: Effort needs a parameterless constructor
         public static Action<BindingsBuilder> Config { get; set; }
 
         public EntityObjectDataLoader()
