@@ -1,4 +1,6 @@
-﻿using Bardock.Utils.UnitTest.Samples.SUT.Entities;
+﻿using Bardock.Utils.UnitTest.Samples.Fixtures.Attributes;
+using Bardock.Utils.UnitTest.Samples.SUT.DTOs;
+using Bardock.Utils.UnitTest.Samples.SUT.Entities;
 using Bardock.Utils.UnitTest.Samples.SUT.Infra;
 using Bardock.Utils.UnitTest.Samples.SUT.Managers;
 using Moq;
@@ -15,22 +17,6 @@ namespace Bardock.Utils.UnitTest.Samples.Tests.Managers
     /// </summary>
     public class CustomerManagerTests
     {
-        public class AutoMoqDataAttribute : AutoDataAttribute
-        {
-            public AutoMoqDataAttribute()
-                : base(new Fixture()
-                    .Customize(new AutoMoqCustomization()))
-            {
-            }
-        }
-        public class InlineAutoMoqData : InlineAutoDataAttribute
-        {
-            public InlineAutoMoqData()
-                : base(new AutoMoqDataAttribute())
-            {
-            }
-        }
-
         private abstract class FromDB
         {
             protected dynamic _db;
@@ -59,19 +45,20 @@ namespace Bardock.Utils.UnitTest.Samples.Tests.Managers
             }
         }
 
+        //[DefaultData]
         [Theory]
-        [InlineAutoMoqData()]
-        //[InlineAutoMoqData(typeof(GetCustomerFromDB))]
-        //[InlineAutoMoqData(typeof(CreateCustomerFromChina))]
+        [InlineDefaultData()]
+        //[InlineDefaultData(typeof(GetCustomerFromDB))]
+        //[InlineDefaultData(typeof(CreateCustomerFromChina))]
         public void Register_ValidEmail_SendMail(
-            Customer customer,
+            CustomerCreate data,
             [Frozen] Mock<IAuthService> authService,
             [Frozen] Mock<IMailer> mailer,
             CustomerManager sut)
         {
-            sut.Create(customer);
+            sut.Create(data);
 
-            mailer.Verify(x => x.Send(customer.Email, "Welcome"));
+            mailer.Verify(x => x.Send(data.Email, "Welcome"));
         }
 
         /// <summary>

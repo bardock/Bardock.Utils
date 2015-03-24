@@ -9,14 +9,27 @@ namespace Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders
     {
         private IDictionary<string, IEntityDataLoader<object>> _bindings;
 
+        public static Action<BindingsBuilder> Config { get; set; }
+
+        public EntityObjectDataLoader()
+        {
+            Init();
+        }
+
         public EntityObjectDataLoader(Action<BindingsBuilder> config)
         {
-            if (config == null)
-                throw new ArgumentNullException("config");
+            Config = config;
+            Init();
+        }
+
+        private void Init()
+        {
+            if (Config == null)
+                throw new ArgumentNullException("Config");
 
             var builder = new BindingsBuilder();
 
-            config(builder);
+            Config(builder);
 
             _bindings = builder.Build();
 

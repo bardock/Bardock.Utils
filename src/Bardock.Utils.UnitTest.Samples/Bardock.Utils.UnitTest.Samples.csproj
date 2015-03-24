@@ -34,8 +34,23 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Effort, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6a46696d54971e6d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Effort.EF6.1.1.4\lib\net45\Effort.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Moq">
       <HintPath>..\..\packages\Moq.4.2.1502.0911\lib\net40\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="NMemory, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6a46696d54971e6d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\NMemory.1.0.1\lib\net45\NMemory.dll</HintPath>
     </Reference>
     <Reference Include="Ploeh.AutoFixture">
       <HintPath>..\..\packages\AutoFixture.3.24.3\lib\net40\Ploeh.AutoFixture.dll</HintPath>
@@ -47,7 +62,9 @@
       <HintPath>..\..\packages\AutoFixture.Xunit.3.24.3\lib\net40\Ploeh.AutoFixture.Xunit.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -63,6 +80,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Fixtures\Attributes\InlineDefaultDataAttribute.cs" />
+    <Compile Include="Fixtures\Attributes\DefaultDataAttribute.cs" />
+    <Compile Include="Fixtures\Customizations\DataContextCustomization.cs" />
+    <Compile Include="Fixtures\Customizations\DefaultCustomization.cs" />
+    <Compile Include="Fixtures\DataLoaders\AddressDataLoader.cs" />
+    <Compile Include="Fixtures\DataLoaders\CustomerDataLoader.cs" />
+    <Compile Include="Fixtures\DataLoaders\CountryDataLoader.cs" />
+    <Compile Include="SUT\DTOs\CustomerCreate.cs" />
+    <Compile Include="SUT\Entities\Country.cs" />
+    <Compile Include="SUT\Infra\DataContext.cs" />
     <Compile Include="Tests\Mocks\MailerMock.cs" />
     <Compile Include="Tests\Mocks\MailerMoqs.cs" />
     <Compile Include="SUT\Infra\IAuthService.cs" />
@@ -85,8 +112,20 @@
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Fixtures\Customizations\" />
+    <ProjectReference Include="..\Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders\Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders.csproj">
+      <Project>{b0f8231c-0f0b-4a2d-940e-5303344848ee}</Project>
+      <Name>Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Bardock.Utils.UnitTest.Data.EF\Bardock.Utils.UnitTest.Data.EF.csproj">
+      <Project>{19961fb9-5e3b-4e6c-b03a-5573d80ff891}</Project>
+      <Name>Bardock.Utils.UnitTest.Data.EF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Bardock.Utils.UnitTest.Data\Bardock.Utils.UnitTest.Data.csproj">
+      <Project>{df4a40f2-af0c-4107-9a1c-35952555f3fa}</Project>
+      <Name>Bardock.Utils.UnitTest.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
