@@ -14,6 +14,9 @@ namespace Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders
 
         public ITableDataLoader CreateTableDataLoader(TableDescription table)
         {
+            if (!_bindings.ContainsKey(table.Name))
+                return new EmptyTableDataLoader();
+
             return new EntityObjectDataLoaderWrapper(_bindings[table.Name], table.Columns);
         }
 
