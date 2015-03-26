@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Bardock.Utils.UnitTest.Samples.Fixtures.DataLoaders
 {
-    public class CountryDataLoader : IEntityDataLoader<Country>
+    public class CountriesDataLoader : IEntityDataLoader<Country>
     {
         public IEnumerable<Country> GetData()
         {

@@ -7,30 +7,20 @@ namespace Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders
 {
     public class EntityObjectDataLoader : IDataLoader
     {
-        private IDictionary<string, IEntityDataLoader<object>> _bindings;
-
-        // TODO FIXME: Effort needs a parameterless constructor
-        public static Action<BindingsBuilder> Config { get; set; }
+        private IDictionary<string, string> _bindings;
 
         public EntityObjectDataLoader()
         {
-            Init();
         }
 
         public EntityObjectDataLoader(Action<BindingsBuilder> config)
         {
-            Config = config;
-            Init();
-        }
-
-        private void Init()
-        {
-            if (Config == null)
-                throw new ArgumentNullException("Config");
+            if (config == null)
+                throw new ArgumentNullException("config");
 
             var builder = new BindingsBuilder();
 
-            Config(builder);
+            config(builder);
 
             _bindings = builder.Build();
 
@@ -38,7 +28,11 @@ namespace Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders
                 throw new NotValidBindingsException("Bindings null or empty");
         }
 
-        public string Argument { get; set; }
+        public string Argument
+        {
+            get { return Newtonsoft.Json.JsonConvert.SerializeObject(_bindings); }
+            set { _bindings = Newtonsoft.Json.JsonConvert.DeserializeObject<IDictionary<string, string>>(value); }
+        }
 
         public ITableDataLoaderFactory CreateTableDataLoaderFactory()
         {
@@ -47,36 +41,24 @@ namespace Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders
 
         public class BindingsBuilder
         {
-            private IDictionary<string, IEntityDataLoader<object>> _bindings;
+            private IDictionary<string, string> _bindings;
 
             public BindingsBuilder()
             {
-                _bindings = new Dictionary<string, IEntityDataLoader<object>>();
+                _bindings = new Dictionary<string, string>();
             }
 
-            public BindingsBuilder Add<TEntity>(string tableName, IEntityDataLoader<TEntity> loader)
-                where TEntity : class
+            public BindingsBuilder Add<TEntityObjectDataLoader>()
+                where TEntityObjectDataLoader : IEntityDataLoader<object>, new()
             {
-                AddBinding(tableName, loader);
+                var type = typeof(TEntityObjectDataLoader);
+                _bindings.Add(type.Name, string.Format("{0}, {1}", type.FullName, type.Assembly.FullName));
                 return this;
             }
 
-            public BindingsBuilder Add<TEntity>(IEntityDataLoader<TEntity> loader)
-                where TEntity : class
+            internal IDictionary<string, string> Build()
             {
-                AddBinding(typeof(TEntity).Name, loader);
-                return this;
-            }
-
-            internal IDictionary<string, IEntityDataLoader<object>> Build()
-            {
-                return _bindings;
-            }
-
-            private void AddBinding<TEntity>(string tableName, IEntityDataLoader<TEntity> loader)
-                where TEntity : class
-            {
-                _bindings.Add(tableName, loader);
+                return _bindings.ToDictionary(e => e.Key, e => e.Value);
             }
         }
 

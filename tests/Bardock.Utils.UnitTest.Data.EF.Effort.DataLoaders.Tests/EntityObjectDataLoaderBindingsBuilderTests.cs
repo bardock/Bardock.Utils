@@ -11,37 +11,20 @@ namespace Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders.Tests
         public void AddOfTEntity()
         {
             var builder = new EntityObjectDataLoader.BindingsBuilder();
-            var dataLoader = new ModelDataLoader();
 
-            builder.Add(dataLoader);
-
-            var bindings = builder.Build();
-
-            Assert.True(dataLoader == bindings[typeof(Model).Name], "Bindings must contain a ModelDataLoader instance");
-        }
-
-        [Fact]
-        public void Add()
-        {
-            var bindingName = "Model";
-            var builder = new EntityObjectDataLoader.BindingsBuilder();
-            var dataLoader = new ModelDataLoader();
-
-            builder.Add(bindingName, dataLoader);
+            builder.Add<ModelDataLoader>();
 
             var bindings = builder.Build();
 
-            Assert.True(dataLoader == bindings[bindingName], "Bindings must contain a ModelDataLoader instance");
+            Assert.True(bindings.ContainsKey(typeof(ModelDataLoader).Name), "Bindings must contain a ModelDataLoader instance");
         }
 
         [Fact]
         public void GetBindings()
         {
-            var bindingName = "Model";
             var builder = new EntityObjectDataLoader.BindingsBuilder();
-            var dataLoader = new ModelDataLoader();
 
-            builder.Add(bindingName, dataLoader);
+            builder.Add<ModelDataLoader>();
 
             var bindings = builder.Build();
 

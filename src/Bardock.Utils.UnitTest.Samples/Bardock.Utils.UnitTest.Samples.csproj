@@ -84,9 +84,9 @@
     <Compile Include="Fixtures\Attributes\DefaultDataAttribute.cs" />
     <Compile Include="Fixtures\Customizations\DataContextCustomization.cs" />
     <Compile Include="Fixtures\Customizations\DefaultCustomization.cs" />
-    <Compile Include="Fixtures\DataLoaders\AddressDataLoader.cs" />
-    <Compile Include="Fixtures\DataLoaders\CustomerDataLoader.cs" />
-    <Compile Include="Fixtures\DataLoaders\CountryDataLoader.cs" />
+    <Compile Include="Fixtures\DataLoaders\AddressesDataLoader.cs" />
+    <Compile Include="Fixtures\DataLoaders\CustomersDataLoader.cs" />
+    <Compile Include="Fixtures\DataLoaders\CountriesDataLoader.cs" />
     <Compile Include="SUT\DTOs\CustomerCreate.cs" />
     <Compile Include="SUT\Entities\Country.cs" />
     <Compile Include="SUT\Infra\DataContext.cs" />
