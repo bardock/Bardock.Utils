@@ -1,0 +1,46 @@
+﻿<#@ template language="C#" #> 
+<#@ assembly name="System.Data" #> 
+<#@ import namespace="System.Data.SqlClient" #> 
+<#@ import namespace="System.Collections.Generic" #> 
+<#@ include file="T4Toolbox.tt" #>
+<#@ include file="EntityDataLoaderGenerator.config.tt" #>
+<#@ include file="EntityDataLoaderTemplate.tt" #>
+
+<#+
+
+    public class EntityDataLoaderGenerator : Generator {
+
+        private EntityDataLoaderTemplateConfig config = new EntityDataLoaderTemplateConfig(); 
+        public EntityDataLoaderTemplate template = new EntityDataLoaderTemplate();
+
+        protected override void RunCore(){
+            foreach(var name in GetEntityNames()) 
+            {
+                template.EntityName = name;
+                template.RenderToFile(name + "DataLoader.cs");
+            }
+        }
+
+        private IEnumerable<string> GetEntityNames()  
+        { 
+            var connectionString =  
+                            @"Data Source=(local);Initial Catalog=AdsVenture;Integrated Security=True"; 
+ 
+            var commandText = "select table_name as TableName from  INFORMATION_SCHEMA.Tables"; 
+             
+            using(var connection = new SqlConnection(connectionString))         
+            { 
+                connection.Open(); 
+                using(var command = new SqlCommand(commandText, connection)) 
+                using(var reader = command.ExecuteReader()) 
+                { 
+                    while (reader.Read()) 
+                    {                                                 
+                        yield return reader["TableName"] as string; 
+                    }     
+                } 
+            } 
+        } 
+    }
+
+ #>

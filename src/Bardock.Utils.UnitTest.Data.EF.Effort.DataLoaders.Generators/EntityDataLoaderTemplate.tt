@@ -1,0 +1,35 @@
+﻿<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ include file="T4Toolbox.tt" #>
+
+<#+
+    public class EntityDataLoaderTemplate : Template {
+
+        public string EntityName {get;set;}
+
+        public override string TransformText(){
+#>
+using Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders;
+using System.Collections.Generic;
+
+public class <#=EntityName#>DataLoader : IEntityDataLoader<<#=EntityName#>>{
+
+    public IEnumerable<<#=EntityName#>> GetData()
+    {
+        return new List<<#=EntityName#>>() 
+        {
+            <#+
+                            
+            #>
+        };
+    }
+
+}
+<#+
+            return this.GenerationEnvironment.ToString();
+        }
+
+    }
+ #>

@@ -1,0 +1,22 @@
+﻿<#@ template debug="true" hostspecific="true" language="C#" #>
+<#@ assembly name="%VS120COMNTOOLS%..\IDE\EntityFramework.dll" #>
+<#@ assembly name="%VS120COMNTOOLS%..\IDE\Microsoft.Data.Entity.Design.dll" #>
+<#@ assembly name="System.Data" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Data.Entity" #>
+<#@ import namespace="System.Data.Entity.Core.Metadata.Edm" #>
+<#@ import namespace="System.Data.Entity.Core.Mapping" #>
+<#@ import namespace="System.Text" #>
+
+<#+
+
+    public class EntityDataLoaderGeneratorConfig{
+
+        public DbContext GetDbContext(){
+            return null;
+        }
+
+    }
+
+ #>
