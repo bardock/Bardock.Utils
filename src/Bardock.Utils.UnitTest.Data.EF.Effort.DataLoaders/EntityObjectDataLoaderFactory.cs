@@ -16,12 +16,10 @@ namespace Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders
 
         public ITableDataLoader CreateTableDataLoader(TableDescription table)
         {
-            var dataLoaderName = string.Format("{0}{1}", table.Name, "DataLoader");
-
-            if (!_bindings.ContainsKey(dataLoaderName))
+            if (!_bindings.ContainsKey(table.Name))
                 return new EmptyTableDataLoader();
 
-            var entry = _bindings.Single(x => x.Key == dataLoaderName);
+            var entry = _bindings.Single(x => x.Key == table.Name);
 
             return new EntityObjectDataLoaderWrapper(
                 (IEntityDataLoader<object>)Activator.CreateInstance(Type.GetType(entry.Value, throwOnError: false)),

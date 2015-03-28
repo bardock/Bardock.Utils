@@ -16,7 +16,7 @@ namespace Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders.Tests
 
             var bindings = builder.Build();
 
-            Assert.True(bindings.ContainsKey(typeof(ModelDataLoader).Name), "Bindings must contain a ModelDataLoader instance");
+            Assert.True(bindings.ContainsKey("Model"), "Bindings must contain a ModelDataLoader instance");
         }
 
         [Fact]
