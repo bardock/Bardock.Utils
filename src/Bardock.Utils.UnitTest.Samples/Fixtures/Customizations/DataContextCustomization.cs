@@ -11,9 +11,7 @@ namespace Bardock.Utils.UnitTest.Samples.Fixtures.Customizations
         public void Customize(IFixture fixture)
         {
             var loader = new EntityObjectDataLoader(
-                conf => conf.Add<CountriesDataLoader>()
-                            .Add<CustomersDataLoader>()
-                            .Add<AddressesDataLoader>());
+                conf => conf.Add<CountriesDataLoader>());
 
             var connection = Effort.DbConnectionFactory.CreateTransient(loader);
 

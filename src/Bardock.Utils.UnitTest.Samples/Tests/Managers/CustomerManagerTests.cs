@@ -7,6 +7,7 @@ using Moq;
 using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.AutoMoq;
 using Ploeh.AutoFixture.Xunit;
+using System;
 using Xunit;
 using Xunit.Extensions;
 
@@ -50,7 +51,7 @@ namespace Bardock.Utils.UnitTest.Samples.Tests.Managers
         [InlineDefaultData()]
         //[InlineDefaultData(typeof(GetCustomerFromDB))]
         //[InlineDefaultData(typeof(CreateCustomerFromChina))]
-        public void Register_ValidEmail_SendMail(
+        public void Create_ValidEmail_SendMail(
             CustomerCreate data,
             [Frozen] Mock<IAuthService> authService,
             [Frozen] Mock<IMailer> mailer,
@@ -61,12 +62,21 @@ namespace Bardock.Utils.UnitTest.Samples.Tests.Managers
             mailer.Verify(x => x.Send(data.Email, "Welcome"));
         }
 
-        /// <summary>
-        /// This unit test demonstrates how to use a service registered in the setup phase of this test
-        /// </summary>
-        [Fact]
-        public void Register_ValidEmail_SendMail_UsingMoq()
+        [Theory]
+        [DefaultData]
+        public void Create_InvalidEmail_InvalidOp(
+            CustomerCreate data,
+            [Frozen] Mock<IAuthService> authService,
+            [Frozen] Mock<IMailer> mailer,
+            CustomerManager sut)
         {
+            data.Email = "invalid";
+
+            Assert.Throws<InvalidOperationException>(() =>
+                sut.Create(data)
+            );
+
+            mailer.Verify(x => x.Send(data.Email, It.IsAny<string>()), Times.Never);
         }
     }
 }
