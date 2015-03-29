@@ -23,9 +23,7 @@ namespace Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders.Tests
         [Fact]
         public void CreateTableDataLoaderFactory()
         {
-            var modelLoader = new ModelDataLoader();
-
-            var loader = new EntityObjectDataLoader(bindings => bindings.Add(modelLoader));
+            var loader = new EntityObjectDataLoader(bindings => bindings.Add<ModelDataLoader>());
 
             var factory = loader.CreateTableDataLoaderFactory();
 
@@ -33,15 +31,13 @@ namespace Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders.Tests
 
             var entityLoader = ((EntityObjectDataLoaderWrapper)dataLoader).GetEntityDataLoader();
 
-            Assert.True(modelLoader == entityLoader);
+            Assert.True(entityLoader != null);
         }
 
         [Fact]
         public void GetData()
         {
-            var modelLoader = new ModelDataLoader();
-
-            var loader = new EntityObjectDataLoader(bindings => bindings.Add(modelLoader));
+            var loader = new EntityObjectDataLoader(bindings => bindings.Add<ModelDataLoader>());
 
             var factory = loader.CreateTableDataLoaderFactory();
 
