@@ -1,11 +1,12 @@
 ﻿using Bardock.Utils.UnitTest.Samples.Fixtures.Attributes;
+using Bardock.Utils.UnitTest.Samples.Fixtures.Customizations;
 using Bardock.Utils.UnitTest.Samples.SUT.DTOs;
 using Bardock.Utils.UnitTest.Samples.SUT.Entities;
 using Bardock.Utils.UnitTest.Samples.SUT.Infra;
 using Bardock.Utils.UnitTest.Samples.SUT.Managers;
 using Moq;
 using Ploeh.AutoFixture;
-using Ploeh.AutoFixture.AutoMoq;
+using Ploeh.AutoFixture.Dsl;
 using Ploeh.AutoFixture.Xunit;
 using System;
 using Xunit;
@@ -30,7 +31,10 @@ namespace Bardock.Utils.UnitTest.Samples.Tests.Managers
 
         private class GetCustomerFromDB : FromDB
         {
-            public GetCustomerFromDB(dynamic db) : base((object)db) { }
+            public GetCustomerFromDB(dynamic db)
+                : base((object)db)
+            {
+            }
 
             public object Resolve()
             {
@@ -75,6 +79,28 @@ namespace Bardock.Utils.UnitTest.Samples.Tests.Managers
             Assert.Throws<InvalidOperationException>(() =>
                 sut.Create(data)
             );
+
+            mailer.Verify(x => x.Send(data.Email, It.IsAny<string>()), Times.Never);
+        }
+
+        private class CustomerCreateWithInvalidEmail : CustomizationComposer<CustomerCreate>
+        {
+            protected override IPostprocessComposer<CustomerCreate> Configure(ICustomizationComposer<CustomerCreate> c)
+            {
+                return c.With(x => x.Email, "invalid");
+            }
+        }
+
+        [Theory]
+        [DefaultData]
+        public void Create_InvalidEmail_InvalidOp___CustomizeWith(
+            [CustomizeWith(typeof(CustomerCreateWithInvalidEmail))] CustomerCreate data,
+            [Frozen] Mock<IAuthService> authService,
+            [Frozen] Mock<IMailer> mailer,
+            CustomerManager sut)
+        {
+            Assert.Throws<InvalidOperationException>(() =>
+                sut.Create(data));
 
             mailer.Verify(x => x.Send(data.Email, It.IsAny<string>()), Times.Never);
         }

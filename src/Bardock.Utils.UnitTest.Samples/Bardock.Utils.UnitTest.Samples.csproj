@@ -80,8 +80,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Fixtures\Attributes\CustomizeWithAttribute.cs" />
     <Compile Include="Fixtures\Attributes\InlineDefaultDataAttribute.cs" />
     <Compile Include="Fixtures\Attributes\DefaultDataAttribute.cs" />
+    <Compile Include="Fixtures\Customizations\CustomizationComposer.cs" />
     <Compile Include="Fixtures\Customizations\DataContextCustomization.cs" />
     <Compile Include="Fixtures\Customizations\DefaultCustomization.cs" />
     <Compile Include="Fixtures\DataLoaders\AddressesDataLoader.cs" />
