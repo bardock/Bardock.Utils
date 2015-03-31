@@ -2,6 +2,7 @@
 using Bardock.Utils.UnitTest.Samples.SUT.Entities;
 using Bardock.Utils.UnitTest.Samples.SUT.Infra;
 using System;
+using System.Linq;
 
 namespace Bardock.Utils.UnitTest.Samples.SUT.Managers
 {
@@ -12,9 +13,9 @@ namespace Bardock.Utils.UnitTest.Samples.SUT.Managers
         private IMailer _mailer;
 
         public CustomerManager(
-            string userName, 
+            string userName,
             DataContext db,
-            IAuthService authService, 
+            IAuthService authService,
             IMailer mailer)
             : base(userName)
         {
@@ -33,7 +34,10 @@ namespace Bardock.Utils.UnitTest.Samples.SUT.Managers
             if (data.Email == "invalid")
                 throw new InvalidOperationException();
 
-            var e = new Customer() 
+            if (_db.Customers.Any(x => x.Email == data.Email))
+                throw new EmailAlreadyExistsException();
+
+            var e = new Customer()
             {
                 FirstName = data.FirstName,
                 LastName = data.LastName,
@@ -46,5 +50,6 @@ namespace Bardock.Utils.UnitTest.Samples.SUT.Managers
 
             _mailer.Send(data.Email, "Welcome");
         }
+        public class EmailAlreadyExistsException : Exception { }
     }
 }

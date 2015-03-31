@@ -109,25 +109,33 @@ namespace Bardock.Utils.UnitTest.Samples.Tests.Managers
 
         [Theory]
         [DefaultData]
-        public void TODO_Insert(
-            IDataContextScopeFactory dataScope,
-            [CustomizeWith(typeof(CustomerCreateWithInvalidEmail))] CustomerCreate data,
-            [Frozen] Mock<IAuthService> authService,
-            [Frozen] Mock<IMailer> mailer,
+        public void Create_ExistingEmail_Exception(
+            IDataContextWrapper db,
+            CustomerCreate data,
             CustomerManager sut)
         {
-            using (var s = dataScope.CreateDefault())
-            {
-                var c = s.Db.GetQuery<Customer>().FirstOrDefault();
-            }
+            data.Email = db.GetQuery<Customer>().Select(x => x.Email).First();
+
+            Assert.Throws<CustomerManager.EmailAlreadyExistsException>(() =>
+                sut.Create(data));
         }
 
         [Theory]
         [DefaultData]
-        public void TODO_Find(
-            IDataContextWrapper db)
+        public void Create_ExistingEmail_Exception___UpdateExisting(
+            IDataContextScopeFactory dataScope,
+            CustomerCreate data,
+            CustomerManager sut)
         {
-            var c = db.GetQuery<Customer>().FirstOrDefault();
+            using (var s = dataScope.CreateDefault())
+            {
+                var c = s.Db.GetQuery<Customer>().First();
+                c.Email = data.Email;
+                s.Db.Update(c);
+            }
+
+            Assert.Throws<CustomerManager.EmailAlreadyExistsException>(() =>
+                sut.Create(data));
         }
     }
 }

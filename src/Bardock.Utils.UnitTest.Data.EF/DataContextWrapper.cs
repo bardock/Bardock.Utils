@@ -66,7 +66,7 @@ namespace Bardock.Utils.UnitTest.Data.EF
         {
             _db.SaveChanges();
 
-            this.DetachAll(_entries);
+            this.DetachAll(_entries.ToList());
 
             return this;
         }

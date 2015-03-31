@@ -9,7 +9,7 @@ namespace Bardock.Utils.UnitTest.Samples.Fixtures.Customizations
     {
         public void Customize(IFixture fixture)
         {
-            var db = fixture.CreateAnonymous<DataContext>();
+            var db = fixture.Create<DataContext>();
             var wrapper = new DataContextWrapper(db);
             fixture.Register<IDataContextWrapper>(() => wrapper);
 
