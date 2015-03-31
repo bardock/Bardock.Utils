@@ -8,6 +8,7 @@ namespace Bardock.Utils.UnitTest.Samples.Fixtures.Customizations
         public DefaultCustomization()
             : base(
                 new DataContextCustomization(),
+                new DataContextWrapperCustomization(),
                 new AutoMoqCustomization())
         {
         }

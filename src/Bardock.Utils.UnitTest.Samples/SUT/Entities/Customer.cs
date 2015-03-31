@@ -15,7 +15,7 @@ namespace Bardock.Utils.UnitTest.Samples.SUT.Entities
 
         public string Email { get; set; }
 
-        public List<Address> Addresses { get; set; }
+        public virtual List<Address> Addresses { get; set; }
 
         public DateTime CreatedOn { get; set; }
     }

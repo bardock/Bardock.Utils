@@ -9,8 +9,10 @@ using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.Dsl;
 using Ploeh.AutoFixture.Xunit;
 using System;
+using System.Linq;
 using Xunit;
 using Xunit.Extensions;
+using Bardock.Utils.UnitTest.Data;
 
 namespace Bardock.Utils.UnitTest.Samples.Tests.Managers
 {
@@ -103,6 +105,29 @@ namespace Bardock.Utils.UnitTest.Samples.Tests.Managers
                 sut.Create(data));
 
             mailer.Verify(x => x.Send(data.Email, It.IsAny<string>()), Times.Never);
+        }
+
+        [Theory]
+        [DefaultData]
+        public void TODO_Insert(
+            IDataContextScopeFactory dataScope,
+            [CustomizeWith(typeof(CustomerCreateWithInvalidEmail))] CustomerCreate data,
+            [Frozen] Mock<IAuthService> authService,
+            [Frozen] Mock<IMailer> mailer,
+            CustomerManager sut)
+        {
+            using (var s = dataScope.CreateDefault())
+            {
+                var c = s.Db.GetQuery<Customer>().FirstOrDefault();
+            }
+        }
+
+        [Theory]
+        [DefaultData]
+        public void TODO_Find(
+            IDataContextWrapper db)
+        {
+            var c = db.GetQuery<Customer>().FirstOrDefault();
         }
     }
 }

@@ -12,19 +12,19 @@ namespace Bardock.Utils.UnitTest.Data
         IDataContextWrapper Add<T>(T e)
             where T : class;
 
-        IDataContextWrapper Add<T>(IEnumerable<T> e)
+        IDataContextWrapper AddAll<T>(IEnumerable<T> e)
             where T : class;
 
         IDataContextWrapper Update<T>(T e)
             where T : class;
 
-        IDataContextWrapper Update<T>(IEnumerable<T> e)
+        IDataContextWrapper UpdateAll<T>(IEnumerable<T> e)
             where T : class;
 
         IDataContextWrapper Delete<T>(T e)
             where T : class;
 
-        IDataContextWrapper Delete<T>(IEnumerable<T> e)
+        IDataContextWrapper DeleteAll<T>(IEnumerable<T> e)
             where T : class;
 
         /// <summary>

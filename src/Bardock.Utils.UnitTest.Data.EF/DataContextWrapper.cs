@@ -27,7 +27,7 @@ namespace Bardock.Utils.UnitTest.Data.EF
             return this;
         }
 
-        public IDataContextWrapper Add<T>(IEnumerable<T> e)
+        public IDataContextWrapper AddAll<T>(IEnumerable<T> e)
             where T : class
         {
             foreach (var i in e)
@@ -47,7 +47,7 @@ namespace Bardock.Utils.UnitTest.Data.EF
             return this;
         }
 
-        public IDataContextWrapper Delete<T>(IEnumerable<T> e)
+        public IDataContextWrapper DeleteAll<T>(IEnumerable<T> e)
             where T : class
         {
             foreach (var i in e)
@@ -66,7 +66,7 @@ namespace Bardock.Utils.UnitTest.Data.EF
         {
             _db.SaveChanges();
 
-            this.Detach(_entries);
+            this.DetachAll(_entries);
 
             return this;
         }
@@ -88,7 +88,7 @@ namespace Bardock.Utils.UnitTest.Data.EF
             return this;
         }
 
-        public IDataContextWrapper Update<T>(IEnumerable<T> e)
+        public IDataContextWrapper UpdateAll<T>(IEnumerable<T> e)
             where T : class
         {
             foreach (var i in e)
@@ -107,7 +107,7 @@ namespace Bardock.Utils.UnitTest.Data.EF
             return this;
         }
 
-        private DataContextWrapper Detach<T>(IEnumerable<T> e)
+        private DataContextWrapper DetachAll<T>(IEnumerable<T> e)
             where T : class
         {
             foreach (var i in e)

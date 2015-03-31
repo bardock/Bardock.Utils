@@ -2,7 +2,6 @@
 using Bardock.Utils.UnitTest.Samples.Fixtures.DataLoaders;
 using Bardock.Utils.UnitTest.Samples.SUT.Infra;
 using Ploeh.AutoFixture;
-using System.Data.Common;
 
 namespace Bardock.Utils.UnitTest.Samples.Fixtures.Customizations
 {
@@ -10,8 +9,10 @@ namespace Bardock.Utils.UnitTest.Samples.Fixtures.Customizations
     {
         public void Customize(IFixture fixture)
         {
-            var loader = new EntityObjectDataLoader(
-                conf => conf.Add<CountriesDataLoader>());
+            var loader = new EntityObjectDataLoader(conf => conf
+                .Add<CountriesDataLoader>()
+                .Add<AddressesDataLoader>()
+                .Add<CustomersDataLoader>());
 
             var connection = Effort.DbConnectionFactory.CreateTransient(loader);
 
