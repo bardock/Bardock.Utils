@@ -90,6 +90,7 @@
     <Compile Include="Fixtures\DataLoaders\AddressesDataLoader.cs" />
     <Compile Include="Fixtures\DataLoaders\CustomersDataLoader.cs" />
     <Compile Include="Fixtures\DataLoaders\CountriesDataLoader.cs" />
+    <Compile Include="Fixtures\DataLoaders\LoaderFixture.cs" />
     <Compile Include="SUT\DTOs\CustomerCreate.cs" />
     <Compile Include="SUT\Entities\Country.cs" />
     <Compile Include="SUT\Infra\DataContext.cs" />
@@ -128,6 +129,10 @@
     <ProjectReference Include="..\Bardock.Utils.UnitTest.Data\Bardock.Utils.UnitTest.Data.csproj">
       <Project>{df4a40f2-af0c-4107-9a1c-35952555f3fa}</Project>
       <Name>Bardock.Utils.UnitTest.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Bardock.Utils\Bardock.Utils.csproj">
+      <Project>{dff10396-c6b8-43f7-bbdd-d7ad9f57e4bf}</Project>
+      <Name>Bardock.Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
