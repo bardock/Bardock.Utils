@@ -38,6 +38,7 @@
   <ItemGroup>
     <Compile Include="Collections\Coll.cs" />
     <Compile Include="DataAnnotations\EmailAttribute.cs" />
+    <Compile Include="Extensions\ExceptionExtensions.cs" />
     <Compile Include="Extensions\ByteExtensions.cs" />
     <Compile Include="Extensions\Expressions\ConvertExpressionExtensions.cs" />
     <Compile Include="Extensions\Expressions\ConstantExpressionExtensions.cs" />
