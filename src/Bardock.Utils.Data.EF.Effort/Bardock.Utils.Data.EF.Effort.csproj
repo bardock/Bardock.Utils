@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{89FE2B31-5E28-46E1-BB50-817EF51954CD}</ProjectGuid>
+    <ProjectGuid>{6DED5D77-9737-4D22-9528-61CC34FC0515}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Bardock.Utils.Data.EF</RootNamespace>
-    <AssemblyName>Bardock.Utils.Data.EF</AssemblyName>
+    <RootNamespace>Bardock.Utils.Data.EF.Effort</RootNamespace>
+    <AssemblyName>Bardock.Utils.Data.EF.Effort</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -32,17 +32,22 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
+    <Reference Include="Effort">
+      <HintPath>..\packages\Effort.EF6.1.1.0\lib\net45\Effort.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="NMemory">
+      <HintPath>..\packages\NMemory.1.0.0\lib\net45\NMemory.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -50,26 +55,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DbContextBase.cs" />
-    <Compile Include="DbContextExtensions.cs" />
-    <Compile Include="EntityTypeConfigurationExtensions.cs" />
-    <Compile Include="Exceptions\DuplicatedEntryException.cs" />
-    <Compile Include="Exceptions\Mappers\CompositeExceptionMapper.cs" />
-    <Compile Include="Exceptions\Mappers\IExceptionMapper.cs" />
-    <Compile Include="Exceptions\Mappers\NullExceptionMapper.cs" />
+    <Compile Include="Exceptions\Mappers\EffortExceptionMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-    <None Include="Bardock.Utils.Data.EF.nuspec" />
-    <None Include="Bardock.Utils.Data.EF.pub.bat" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
+    <ProjectReference Include="..\Bardock.Utils.Data.EF\Bardock.Utils.Data.EF.csproj">
+      <Project>{89fe2b31-5e28-46e1-bb50-817ef51954cd}</Project>
+      <Name>Bardock.Utils.Data.EF</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Bardock.Utils\Bardock.Utils.csproj">
       <Project>{dff10396-c6b8-43f7-bbdd-d7ad9f57e4bf}</Project>
       <Name>Bardock.Utils</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="Bardock.Utils.Data.EF.Effort.nuspec" />
+    <None Include="Bardock.Utils.Data.EF.Effort.pub.bat" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
