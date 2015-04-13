@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Bardock.Utils.Collections
+﻿namespace Bardock.Utils.Collections
 {
     public class Coll
     {
@@ -14,7 +8,7 @@ namespace Bardock.Utils.Collections
         /// </summary>
         public static T[] Array<T>()
         {
-            return new T[]{};
+            return new T[] { };
         }
 
         /// <summary>

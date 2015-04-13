@@ -8,4 +8,4 @@ namespace Bardock.Utils.Data.EF.Exceptions
             : base("Cannot insert duplicate entry", ex)
         { }
     }
-}   
+}

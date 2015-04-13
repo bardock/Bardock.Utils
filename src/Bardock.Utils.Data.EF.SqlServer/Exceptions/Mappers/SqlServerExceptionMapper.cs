@@ -1,9 +1,9 @@
-﻿using Bardock.Utils.Data.EF.Exceptions;
-using Bardock.Utils.Data.EF.Exceptions.Mappers;
-using Bardock.Utils.Extensions;
-using System;
+﻿using System;
 using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
+using Bardock.Utils.Data.EF.Exceptions;
+using Bardock.Utils.Data.EF.Exceptions.Mappers;
+using Bardock.Utils.Extensions;
 
 namespace Bardock.Utils.Data.EF.SqlServer.Exceptions.Mappers
 {

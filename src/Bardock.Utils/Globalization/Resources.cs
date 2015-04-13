@@ -6,7 +6,7 @@ namespace Bardock.Utils.Globalization
     {
         private static IResourceProvider _current = new NullResourceProvider();
 
-        public static IResourceProvider Current  { get { return _current; } }
+        public static IResourceProvider Current { get { return _current; } }
 
         public static void Register(IResourceProvider provider)
         {
@@ -40,7 +40,7 @@ namespace Bardock.Utils.Globalization
     /// Provides a wrapper for a strongly-typed resource class (i.e. the auto-generated class from a *.resx file)
     /// </summary>
     public class TypedClassResourceProvider : IResourceProvider
-	{
+    {
         private Type _resourceType;
 
         public TypedClassResourceProvider(Type _resourceType)
@@ -59,5 +59,5 @@ namespace Bardock.Utils.Globalization
 
             return prop.GetValue(null).ToString();
         }
-	}
+    }
 }

@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Runtime.CompilerServices;
+﻿using System.IO;
 
 namespace Bardock.Utils.Extensions
 {
@@ -28,5 +26,4 @@ namespace Bardock.Utils.Extensions
             }
         }
     }
-
 }

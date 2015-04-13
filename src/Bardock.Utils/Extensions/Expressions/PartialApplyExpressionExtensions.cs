@@ -34,7 +34,6 @@ namespace Bardock.Utils.Extensions
 
     public static class PartialApplyExpressionExtensions
     {
-
         #region PartialApply_Func
 
         public static Expression<Func<R>> PartialApply<A1, R>(
@@ -48,7 +47,7 @@ namespace Bardock.Utils.Extensions
             this Expression<Func<A1, A2, R>> expr, A1 arg1)
         {
             return Expression.Lambda<Func<A2, R>>(
-                new PartialApplyExpressionVisitor<A1>(expr, arg1).Visit(), 
+                new PartialApplyExpressionVisitor<A1>(expr, arg1).Visit(),
                 expr.Parameters.Skip(1));
         }
 
@@ -56,7 +55,7 @@ namespace Bardock.Utils.Extensions
             this Expression<Func<A1, A2, A3, R>> expr, A1 arg1)
         {
             return Expression.Lambda<Func<A2, A3, R>>(
-                new PartialApplyExpressionVisitor<A1>(expr, arg1).Visit(), 
+                new PartialApplyExpressionVisitor<A1>(expr, arg1).Visit(),
                 expr.Parameters.Skip(1));
         }
 
@@ -78,9 +77,9 @@ namespace Bardock.Utils.Extensions
                 expr.Parameters.Take(2));
         }
 
-        #endregion
+        #endregion PartialApply_Func_LastParam
 
-        #endregion
+        #endregion PartialApply_Func
 
         #region PartialApply_Action
 
@@ -95,7 +94,7 @@ namespace Bardock.Utils.Extensions
             this Expression<Action<A1, A2>> expr, A1 arg1)
         {
             return Expression.Lambda<Action<A2>>(
-                new PartialApplyExpressionVisitor<A1>(expr, arg1).Visit(), 
+                new PartialApplyExpressionVisitor<A1>(expr, arg1).Visit(),
                 expr.Parameters.Skip(1));
         }
 
@@ -103,7 +102,7 @@ namespace Bardock.Utils.Extensions
             this Expression<Action<A1, A2, A3>> expr, A1 arg1)
         {
             return Expression.Lambda<Action<A2, A3>>(
-                new PartialApplyExpressionVisitor<A1>(expr, arg1).Visit(), 
+                new PartialApplyExpressionVisitor<A1>(expr, arg1).Visit(),
                 expr.Parameters.Skip(1));
         }
 
@@ -113,7 +112,7 @@ namespace Bardock.Utils.Extensions
             this Expression<Action<A1, A2>> expr, A2 arg2)
         {
             return Expression.Lambda<Action<A1>>(
-                new PartialApplyExpressionVisitor<A2>(expr, arg2, expr.Parameters.Last()).Visit(), 
+                new PartialApplyExpressionVisitor<A2>(expr, arg2, expr.Parameters.Last()).Visit(),
                 expr.Parameters.Take(1));
         }
 
@@ -121,12 +120,12 @@ namespace Bardock.Utils.Extensions
             this Expression<Action<A1, A2, A3>> expr, A3 arg3)
         {
             return Expression.Lambda<Action<A1, A2>>(
-                new PartialApplyExpressionVisitor<A3>(expr, arg3, expr.Parameters.Last()).Visit(), 
+                new PartialApplyExpressionVisitor<A3>(expr, arg3, expr.Parameters.Last()).Visit(),
                 expr.Parameters.Take(2));
         }
 
-        #endregion
+        #endregion PartialApply_Action_LastParam
 
-        #endregion
+        #endregion PartialApply_Action
     }
 }

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Linq;
 
 namespace Bardock.Utils.Extensions
 {
@@ -15,5 +12,5 @@ namespace Bardock.Utils.Extensions
             }
             return source;
         }
-	}
+    }
 }

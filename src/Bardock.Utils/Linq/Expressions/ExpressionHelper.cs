@@ -1,49 +1,48 @@
 ﻿using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Collections.Generic;
-using System.Collections.Concurrent;
 using System.Reflection;
-using System.Globalization;
 
 namespace Bardock.Utils.Linq.Expressions
 {
-	public class ExpressionHelper
-	{
-
+    public class ExpressionHelper
+    {
         /// <summary>
         /// Obtains the member name string of a specified expression
         /// </summary>
-		public static string GetMemberName<T>(Expression<System.Func<T, object>> expression)
-		{
-			if (expression.Body is MemberExpression) 
+        public static string GetMemberName<T>(Expression<System.Func<T, object>> expression)
+        {
+            if (expression.Body is MemberExpression)
             {
-				return ((MemberExpression)expression.Body).Member.Name;
-			} 
-            else 
+                return ((MemberExpression)expression.Body).Member.Name;
+            }
+            else
             {
-				var op = (((UnaryExpression)expression.Body).Operand);
-				return ((MemberExpression)op).Member.Name;
-			}
-		}
+                var op = (((UnaryExpression)expression.Body).Operand);
+                return ((MemberExpression)op).Member.Name;
+            }
+        }
 
-		/// <summary>
-		/// Builds an Expression Tree from an expression string with properties, for example: "Prop1.Prop2.Prop3"
-		/// </summary>
-		public static LambdaExpression ParseProperties<TSource>(string expressionString)
-		{
-			string[] properties = expressionString.Split(new char[]{'.'}, StringSplitOptions.RemoveEmptyEntries);
+        /// <summary>
+        /// Builds an Expression Tree from an expression string with properties, for example: "Prop1.Prop2.Prop3"
+        /// </summary>
+        public static LambdaExpression ParseProperties<TSource>(string expressionString)
+        {
+            string[] properties = expressionString.Split(new char[] { '.' }, StringSplitOptions.RemoveEmptyEntries);
 
-			ParameterExpression parameter = Expression.Parameter(typeof(TSource), "posting");
+            ParameterExpression parameter = Expression.Parameter(typeof(TSource), "posting");
 
-			Expression exp = parameter;
-			foreach (var prop in properties) 
+            Expression exp = parameter;
+            foreach (var prop in properties)
             {
-				exp = Expression.Property(exp, prop);
-			}
+                exp = Expression.Property(exp, prop);
+            }
 
             return Expression.Lambda(exp, parameter);
-		}
+        }
 
         public static string GetExpressionText<TModel, TResult>(Expression<Func<TModel, TResult>> exp)
         {
@@ -64,8 +63,8 @@ namespace Bardock.Utils.Linq.Expressions
 
         private class ParameterRebinder : ExpressionVisitor
         {
-
             private readonly Dictionary<ParameterExpression, ParameterExpression> map;
+
             public ParameterRebinder(Dictionary<ParameterExpression, ParameterExpression> map)
             {
                 this.map = map ?? new Dictionary<ParameterExpression, ParameterExpression>();
@@ -104,7 +103,7 @@ namespace Bardock.Utils.Linq.Expressions
             // replace parameters in the second lambda expression with parameters from the first
             var secondBody = ParameterRebinder.ReplaceParameters(map, second.Body);
 
-            // apply composition of lambda expression bodies to parameters from the first expression 
+            // apply composition of lambda expression bodies to parameters from the first expression
             return Expression.Lambda<TReturn>(merge(first.Body, secondBody), first.Parameters);
         }
 
@@ -123,7 +122,8 @@ namespace Bardock.Utils.Linq.Expressions
             var @params = exp.Parameters.ToList();
             return Expression.Lambda<Func<T, bool>>(Expression.Not(exp.Body), parameters: @params);
         }
-        #endregion
+
+        #endregion "Expression Composing"
 
         #region "Mvc Official Helpers"
 
@@ -230,8 +230,10 @@ namespace Bardock.Utils.Linq.Expressions
                 .OfType<PropertyInfo>()
                 .Any(p => p.GetGetMethod() == methodExpression.Method);
         }
-        #endregion
+
+        #endregion "Mvc Official Helpers"
     }
+
     internal static class CachedExpressionCompiler
     {
         // This is the entry point to the cached expression compilation system. The system

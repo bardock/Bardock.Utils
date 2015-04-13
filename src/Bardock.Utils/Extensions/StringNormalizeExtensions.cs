@@ -29,7 +29,7 @@ namespace Bardock.Utils.Extensions
                     sb.Append(c.ToLower());
                     prevdash = false;
                 }
-                else if (c.In('´','’'))
+                else if (c.In('´', '’'))
                 {
                     sb.Append('\'');
                     prevdash = false;

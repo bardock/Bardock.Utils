@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Runtime.CompilerServices;
 
 namespace Bardock.Utils.Extensions
 {
-	public static class GenericExtensions
+    public static class GenericExtensions
     {
         /// <summary>
         /// Determines if the instance satifies the specified predicated
@@ -51,12 +49,12 @@ namespace Bardock.Utils.Extensions
         }
 
         /// <summary>
-        /// Applies specified function when the flag is true. 
+        /// Applies specified function when the flag is true.
         /// This methods provides method chaining when a condition must be evaluated.
         /// </summary>
         public static T Apply<T>(this T @this, Func<T, T> f, bool when)
         {
             return when ? f.Invoke(@this) : @this;
         }
-	}
+    }
 }

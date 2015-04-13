@@ -1,10 +1,10 @@
-﻿using Bardock.Utils.Data.EF.Exceptions.Mappers;
-using System;
+﻿using System;
 using System.Data.Common;
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
 using System.Threading.Tasks;
+using Bardock.Utils.Data.EF.Exceptions.Mappers;
 
 namespace Bardock.Utils.Data.EF
 {
@@ -12,10 +12,12 @@ namespace Bardock.Utils.Data.EF
     {
         private IExceptionMapper _exceptionMapper;
 
-        protected DbContextBase() : base()
+        protected DbContextBase()
+            : base()
         {
             _exceptionMapper = new NullExceptionMapper();
         }
+
         public DbContextBase(
             IExceptionMapper exceptionMapper)
             : base()
@@ -24,7 +26,7 @@ namespace Bardock.Utils.Data.EF
         }
 
         public DbContextBase(
-            string nameOrConnectionString, 
+            string nameOrConnectionString,
             IExceptionMapper exceptionMapper = null)
             : base(nameOrConnectionString)
         {
@@ -32,8 +34,8 @@ namespace Bardock.Utils.Data.EF
         }
 
         public DbContextBase(
-            DbConnection existingConnection, 
-            bool contextOwnsConnection, 
+            DbConnection existingConnection,
+            bool contextOwnsConnection,
             IExceptionMapper exceptionMapper = null)
             : base(existingConnection, contextOwnsConnection)
         {
@@ -41,8 +43,8 @@ namespace Bardock.Utils.Data.EF
         }
 
         public DbContextBase(
-            ObjectContext objectContext, 
-            bool dbContextOwnsObjectContext, 
+            ObjectContext objectContext,
+            bool dbContextOwnsObjectContext,
             IExceptionMapper exceptionMapper = null)
             : base(objectContext, dbContextOwnsObjectContext)
         {
@@ -50,8 +52,8 @@ namespace Bardock.Utils.Data.EF
         }
 
         public DbContextBase(
-            string nameOrConnectionString, 
-            DbCompiledModel model, 
+            string nameOrConnectionString,
+            DbCompiledModel model,
             IExceptionMapper exceptionMapper = null)
             : base(nameOrConnectionString, model)
         {
@@ -59,9 +61,9 @@ namespace Bardock.Utils.Data.EF
         }
 
         public DbContextBase(
-            DbConnection existingConnection, 
-            DbCompiledModel model, 
-            bool contextOwnsConnection, 
+            DbConnection existingConnection,
+            DbCompiledModel model,
+            bool contextOwnsConnection,
             IExceptionMapper exceptionMapper = null)
             : base(existingConnection, model, contextOwnsConnection)
         {

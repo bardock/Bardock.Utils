@@ -1,8 +1,8 @@
-﻿using Bardock.Utils.Linq.Expressions;
-using System;
+﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using Bardock.Utils.Linq.Expressions;
 
 namespace Bardock.Utils.Extensions
 {
@@ -53,7 +53,7 @@ namespace Bardock.Utils.Extensions
 
             if (fromDate.HasValue)
             {
-                if(removeTime)
+                if (removeTime)
                 {
                     fromDate = fromDate.Value.ToDayStart();
                 }
@@ -123,6 +123,5 @@ namespace Bardock.Utils.Extensions
 	        });
             return (IOrderedQueryable<TSource>)ret;
         }
-	}
-
+    }
 }

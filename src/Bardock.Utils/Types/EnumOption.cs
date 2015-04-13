@@ -12,12 +12,14 @@ namespace Bardock.Utils.Types
         where TValue : struct, IConvertible
     {
         public TEnum Enum { get; private set; }
+
         public string Name { get; private set; }
+
         public TValue Value { get; private set; }
 
         public EnumOption(TEnum @enum)
         {
-			if (!typeof(TEnum).IsEnum)
+            if (!typeof(TEnum).IsEnum)
                 throw new ArgumentException("TEnum must be an enumerated type");
 
             this.Enum = @enum;
@@ -31,7 +33,7 @@ namespace Bardock.Utils.Types
     /// </summary>
     /// <typeparam name="TEnum">Enum type</typeparam>
     public class EnumOption<TEnum> : EnumOption<TEnum, int>
-        where TEnum : struct, IConvertible 
+        where TEnum : struct, IConvertible
     {
         public EnumOption(TEnum @enum)
             : base(@enum) { }

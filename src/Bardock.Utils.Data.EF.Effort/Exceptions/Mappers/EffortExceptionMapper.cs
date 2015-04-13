@@ -1,8 +1,8 @@
-﻿using Bardock.Utils.Data.EF.Exceptions;
+﻿using System;
+using System.Data.Entity.Infrastructure;
+using Bardock.Utils.Data.EF.Exceptions;
 using Bardock.Utils.Data.EF.Exceptions.Mappers;
 using Bardock.Utils.Extensions;
-using System;
-using System.Data.Entity.Infrastructure;
 
 namespace Bardock.Utils.Data.EF.Effort.Exceptions.Mappers
 {
