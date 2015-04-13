@@ -12,89 +12,48 @@ namespace Bardock.Utils.Data.EF
 {
     public static class EntityTypeConfigurationExtensions
     {
-        public static EntityTypeConfiguration<TEntity> HasIndex<TEntity, TProp>(
+        public static EntityTypeConfiguration<TEntity> HasIndex<TEntity>(
             this EntityTypeConfiguration<TEntity> config,
-            Expression<Func<TEntity, TProp>> field,
-            string name = null,
-            bool isUnique = false)
+            params Expression<Func<TEntity, object>>[] fields)
             where TEntity : class
         {
-            return config.HasIndex(
-                fieldsExpressions: new LambdaExpression[] { field },
-                name: name,
-                isUnique: isUnique);
+            return config.HasIndex(name: null, fields: fields);
         }
 
-        public static EntityTypeConfiguration<TEntity> HasIndex<TEntity, TProp1, TProp2>(
+        public static EntityTypeConfiguration<TEntity> HasIndex<TEntity>(
             this EntityTypeConfiguration<TEntity> config,
-            Expression<Func<TEntity, TProp1>> field1,
-            Expression<Func<TEntity, TProp2>> field2,
-            string name = null,
-            bool isUnique = false)
+            string name,
+            params Expression<Func<TEntity, object>>[] fields)
             where TEntity : class
         {
-            return config.HasIndex(
-                fieldsExpressions: new LambdaExpression[] { field1, field2 },
-                name: name,
-                isUnique: isUnique);
+            return config.HasIndex(name: name, isUnique: false, fields: fields);
         }
 
-        public static EntityTypeConfiguration<TEntity> HasIndex<TEntity, TProp1, TProp2, TProp3>(
+        public static EntityTypeConfiguration<TEntity> HasUniqueIndex<TEntity>(
             this EntityTypeConfiguration<TEntity> config,
-            Expression<Func<TEntity, TProp1>> field1,
-            Expression<Func<TEntity, TProp2>> field2,
-            Expression<Func<TEntity, TProp3>> field3,
-            string name = null,
-            bool isUnique = false)
+            params Expression<Func<TEntity, object>>[] fields)
             where TEntity : class
         {
-            return config.HasIndex(
-                fieldsExpressions: new LambdaExpression[] { field1, field2, field3 },
-                name: name,
-                isUnique: isUnique);
+            return config.HasUniqueIndex(name: null, fields: fields);
         }
 
-        public static EntityTypeConfiguration<TEntity> HasIndex<TEntity, TProp1, TProp2, TProp3, TProp4>(
+        public static EntityTypeConfiguration<TEntity> HasUniqueIndex<TEntity>(
             this EntityTypeConfiguration<TEntity> config,
-            Expression<Func<TEntity, TProp1>> field1,
-            Expression<Func<TEntity, TProp2>> field2,
-            Expression<Func<TEntity, TProp3>> field3,
-            Expression<Func<TEntity, TProp4>> field4,
-            string name = null,
-            bool isUnique = false)
+            string name,
+            params Expression<Func<TEntity, object>>[] fields)
             where TEntity : class
         {
-            return config.HasIndex(
-                fieldsExpressions: new LambdaExpression[] { field1, field2, field3, field4 },
-                name: name,
-                isUnique: isUnique);
-        }
-
-        public static EntityTypeConfiguration<TEntity> HasIndex<TEntity, TProp1, TProp2, TProp3, TProp4, TProp5>(
-            this EntityTypeConfiguration<TEntity> config,
-            Expression<Func<TEntity, TProp1>> field1,
-            Expression<Func<TEntity, TProp2>> field2,
-            Expression<Func<TEntity, TProp3>> field3,
-            Expression<Func<TEntity, TProp4>> field4,
-            Expression<Func<TEntity, TProp5>> field5,
-            string name = null,
-            bool isUnique = false)
-            where TEntity : class
-        {
-            return config.HasIndex(
-                fieldsExpressions: new LambdaExpression[] { field1, field2, field3, field4, field5 },
-                name: name,
-                isUnique: isUnique);
+            return config.HasIndex(name: name, isUnique: true, fields: fields);
         }
 
         private static EntityTypeConfiguration<TEntity> HasIndex<TEntity>(
             this EntityTypeConfiguration<TEntity> config,
-            LambdaExpression[] fieldsExpressions,
-            string name = null,
-            bool isUnique = false)
+            string name,
+            bool isUnique,
+            params Expression<Func<TEntity, object>>[] fields)
             where TEntity : class
         {
-            var fieldsProperties = fieldsExpressions
+            var fieldsProperties = fields
                 .Select(x => (MemberExpression)(x.Body.RemoveConvert()))
                 .Select(x => (PropertyInfo)x.Member)
                 .ToList();
@@ -104,26 +63,31 @@ namespace Bardock.Utils.Data.EF
             var i = 0;
             foreach (var prop in fieldsProperties)
             {
-                var type = config.GetType();
-                var propertyMethod = type.GetMethods()
+                var propertyMethod = config.GetType().GetMethods()
                     .Where(x => x.Name == "Property")
                     .Select(x => new
                     {
                         Method = x,
                         PropertyType = GetPropertyTypeOfPropertyMethod(x),
                     })
-                    .Where(x => x.PropertyType == prop.PropertyType
-                        // check if required overload is: Property<T>(Expression<Func<TStructuralType, T>> propertyExpression) where T : struct
-                        || !x.PropertyType.IsNullable() && !prop.PropertyType.IsNullable() && prop.PropertyType.IsValueType
-                        // check if required overload is: Property<T>(Expression<Func<TStructuralType, T?>> propertyExpression) where T : struct
-                        || x.PropertyType.IsNullable() && prop.PropertyType.IsNullable() && prop.PropertyType.GetNullableUnderlyingType().IsValueType)
+                    .Select(x => new
+                    {
+                        Method = x.Method,
+                        Priority = x.PropertyType == prop.PropertyType ? 1 :
+                            // check if required overload is: Property<T>(Expression<Func<TStructuralType, T>> propertyExpression) where T : struct
+                            x.PropertyType.IsGenericParameter(nullable: false) && prop.PropertyType.IsValueType(nullable: false) ? 2 :
+                            // check if required overload is: Property<T>(Expression<Func<TStructuralType, T?>> propertyExpression) where T : struct
+                            x.PropertyType.IsGenericParameter(nullable: true) && prop.PropertyType.IsValueType(nullable: true) ? 3 : 0
+                    })
+                    .Where(x => x.Priority != 0)
+                    .OrderBy(x => x.Priority)
                     .Select(x => x.Method)
-                    .Single();
+                    .First();
 
                 if (propertyMethod.IsGenericMethod)
                     propertyMethod = propertyMethod.MakeGenericMethod(prop.PropertyType.GetNullableUnderlyingType() ?? prop.PropertyType);
 
-                var propertyConfig = propertyMethod.Invoke(config, new[] { fieldsExpressions[i] }) as PrimitivePropertyConfiguration;
+                var propertyConfig = propertyMethod.Invoke(config, new[] { prop.ToLambdaExpression() }) as PrimitivePropertyConfiguration;
 
                 propertyConfig
                     .HasColumnAnnotation(
