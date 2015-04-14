@@ -3,6 +3,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using Bardock.Utils.Linq.Expressions;
+using System.Collections.Generic;
 
 namespace Bardock.Utils.Extensions
 {
@@ -122,6 +123,38 @@ namespace Bardock.Utils.Extensions
 		        lambda
 	        });
             return (IOrderedQueryable<TSource>)ret;
+        }
+
+        private static readonly MethodInfo _StringToLowerMethod = typeof(string).GetMethods().Where(m => m.Name == "ToLower" && m.GetParameters().Length == 0).FirstOrDefault();
+        private static readonly MethodInfo _StringContainsMethod = typeof(string).GetMethods().Where(m => m.Name == "Contains" && m.GetParameters().Length == 1).FirstOrDefault();
+
+        public static IQueryable<T> Search<T>(this IQueryable<T> query, string searchTerm, Expression<Func<T, string>> searchExpression)
+        {
+	        return query.Search(searchTerm, new Expression<Func<T, string>>[] { searchExpression });
+        }
+
+        public static IQueryable<T> Search<T>(this IQueryable<T> query, string searchTerm, params Expression<Func<T, string>>[] searchExpressions)
+        {
+            return query.Search(searchTerm, searchExpressions.AsEnumerable());
+        }
+
+        public static IQueryable<T> Search<T>(this IQueryable<T> query, string searchTerm, IEnumerable<Expression<Func<T, string>>> searchExpressions)
+        {
+	        if (string.IsNullOrWhiteSpace(searchTerm) || !searchExpressions.Any()) {
+		        return query;
+	        }
+
+	        Expression<Func<T, bool>> predicate = (T x) => false;
+	        foreach (var searchExpression in searchExpressions) {
+		        var _x_tolower_contains_search_tolower = Expression.Lambda(
+                    Expression.Call(
+                        Expression.Call(searchExpression.Body, _StringToLowerMethod), _StringContainsMethod, Expression.Constant(searchTerm.ToLower())
+                    ), 
+                    searchExpression.Parameters);
+
+		        predicate = ExpressionHelper.OrElse(predicate, (Expression<Func<T, bool>>)_x_tolower_contains_search_tolower);
+	        }
+	        return query.Where(predicate);
         }
     }
 }

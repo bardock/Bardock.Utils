@@ -143,5 +143,37 @@ namespace Bardock.Utils.Tests.Extensions
             Assert.Equal(dto1.Property3, query.ElementAt(1).Property3);
             Assert.Equal(dto2.Property3, query.ElementAt(0).Property3);
         }
+
+        public class SearchDTO
+        {
+            public string Property1 { get; set; }
+            public string Property2 { get; set; }
+            public string Property3 { get; set; }
+
+            public SearchDTO(string property1, string property2, string property3)
+            {
+                Property1 = property1;
+                Property2 = property2;
+                Property3 = property3;
+            }
+        }
+
+        [Fact]
+        public void Search()
+        {
+            var dto1 = new SearchDTO("Isis", "Castañeda", "Finantial");
+            var dto2 = new SearchDTO("Helenia", "Caro", "Online");
+            var dto3 = new SearchDTO("Humberto", "Carmona", "Finantial");
+
+            var query = Coll.Array(dto1, dto2, dto3).AsQueryable();
+
+            var result = query.Search("isis", x => x.Property1).ToList();
+            Assert.Equal(1, result.Count());
+            Assert.Equal(dto1.Property1, result.First().Property1);
+
+            result = query.Search("isis casta", x => x.Property1 + " " + x.Property2).ToList();
+            Assert.Equal(1, result.Count());
+            Assert.Equal(dto1.Property1, result.First().Property1);
+        }
 	}
 }

@@ -86,12 +86,12 @@ namespace Bardock.Utils.Linq.Expressions
             }
         }
 
-        public Expression<T> ComposeExpressions<T>(Expression<T> first, Expression<T> second, Func<Expression, Expression, Expression> merge)
+        public static Expression<T> ComposeExpressions<T>(Expression<T> first, Expression<T> second, Func<Expression, Expression, Expression> merge)
         {
             return ComposeExpressions<T, T>(first, second, merge);
         }
 
-        public Expression<TReturn> ComposeExpressions<T, TReturn>(Expression<T> first, Expression<T> second, Func<Expression, Expression, Expression> merge)
+        public static Expression<TReturn> ComposeExpressions<T, TReturn>(Expression<T> first, Expression<T> second, Func<Expression, Expression, Expression> merge)
         {
             // build parameter map (from parameters of second to parameters of first)
             var map = first.Parameters.Select((f, i) => new
@@ -107,17 +107,17 @@ namespace Bardock.Utils.Linq.Expressions
             return Expression.Lambda<TReturn>(merge(first.Body, secondBody), first.Parameters);
         }
 
-        public Expression<Func<T, bool>> AndAlso<T>(Expression<Func<T, bool>> first, Expression<Func<T, bool>> second)
+        public static Expression<Func<T, bool>> AndAlso<T>(Expression<Func<T, bool>> first, Expression<Func<T, bool>> second)
         {
             return ComposeExpressions(first, second, Expression.AndAlso);
         }
 
-        public Expression<Func<T, bool>> OrElse<T>(Expression<Func<T, bool>> first, Expression<Func<T, bool>> second)
+        public static Expression<Func<T, bool>> OrElse<T>(Expression<Func<T, bool>> first, Expression<Func<T, bool>> second)
         {
             return ComposeExpressions(first, second, Expression.OrElse);
         }
 
-        public Expression<Func<T, bool>> Not<T>(Expression<Func<T, bool>> exp)
+        public static Expression<Func<T, bool>> Not<T>(Expression<Func<T, bool>> exp)
         {
             var @params = exp.Parameters.ToList();
             return Expression.Lambda<Func<T, bool>>(Expression.Not(exp.Body), parameters: @params);
