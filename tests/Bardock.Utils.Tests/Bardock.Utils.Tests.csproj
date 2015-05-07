@@ -57,6 +57,7 @@
     <Compile Include="Extensions\IEnumerableExtensionsTest.cs" />
     <Compile Include="Extensions\ByteExtensionsTest.cs" />
     <Compile Include="Extensions\CharExtensionsTest.cs" />
+    <Compile Include="Extensions\LongExtensionsTest.cs" />
     <Compile Include="Extensions\StringNormalizeExtensionsTest.cs" />
     <Compile Include="Extensions\StringHashingExtensionsTest.cs" />
     <Compile Include="Extensions\StringExtensionsTest.cs" />
