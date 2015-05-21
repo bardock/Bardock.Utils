@@ -37,6 +37,56 @@ namespace Bardock.Utils.Extensions
         }
 
         /// <summary>
+        /// Filters a sequence of values based on a specified range of values of the selected property
+        /// </summary>
+        public static IEnumerable<TSource> Where<TSource, TProp>(
+            this IEnumerable<TSource> source,
+            Func<TSource, TProp> selector,
+            IEnumerable<TProp> items)
+        {
+            if (items == null)
+                return source;
+
+            //store evaluated collection of items in order to prevent multiple evaluations into the where clause
+            var collection = items.ToArray();
+
+            return source.Where(x => collection.Contains(selector(x)));
+        }
+
+        /// <summary>
+        /// Filters a sequence of values based on a specified range of values of the selected property
+        /// </summary>
+        public static IEnumerable<TSource> Where<TSource, TProp>(
+            this IEnumerable<TSource> source,
+            Func<TSource, TProp?> selector,
+            IEnumerable<TProp> items)
+            where TProp : struct
+        {
+            if (items == null)
+                return source;
+
+            //store evaluated collection of items in order to prevent multiple evaluations into the where clause
+            var collection = items.ToArray();
+
+            return source.Where(x => selector(x).HasValue && collection.Contains(selector(x).Value));
+        }
+
+        /// <summary>
+        /// Filters a sequence of values based on a specified range of values of the selected property
+        /// </summary>
+        public static IEnumerable<TSource> Where<TSource, TProp>(
+            this IEnumerable<TSource> source,
+            Func<TSource, TProp> selector,
+            IEnumerable<TProp?> items)
+            where TProp : struct
+        {
+            if (items == null)
+                return source;
+
+            return source.Where(selector, items.Where(x => x.HasValue).Select(x => x.Value));
+        }
+
+        /// <summary>
         /// Splits a sequence of values based on a predicate.
         /// </summary>
         public static IEnumerable<IEnumerable<TSource>> Split<TSource>(

@@ -89,6 +89,70 @@ namespace Bardock.Utils.Extensions
             return source.Where(predicate);
         }
 
+        private static readonly MethodInfo _ContainsMethod = typeof(Enumerable).GetMethods().Where(method => method.Name == "Contains").Where(method => method.GetParameters().Length == 2).Single();
+
+        private static Expression BuildContainsExpression<TSource, TProp>(
+            Expression<Func<TSource, TProp>> selector,
+            IEnumerable<TProp> items)
+        {
+            return Expression.Call(
+                _ContainsMethod.MakeGenericMethod(typeof(TProp)),
+                Expression.Constant(items),
+                selector.Body);
+        }
+
+        /// <summary>
+        /// Filters a sequence of values based on a specified range of values of the selected property
+        /// </summary>
+        public static IQueryable<TSource> Where<TSource, TProp>(
+            this IQueryable<TSource> source,
+            Expression<Func<TSource, TProp>> selector,
+            IEnumerable<TProp> items)
+        {
+            if (items == null)
+                return source;
+
+            return source.Where(Expression.Lambda<Func<TSource, bool>>(
+                BuildContainsExpression(selector, items),
+                selector.Parameters));
+        }
+
+        /// <summary>
+        /// Filters a sequence of values based on a specified range of values of the selected property
+        /// </summary>
+        public static IQueryable<TSource> Where<TSource, TProp>(
+            this IQueryable<TSource> source,
+            Expression<Func<TSource, TProp?>> selector,
+            IEnumerable<TProp> items)
+            where TProp : struct
+        {
+            if (items == null)
+                return source;
+
+            var predicate = Expression.Lambda<Func<TSource, bool>>(
+                Expression.AndAlso(
+                    Expression.Property(selector.Body, "HasValue"),
+                    BuildContainsExpression(selector, items.Cast<TProp?>())),
+                selector.Parameters);
+
+            return source.Where(predicate);
+        }
+
+        /// <summary>
+        /// Filters a sequence of values based on a specified range of values of the selected property
+        /// </summary>
+        public static IQueryable<TSource> Where<TSource, TProp>(
+            this IQueryable<TSource> source,
+            Expression<Func<TSource, TProp>> selector,
+            IEnumerable<TProp?> items)
+            where TProp : struct
+        {
+            if (items == null)
+                return source;
+
+            return source.Where(selector, items.Where(x => x.HasValue).Select(x => x.Value));
+        }
+
         private static readonly MethodInfo _OrderByMethod = typeof(Queryable).GetMethods().Where(method => method.Name == "OrderBy").Where(method => method.GetParameters().Length == 2).Single();
         private static readonly MethodInfo _OrderByDescendingMethod = typeof(Queryable).GetMethods().Where(method => method.Name == "OrderByDescending").Where(method => method.GetParameters().Length == 2).Single();
 
