@@ -38,6 +38,23 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
                 display: display ?? (x => Resources.Current.GetValue(x.Name)),
                 value: x => x.Value);
         }
+
+        public static OptionsList<SelectListItem> CreateForBoolean(
+            string displayTrue = null, string displayFalse = null, bool? value = null)
+        {
+            displayTrue = displayTrue ?? bool.TrueString;
+            displayFalse = displayFalse ?? bool.FalseString;
+
+            var options = OptionsList.Create(new List<SelectListItem>() {
+                new SelectListItem() { Text = displayTrue, Value = bool.TrueString },
+                new SelectListItem() { Text = displayFalse, Value = bool.FalseString },
+            }); 
+            
+            if (value != null) 
+                 options.SelectedValue(value.Value.ToString());
+
+            return options;
+        }
     }
 
     public class OptionsList<TItem> : IEnumerable<OptionItem>
@@ -75,7 +92,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
             {
                 return this.IsSelected(x => false);
             }
-            if(typeof(IEnumerable).IsAssignableFrom(value.GetType()))
+            if (!(value is string) && typeof(IEnumerable).IsAssignableFrom(value.GetType()))
             {
                 return this.SelectedValues((IEnumerable)value);
             }
