@@ -85,22 +85,48 @@ namespace Bardock.Utils.UnitTest.Samples.Tests.Managers
             mailer.Verify(x => x.Send(data.Email, It.IsAny<string>()), Times.Never);
         }
 
-        private class CustomerCreateWithInvalidEmail : CustomizationComposer<CustomerCreate>
+        private class WithInvalidEmailAttribute : CustomizeAttribute
         {
-            protected override IPostprocessComposer<CustomerCreate> Configure(ICustomizationComposer<CustomerCreate> c)
+            public override ICustomization GetCustomization(System.Reflection.ParameterInfo parameter)
             {
-                return c.With(x => x.Email, "invalid");
+                return new WithInvalidEmail();
+            }
+
+            private class WithInvalidEmail : CustomizationComposer<CustomerCreate>
+            {
+                protected override IPostprocessComposer<CustomerCreate> Configure(IFixture f, ICustomizationComposer<CustomerCreate> c)
+                {
+                    return c.With(x => x.Email, "invalid");
+                }
+            }
+        }
+
+        private class AsAdultAttribute : CustomizeAttribute
+        {
+            public override ICustomization GetCustomization(System.Reflection.ParameterInfo parameter)
+            {
+                return new AsAdult();
+            }
+
+            private class AsAdult : CustomizationComposer<CustomerCreate>
+            {
+                protected override IPostprocessComposer<CustomerCreate> Configure(IFixture f, ICustomizationComposer<CustomerCreate> c)
+                {
+                    return c.With(x => x.Age, 21);
+                }
             }
         }
 
         [Theory]
         [DefaultData]
         public void Create_InvalidEmail_InvalidOp___CustomizeWith(
-            [CustomizeWith(typeof(CustomerCreateWithInvalidEmail))] CustomerCreate data,
+            //[CustomizeWith(typeof(WithInvalidEmail))] CustomerCreate data,
+            [WithInvalidEmail][AsAdult] CustomerCreate data,
             [Frozen] Mock<IAuthService> authService,
             [Frozen] Mock<IMailer> mailer,
             CustomerManager sut)
         {
+            Assert.True(data.Age >= 21);
             Assert.Throws<InvalidOperationException>(() =>
                 sut.Create(data));
 

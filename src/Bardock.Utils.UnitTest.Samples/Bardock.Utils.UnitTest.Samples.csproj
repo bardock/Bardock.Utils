@@ -91,6 +91,7 @@
     <Compile Include="Fixtures\DataLoaders\CustomersDataLoader.cs" />
     <Compile Include="Fixtures\DataLoaders\CountriesDataLoader.cs" />
     <Compile Include="Fixtures\DataLoaders\LoaderFixture.cs" />
+    <Compile Include="Fixtures\Helpers\IFixtureExtensions.cs" />
     <Compile Include="SUT\DTOs\CustomerCreate.cs" />
     <Compile Include="SUT\Entities\Country.cs" />
     <Compile Include="SUT\Infra\DataContext.cs" />
