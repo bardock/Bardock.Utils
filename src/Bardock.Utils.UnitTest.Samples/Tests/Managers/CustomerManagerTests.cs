@@ -13,6 +13,7 @@ using System.Linq;
 using Xunit;
 using Xunit.Extensions;
 using Bardock.Utils.UnitTest.Data;
+using Bardock.Utils.UnitTest.Samples.Fixtures.Helpers;
 
 namespace Bardock.Utils.UnitTest.Samples.Tests.Managers
 {
@@ -101,19 +102,31 @@ namespace Bardock.Utils.UnitTest.Samples.Tests.Managers
             }
         }
 
-        private class AsAdultAttribute : CustomizeAttribute
+        public abstract class CompositeCustomizationAttribute : CustomizeAttribute
         {
-            public override ICustomization GetCustomization(System.Reflection.ParameterInfo parameter)
+            private ICustomization[] _customizations;
+
+            public CompositeCustomizationAttribute(params ICustomization[] customizations)
             {
-                return new AsAdult();
+                _customizations = customizations;
             }
 
-            private class AsAdult : CustomizationComposer<CustomerCreate>
+            public override ICustomization GetCustomization(System.Reflection.ParameterInfo parameter)
             {
-                protected override IPostprocessComposer<CustomerCreate> Configure(IFixture f, ICustomizationComposer<CustomerCreate> c)
-                {
-                    return c.With(x => x.Age, 21);
-                }
+                return new CompositeCustomization(_customizations);
+            }
+        }
+
+        private class AsAdultAttribute : CompositeCustomizationAttribute
+        {
+            public AsAdultAttribute() : base(new AsAdultCustomization()) { }
+        }
+
+        public class AsAdultCustomization : ICustomization
+        {
+            public void Customize(IFixture fixture)
+            {
+                fixture.Customize<CustomerCreate>(c => c.With(x => x.Age, 21), append: true);
             }
         }
 
@@ -122,6 +135,7 @@ namespace Bardock.Utils.UnitTest.Samples.Tests.Managers
         public void Create_InvalidEmail_InvalidOp___CustomizeWith(
             //[CustomizeWith(typeof(WithInvalidEmail))] CustomerCreate data,
             [WithInvalidEmail][AsAdult] CustomerCreate data,
+            string language,
             [Frozen] Mock<IAuthService> authService,
             [Frozen] Mock<IMailer> mailer,
             CustomerManager sut)
