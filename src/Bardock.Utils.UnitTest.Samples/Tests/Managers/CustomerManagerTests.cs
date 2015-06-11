@@ -14,6 +14,8 @@ using Xunit;
 using Xunit.Extensions;
 using Bardock.Utils.UnitTest.Data;
 using Bardock.Utils.UnitTest.Samples.Fixtures.Helpers;
+using Ploeh.AutoFixture.Kernel;
+using System.Reflection;
 
 namespace Bardock.Utils.UnitTest.Samples.Tests.Managers
 {
@@ -55,7 +57,7 @@ namespace Bardock.Utils.UnitTest.Samples.Tests.Managers
 
         //[DefaultData]
         [Theory]
-        [InlineDefaultData()]
+        [DefaultData()]
         //[InlineDefaultData(typeof(GetCustomerFromDB))]
         //[InlineDefaultData(typeof(CreateCustomerFromChina))]
         public void Create_ValidEmail_SendMail(
@@ -127,6 +129,7 @@ namespace Bardock.Utils.UnitTest.Samples.Tests.Managers
             public void Customize(IFixture fixture)
             {
                 fixture.Customize<CustomerCreate>(c => c.With(x => x.Age, 21), append: true);
+                fixture.Customize<Customer>(c => c.With(x => x.Age, 21).Without(x => x.Addresses), append: true);
             }
         }
 
@@ -176,6 +179,70 @@ namespace Bardock.Utils.UnitTest.Samples.Tests.Managers
 
             Assert.Throws<CustomerManager.EmailAlreadyExistsException>(() =>
                 sut.Create(data));
+        }
+
+        public class PersistedEntityAttribute : CustomizeAttribute
+        {
+            public override ICustomization GetCustomization(ParameterInfo parameter)
+            {
+                return new PersistedEntityCustomization(parameter.ParameterType);
+            }
+        }
+
+        public class PersistedEntityCustomization : ICustomization
+        {
+            private Type _entityType;
+
+            public PersistedEntityCustomization(Type entityType)
+            {
+                this._entityType = entityType;
+            }
+
+            public void Customize(IFixture fixture)
+            {
+                var db = fixture.Create<IDataContextWrapper>();
+                fixture.Customizations.Add(new PersistedEntitySpecimenBuilder(this._entityType, db));
+            }
+        }
+
+        public class PersistedEntityCustomization<TEntity> : PersistedEntityCustomization
+        {
+            public PersistedEntityCustomization() : base(typeof(TEntity)) { }
+        }
+
+        public class PersistedEntitySpecimenBuilder : ISpecimenBuilder
+        {
+            private Type _entityType;
+            private IDataContextWrapper _db;
+
+            public PersistedEntitySpecimenBuilder(Type entityType, IDataContextWrapper db)
+            {
+                this._entityType = entityType;
+                this._db = db;
+            }
+
+            public object Create(object request, ISpecimenContext context)
+            {
+                var pi = request as ParameterInfo;
+                if (pi == null || pi.ParameterType != this._entityType)
+                {
+                    return new NoSpecimen(request);
+                }
+
+                var e = context.Resolve(this._entityType);
+                this._db.Add(e).Save();
+
+                return e;
+            }
+        }
+
+        [Theory]
+        [DefaultData]
+        public void Update_ExistingCustomer_Success(
+            [PersistedEntity][AsAdult] Customer e,
+            CustomerManager sut)
+        {
+            sut.Update(e.ID, null);
         }
     }
 }

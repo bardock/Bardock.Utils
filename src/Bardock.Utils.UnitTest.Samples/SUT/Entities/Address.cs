@@ -6,7 +6,7 @@
 
         public int CustomerID { get; set; }
 
-        public Customer Customer { get; set; }
+        public virtual Customer Customer { get; set; }
 
         public string Line1 { get; set; }
 
@@ -16,6 +16,6 @@
 
         public int CountryID { get; set; }
 
-        public Country Country { get; set; }
+        public virtual Country Country { get; set; }
     }
 }

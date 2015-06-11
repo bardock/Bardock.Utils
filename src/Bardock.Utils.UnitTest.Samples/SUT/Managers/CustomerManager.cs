@@ -50,6 +50,12 @@ namespace Bardock.Utils.UnitTest.Samples.SUT.Managers
 
             _mailer.Send(data.Email, "Welcome");
         }
+
+        public void Update(int id, CustomerCreate data)
+        {
+            var e = _db.Customers.First(x => x.ID == id);
+        }
+
         public class EmailAlreadyExistsException : Exception { }
     }
 }
