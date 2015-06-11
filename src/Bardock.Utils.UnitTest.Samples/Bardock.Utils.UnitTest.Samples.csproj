@@ -84,6 +84,7 @@
     <Compile Include="Fixtures\Attributes\InlineDefaultDataAttribute.cs" />
     <Compile Include="Fixtures\Attributes\DefaultDataAttribute.cs" />
     <Compile Include="Fixtures\Customizations\CustomizationComposer.cs" />
+    <Compile Include="Fixtures\Customizations\IgnoreEntityKeysCustomization.cs" />
     <Compile Include="Fixtures\Customizations\DataContextWrapperCustomization.cs" />
     <Compile Include="Fixtures\Customizations\DataContextCustomization.cs" />
     <Compile Include="Fixtures\Customizations\DefaultCustomization.cs" />

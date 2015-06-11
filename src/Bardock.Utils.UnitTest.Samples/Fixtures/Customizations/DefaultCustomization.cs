@@ -1,4 +1,5 @@
-﻿using Ploeh.AutoFixture;
+﻿using Bardock.Utils.UnitTest.Samples.SUT.Infra;
+using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.AutoMoq;
 
 namespace Bardock.Utils.UnitTest.Samples.Fixtures.Customizations
@@ -7,6 +8,7 @@ namespace Bardock.Utils.UnitTest.Samples.Fixtures.Customizations
     {
         public DefaultCustomization()
             : base(
+                new IgnoreEntityKeysCustomization<DataContext>(),
                 new DataContextCustomization(),
                 new DataContextWrapperCustomization(),
                 new AutoMoqCustomization())
