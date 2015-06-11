@@ -7,15 +7,17 @@ namespace Bardock.Utils.UnitTest.Samples.Fixtures.Attributes
 {
     internal class DefaultDataAttribute : AutoDataAttribute
     {
-        public DefaultDataAttribute()
+        internal DefaultDataAttribute()
             : base(new Fixture().Customize(new DefaultCustomization()))
-        {
-        }
+        { }
 
-        internal DefaultDataAttribute(params Type[] customizations)
-            : base()
+        internal DefaultDataAttribute(params Type[] customizationTypes)
+            : base(new Fixture().Customize(new DefaultCustomization())) // If this line is replaced by "this()", the sample tests stop working
         {
-            throw new NotImplementedException();
+            foreach (var t in customizationTypes)
+            {
+                this.Fixture.Customize((ICustomization)Activator.CreateInstance(t, null));
+            }
         }
     }
 }
