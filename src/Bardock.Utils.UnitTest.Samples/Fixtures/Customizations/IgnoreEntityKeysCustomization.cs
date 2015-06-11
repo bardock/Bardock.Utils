@@ -1,6 +1,6 @@
 ﻿using System.Data.Entity;
-using System.Linq;
 using System.Reflection;
+using Bardock.Utils.UnitTest.Samples.SUT.Infra;
 using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.Kernel;
 
@@ -27,21 +27,11 @@ namespace Bardock.Utils.UnitTest.Samples.Fixtures.Customizations
             }
 
             var propName = pi.GetGetMethod().Name;
-            if ((propName.EndsWith("ID") || propName.EndsWith("Id")) && this.BelongsToEntityClass(pi))
+            if ((propName.EndsWith("ID") || propName.EndsWith("Id")) && pi.DeclaringType.IsMappedEntity<DataContext>())
             {
                 return null;
             }
             return new NoSpecimen(request);
-        }
-
-        private bool BelongsToEntityClass(PropertyInfo pi)
-        {
-            return typeof(TDbContext)
-                .GetProperties()
-                .Select(prop => prop.PropertyType)
-                .Where(propType => typeof(IDbSet<>).IsAssignableFrom(propType.GetGenericTypeDefinition()))
-                .Select(propType => propType.GetGenericArguments()[0])
-                .Any(entityType => entityType.IsAssignableFrom(pi.DeclaringType));
         }
     }
 }
