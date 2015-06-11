@@ -129,7 +129,7 @@ namespace Bardock.Utils.UnitTest.Samples.Tests.Managers
             public void Customize(IFixture fixture)
             {
                 fixture.Customize<CustomerCreate>(c => c.With(x => x.Age, 21), append: true);
-                fixture.Customize<Customer>(c => c.With(x => x.Age, 21).Without(x => x.Addresses), append: true);
+                fixture.Customize<Customer>(c => c.With(x => x.Age, 21), append: true);
             }
         }
 

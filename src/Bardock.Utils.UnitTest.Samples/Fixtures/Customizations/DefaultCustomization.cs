@@ -9,6 +9,7 @@ namespace Bardock.Utils.UnitTest.Samples.Fixtures.Customizations
         public DefaultCustomization()
             : base(
                 new IgnoreEntityKeysCustomization<DataContext>(),
+                new IgnoreEntityNavigationPropsCustomization<DataContext>(),
                 new DataContextCustomization(),
                 new DataContextWrapperCustomization(),
                 new AutoMoqCustomization())

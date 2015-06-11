@@ -16,6 +16,7 @@ namespace Bardock.Utils.UnitTest.Samples.Fixtures.Customizations
             return typeof(TDbContext)
                 .GetProperties()
                 .Select(prop => prop.PropertyType)
+                .Where(propType => propType.IsGenericType)
                 .Where(propType => typeof(IDbSet<>).IsAssignableFrom(propType.GetGenericTypeDefinition()))
                 .Select(propType => propType.GetGenericArguments()[0])
                 .Any(entityType => entityType.IsAssignableFrom(type));
