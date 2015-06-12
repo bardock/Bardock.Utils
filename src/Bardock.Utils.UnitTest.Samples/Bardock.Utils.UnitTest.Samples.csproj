@@ -89,8 +89,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Fixtures\Attributes\CompositeCustomizeAttribute.cs" />
     <Compile Include="Fixtures\Attributes\DefaultDataAttribute.cs" />
     <Compile Include="Fixtures\Attributes\InlineDefaultDataAttribute.cs" />
+    <Compile Include="Fixtures\Attributes\PersistedEntityAttribute.cs" />
     <Compile Include="Fixtures\Customizations\CustomizationComposer.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -100,6 +102,7 @@
     <Compile Include="Fixtures\Customizations\DefaultCustomization.cs" />
     <Compile Include="Fixtures\Customizations\IgnoreEntityKeysCustomization.cs" />
     <Compile Include="Fixtures\Customizations\IgnoreEntityNavigationPropsCustomization.cs" />
+    <Compile Include="Fixtures\Customizations\PersistedEntityCustomization.cs" />
     <Compile Include="Fixtures\DataLoaders\AddressesDataLoader.cs" />
     <Compile Include="Fixtures\DataLoaders\CountriesDataLoader.cs" />
     <Compile Include="Fixtures\DataLoaders\CustomersDataLoader.cs" />
@@ -119,6 +122,8 @@
     <Compile Include="SUT\Entities\Order.cs" />
     <Compile Include="SUT\Entities\Product.cs" />
     <Compile Include="Tests\Managers\CustomerManagerTests.cs" />
+    <Compile Include="Tests\Mocks\MailerMock.cs" />
+    <Compile Include="Tests\Mocks\MailerMoqs.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -130,9 +135,7 @@
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Tests\Mocks\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders\Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders.csproj">
       <Project>{b0f8231c-0f0b-4a2d-940e-5303344848ee}</Project>

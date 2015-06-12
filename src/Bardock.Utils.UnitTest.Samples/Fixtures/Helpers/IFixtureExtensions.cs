@@ -1,8 +1,8 @@
-﻿using System;
-using System.Linq;
-using Ploeh.AutoFixture;
+﻿using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.Dsl;
 using Ploeh.AutoFixture.Kernel;
+using System;
+using System.Linq;
 
 namespace Bardock.Utils.UnitTest.Samples.Fixtures.Helpers
 {

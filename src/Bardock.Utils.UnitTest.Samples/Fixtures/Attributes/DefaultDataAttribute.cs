@@ -1,7 +1,7 @@
-﻿using System;
-using Bardock.Utils.UnitTest.Samples.Fixtures.Customizations;
+﻿using Bardock.Utils.UnitTest.Samples.Fixtures.Customizations;
 using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.Xunit2;
+using System;
 
 namespace Bardock.Utils.UnitTest.Samples.Fixtures.Attributes
 {

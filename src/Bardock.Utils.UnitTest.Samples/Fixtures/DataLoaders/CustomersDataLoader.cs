@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders;
+﻿using Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders;
 using Bardock.Utils.UnitTest.Samples.SUT.Entities;
 using Ploeh.AutoFixture;
+using System.Collections.Generic;
 
 namespace Bardock.Utils.UnitTest.Samples.Fixtures.DataLoaders
 {

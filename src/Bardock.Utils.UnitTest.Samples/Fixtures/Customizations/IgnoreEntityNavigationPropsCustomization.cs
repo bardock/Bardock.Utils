@@ -1,9 +1,9 @@
-﻿using System.Data.Entity;
-using System.Reflection;
-using Bardock.Utils.Extensions;
+﻿using Bardock.Utils.Extensions;
 using Bardock.Utils.UnitTest.Samples.SUT.Infra;
 using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.Kernel;
+using System.Data.Entity;
+using System.Reflection;
 
 namespace Bardock.Utils.UnitTest.Samples.Fixtures.Customizations
 {

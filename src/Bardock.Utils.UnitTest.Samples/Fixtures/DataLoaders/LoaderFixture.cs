@@ -1,7 +1,6 @@
 ﻿using Bardock.Utils.Extensions;
-using System;
-using System.Reflection;
 using Ploeh.AutoFixture.Kernel;
+using System.Reflection;
 
 namespace Bardock.Utils.UnitTest.Samples.Fixtures.DataLoaders
 {

@@ -1,21 +1,18 @@
-﻿using Bardock.Utils.UnitTest.Samples.Fixtures.Attributes;
+﻿using Bardock.Utils.UnitTest.Data;
+using Bardock.Utils.UnitTest.Samples.Fixtures.Attributes;
 using Bardock.Utils.UnitTest.Samples.Fixtures.Customizations;
+using Bardock.Utils.UnitTest.Samples.Fixtures.Helpers;
 using Bardock.Utils.UnitTest.Samples.SUT.DTOs;
 using Bardock.Utils.UnitTest.Samples.SUT.Entities;
 using Bardock.Utils.UnitTest.Samples.SUT.Infra;
 using Bardock.Utils.UnitTest.Samples.SUT.Managers;
 using Moq;
 using Ploeh.AutoFixture;
-using Ploeh.AutoFixture.Dsl;
 using Ploeh.AutoFixture.Xunit2;
 using System;
 using System.Linq;
-using Xunit;
-using Xunit.Extensions;
-using Bardock.Utils.UnitTest.Data;
-using Bardock.Utils.UnitTest.Samples.Fixtures.Helpers;
-using Ploeh.AutoFixture.Kernel;
 using System.Reflection;
+using Xunit;
 
 namespace Bardock.Utils.UnitTest.Samples.Tests.Managers
 {
@@ -24,42 +21,62 @@ namespace Bardock.Utils.UnitTest.Samples.Tests.Managers
     /// </summary>
     public class CustomerManagerTests
     {
-        private abstract class FromDB
+        public class WithInvalidEmailAttribute : CustomizeAttribute
         {
-            protected dynamic _db;
-
-            public FromDB(dynamic db)
+            public override ICustomization GetCustomization(ParameterInfo parameter)
             {
-                _db = db;
+                return new WithInvalidEmailCustomization();
             }
         }
 
-        private class GetCustomerFromDB : FromDB
+        public class WithInvalidEmailCustomization : ICustomization
         {
-            public GetCustomerFromDB(dynamic db)
-                : base((object)db)
+            public void Customize(IFixture fixture)
             {
-            }
-
-            public object Resolve()
-            {
-                return _db.Customers.Find(1);
+                fixture.Customize<CustomerCreate>(c => c.With(x => x.Email, "invalid"), append: true);
+                fixture.Customize<Customer>(c => c.With(x => x.Email, "invalid"), append: true);
             }
         }
 
-        private class CreateCustomerFromChina
+        private class AsAdultAttribute : CustomizeAttribute
         {
-            public void Configure(IFixture fixture)
+            public override ICustomization GetCustomization(ParameterInfo parameter)
             {
-                fixture.Build<Customer>().With(x => x.Email, "");
+                return new AsAdultCustomization();
+            }
+        }
+
+        public class AsAdultCustomization : ICustomization
+        {
+            public void Customize(IFixture fixture)
+            {
+                fixture.Customize<CustomerCreate>(c => c.With(x => x.Age, 21), append: true);
+                fixture.Customize<Customer>(c => c.With(x => x.Age, 21), append: true);
+            }
+        }
+
+        public class WithInvalidEmailAsAdultAttribute : CompositeCustomizeAttribute
+        {
+            public override ICustomization[] GetCustomizations(ParameterInfo parameter)
+            {
+                return new ICustomization[] { new WithInvalidEmailCustomization(), new AsAdultCustomization() };
+            }
+        }
+
+        public class WithInvalidEmailAsAdultPersistedAttribute : CompositeCustomizeAttribute
+        {
+            public override ICustomization[] GetCustomizations(ParameterInfo parameter)
+            {
+                return new ICustomization[] { new AsAdultCustomization(), new WithInvalidEmailCustomization(), new PersistedEntityCustomization(parameter) };
             }
         }
 
         //[DefaultData]
-        [Theory]
-        [DefaultData()]
         //[InlineDefaultData(typeof(GetCustomerFromDB))]
         //[InlineDefaultData(typeof(CreateCustomerFromChina))]
+        //[DefaultData]
+        [Theory]
+        [InlineDefaultData()]
         public void Create_ValidEmail_SendMail(
             CustomerCreate data,
             [Frozen] Mock<IAuthService> authService,
@@ -88,61 +105,30 @@ namespace Bardock.Utils.UnitTest.Samples.Tests.Managers
             mailer.Verify(x => x.Send(data.Email, It.IsAny<string>()), Times.Never);
         }
 
-        private class WithInvalidEmailAttribute : CustomizeAttribute
-        {
-            public override ICustomization GetCustomization(System.Reflection.ParameterInfo parameter)
-            {
-                return new WithInvalidEmail();
-            }
-
-            private class WithInvalidEmail : CustomizationComposer<CustomerCreate>
-            {
-                protected override IPostprocessComposer<CustomerCreate> Configure(IFixture f, ICustomizationComposer<CustomerCreate> c)
-                {
-                    return c.With(x => x.Email, "invalid");
-                }
-            }
-        }
-
-        public abstract class CompositeCustomizationAttribute : CustomizeAttribute
-        {
-            private ICustomization[] _customizations;
-
-            public CompositeCustomizationAttribute(params ICustomization[] customizations)
-            {
-                _customizations = customizations;
-            }
-
-            public override ICustomization GetCustomization(System.Reflection.ParameterInfo parameter)
-            {
-                return new CompositeCustomization(_customizations);
-            }
-        }
-
-        private class AsAdultAttribute : CompositeCustomizationAttribute
-        {
-            public AsAdultAttribute() : base(new AsAdultCustomization()) { }
-        }
-
-        public class AsAdultCustomization : ICustomization
-        {
-            public void Customize(IFixture fixture)
-            {
-                fixture.Customize<CustomerCreate>(c => c.With(x => x.Age, 21), append: true);
-                fixture.Customize<Customer>(c => c.With(x => x.Age, 21), append: true);
-            }
-        }
-
         [Theory]
         [DefaultData]
-        public void Create_InvalidEmail_InvalidOp___CustomizeWith(
-            //[CustomizeWith(typeof(WithInvalidEmail))] CustomerCreate data,
+        public void Create_InvalidEmail2_InvalidOp___WithInvalidEmailAsAdult(
             [WithInvalidEmail][AsAdult] CustomerCreate data,
             [Frozen] Mock<IAuthService> authService,
             [Frozen] Mock<IMailer> mailer,
             CustomerManager sut)
         {
-            Assert.True(data.Age >= 21);
+            Assert.True(data.Age == 21);
+            Assert.Throws<InvalidOperationException>(() =>
+                sut.Create(data));
+
+            mailer.Verify(x => x.Send(data.Email, It.IsAny<string>()), Times.Never);
+        }
+
+        [Theory]
+        [DefaultData]
+        public void Create_InvalidEmail_InvalidOp___WithInvalidEmailAsAdultComposed(
+            [WithInvalidEmailAsAdult] CustomerCreate data,
+            [Frozen] Mock<IAuthService> authService,
+            [Frozen] Mock<IMailer> mailer,
+            CustomerManager sut)
+        {
+            Assert.True(data.Age == 21);
             Assert.Throws<InvalidOperationException>(() =>
                 sut.Create(data));
 
@@ -180,65 +166,25 @@ namespace Bardock.Utils.UnitTest.Samples.Tests.Managers
                 sut.Create(data));
         }
 
-        public class PersistedEntityAttribute : CustomizeAttribute
+        [Theory]
+        [DefaultData]
+        public void Update_ExistingAdultCustomer_Success(
+            //warning: the declaring order of the attrs
+            //does not guarantee that customizations will
+            //apply in that order, if ordering is required
+            //then combine multiple customizations using
+            //CompositeCustomizeAttribute like the example
+            //below
+            [PersistedEntity][AsAdult] Customer e,
+            CustomerManager sut)
         {
-            public override ICustomization GetCustomization(ParameterInfo parameter)
-            {
-                return new PersistedEntityCustomization(parameter.ParameterType);
-            }
-        }
-
-        public class PersistedEntityCustomization : ICustomization
-        {
-            private Type _entityType;
-
-            public PersistedEntityCustomization(Type entityType)
-            {
-                this._entityType = entityType;
-            }
-
-            public void Customize(IFixture fixture)
-            {
-                var db = fixture.Create<IDataContextWrapper>();
-                fixture.Customizations.Add(new PersistedEntitySpecimenBuilder(this._entityType, db));
-            }
-        }
-
-        public class PersistedEntityCustomization<TEntity> : PersistedEntityCustomization
-        {
-            public PersistedEntityCustomization() : base(typeof(TEntity)) { }
-        }
-
-        public class PersistedEntitySpecimenBuilder : ISpecimenBuilder
-        {
-            private Type _entityType;
-            private IDataContextWrapper _db;
-
-            public PersistedEntitySpecimenBuilder(Type entityType, IDataContextWrapper db)
-            {
-                this._entityType = entityType;
-                this._db = db;
-            }
-
-            public object Create(object request, ISpecimenContext context)
-            {
-                var pi = request as ParameterInfo;
-                if (pi == null || pi.ParameterType != this._entityType)
-                {
-                    return new NoSpecimen(request);
-                }
-
-                var e = context.Resolve(this._entityType);
-                this._db.Add(e).Save();
-
-                return e;
-            }
+            sut.Update(e.ID, null);
         }
 
         [Theory]
         [DefaultData]
-        public void Update_ExistingCustomer_Success(
-            [PersistedEntity][AsAdult] Customer e,
+        public void Update_ExistingAdultCustomer_Success_Composed(
+            [WithInvalidEmailAsAdultPersisted] Customer e,
             CustomerManager sut)
         {
             sut.Update(e.ID, null);

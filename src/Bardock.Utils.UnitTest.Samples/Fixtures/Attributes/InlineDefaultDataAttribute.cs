@@ -1,6 +1,6 @@
-﻿using System.Linq;
-using Ploeh.AutoFixture;
+﻿using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.Xunit2;
+using System.Linq;
 
 namespace Bardock.Utils.UnitTest.Samples.Fixtures.Attributes
 {
