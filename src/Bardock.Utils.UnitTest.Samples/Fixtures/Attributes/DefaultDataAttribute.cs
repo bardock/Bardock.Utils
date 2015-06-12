@@ -1,17 +1,17 @@
 ﻿using System;
 using Bardock.Utils.UnitTest.Samples.Fixtures.Customizations;
 using Ploeh.AutoFixture;
-using Ploeh.AutoFixture.Xunit;
+using Ploeh.AutoFixture.Xunit2;
 
 namespace Bardock.Utils.UnitTest.Samples.Fixtures.Attributes
 {
-    internal class DefaultDataAttribute : AutoDataAttribute
+    public class DefaultDataAttribute : AutoDataAttribute
     {
-        internal DefaultDataAttribute()
+        public DefaultDataAttribute()
             : base(new Fixture().Customize(new DefaultCustomization()))
         { }
 
-        internal DefaultDataAttribute(params Type[] customizationTypes)
+        public DefaultDataAttribute(params Type[] customizationTypes)
             : base(new Fixture().Customize(new DefaultCustomization())) // If this line is replaced by "this()", the sample tests stop working
         {
             foreach (var t in customizationTypes)

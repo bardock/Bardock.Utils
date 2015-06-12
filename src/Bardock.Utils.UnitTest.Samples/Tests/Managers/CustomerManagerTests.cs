@@ -7,7 +7,7 @@ using Bardock.Utils.UnitTest.Samples.SUT.Managers;
 using Moq;
 using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.Dsl;
-using Ploeh.AutoFixture.Xunit;
+using Ploeh.AutoFixture.Xunit2;
 using System;
 using System.Linq;
 using Xunit;
