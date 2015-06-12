@@ -15,12 +15,7 @@ namespace Bardock.Utils.UnitTest.Samples.Fixtures.Helpers
                 var composer = @this.GetCurrentCustomizationComposer<T>();
                 if (composer != null)
                 {
-                    @this.Customize<T>(b =>
-                    {
-                        composerTransformation(composer);
-                        return composer;
-                    });
-
+                    @this.Customize<T>(b => composerTransformation(composer));
                     return;
                 }
             }
