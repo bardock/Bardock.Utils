@@ -76,7 +76,7 @@ namespace Bardock.Utils.UnitTest.Samples.Tests.Managers
         //[InlineDefaultData(typeof(CreateCustomerFromChina))]
         //[DefaultData]
         [Theory]
-        [InlineDefaultData()]
+        [DefaultData]
         public void Create_ValidEmail_SendMail(
             CustomerCreate data,
             [Frozen] Mock<IAuthService> authService,

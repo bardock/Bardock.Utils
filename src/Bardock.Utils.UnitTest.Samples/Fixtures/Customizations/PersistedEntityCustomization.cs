@@ -40,8 +40,8 @@ namespace Bardock.Utils.UnitTest.Samples.Fixtures.Customizations
 
         public PersistedEntitySpecimenBuilder(Type entityType, IDataContextWrapper db)
         {
-            this._entityType = entityType;
-            this._db = db;
+            _entityType = entityType;
+            _db = db;
         }
 
         public object Create(object request, ISpecimenContext context)
@@ -53,7 +53,14 @@ namespace Bardock.Utils.UnitTest.Samples.Fixtures.Customizations
             }
 
             var e = context.Resolve(this._entityType);
-            this._db.Add(e).Save();
+            try
+            {
+                _db.Add(e).Save();
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
 
             return e;
         }

@@ -1,4 +1,5 @@
-﻿namespace Bardock.Utils.UnitTest.Samples.SUT.DTOs
+﻿using System.ComponentModel.DataAnnotations;
+namespace Bardock.Utils.UnitTest.Samples.SUT.DTOs
 {
     public class CustomerCreate
     {
@@ -9,5 +10,10 @@
         public int Age { get; set; }
 
         public string Email { get; set; }
+
+        [EmailAddress]
+        public string frita { get; set; }
+
+        public int StatusID { get; set; }
     }
 }

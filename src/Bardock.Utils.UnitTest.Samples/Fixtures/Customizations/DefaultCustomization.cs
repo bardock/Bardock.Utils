@@ -10,6 +10,7 @@ namespace Bardock.Utils.UnitTest.Samples.Fixtures.Customizations
             : base(
                 new IgnoreEntityKeysCustomization<DataContext>(),
                 new IgnoreEntityNavigationPropsCustomization<DataContext>(),
+                new ComplexDataCustomization(),
                 new DataContextCustomization(),
                 new DataContextWrapperCustomization(),
                 new AutoMoqCustomization())
