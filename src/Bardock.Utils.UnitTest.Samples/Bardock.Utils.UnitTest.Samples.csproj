@@ -89,7 +89,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Fixtures\Attributes\CompositeCustomizeAttribute.cs" />
     <Compile Include="Fixtures\Attributes\DefaultDataAttribute.cs" />
     <Compile Include="Fixtures\Attributes\InlineDefaultDataAttribute.cs" />
     <Compile Include="Fixtures\Attributes\PersistedEntityAttribute.cs" />

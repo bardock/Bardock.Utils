@@ -1,7 +1,8 @@
-﻿using Bardock.Utils.UnitTest.Samples.Fixtures.Customizations;
+﻿using System;
+using System.Linq;
+using Bardock.Utils.UnitTest.Samples.Fixtures.Customizations;
 using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.Xunit2;
-using System;
 
 namespace Bardock.Utils.UnitTest.Samples.Fixtures.Attributes
 {
@@ -12,12 +13,12 @@ namespace Bardock.Utils.UnitTest.Samples.Fixtures.Attributes
         { }
 
         public DefaultDataAttribute(params Type[] customizationTypes)
-            : base(new Fixture().Customize(new DefaultCustomization())) // If this line is replaced by "this()", the sample tests stop working
+            : this()
         {
-            foreach (var t in customizationTypes)
-            {
-                this.Fixture.Customize((ICustomization)Activator.CreateInstance(t, null));
-            }
+            this.Fixture.Customize(
+                new CompositeCustomization(
+                    customizationTypes.Select(t =>
+                        (ICustomization)Activator.CreateInstance(t, null))));
         }
     }
 }

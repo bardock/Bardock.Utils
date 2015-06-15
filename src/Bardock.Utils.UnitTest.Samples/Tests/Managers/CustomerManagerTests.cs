@@ -55,21 +55,30 @@ namespace Bardock.Utils.UnitTest.Samples.Tests.Managers
             }
         }
 
-        public class WithInvalidEmailAsAdultAttribute : CompositeCustomizeAttribute
+        public class WithInvalidEmailAsAdultAttribute : CustomizeAttribute
         {
-            public override ICustomization[] GetCustomizations(ParameterInfo parameter)
+            public override ICustomization GetCustomization(ParameterInfo parameter)
             {
-                return new ICustomization[] { new WithInvalidEmailCustomization(), new AsAdultCustomization() };
+                return new CompositeCustomization(new WithInvalidEmailCustomization(), new AsAdultCustomization());
             }
         }
 
-        public class AsAdultPersistedAttribute : CompositeCustomizeAttribute
+        public class AsAdultPersistedAttribute : CustomizeAttribute
         {
-            public override ICustomization[] GetCustomizations(ParameterInfo parameter)
+            public override ICustomization GetCustomization(ParameterInfo parameter)
             {
-                return new ICustomization[] { new AsAdultCustomization(), new PersistedEntityCustomization(parameter) };
+                return new CompositeCustomization(new AsAdultCustomization(), new PersistedEntityCustomization(parameter));
             }
         }
+
+        //NOTE: DO NOT DO THE FOLLOWING:
+        //public class WithInvalidEmailAsAdultPersistedAttribute : AsAdultPersistedAttribute
+        //{
+        //    public override ICustomization GetCustomization(ParameterInfo parameter)
+        //    {
+        //        return base.GetCustomization(parameter);
+        //    }
+        //}
 
         //[DefaultData]
         //[InlineDefaultData(typeof(GetCustomerFromDB))]
@@ -148,23 +157,23 @@ namespace Bardock.Utils.UnitTest.Samples.Tests.Managers
                 sut.Create(data));
         }
 
-        [Theory]
-        [DefaultData]
-        public void Create_ExistingEmail_Exception___UpdateExisting(
-            IDataContextScopeFactory dataScope,
-            CustomerCreate data,
-            CustomerManager sut)
-        {
-            using (var s = dataScope.CreateDefault())
-            {
-                var c = s.Db.GetQuery<Customer>().First();
-                c.Email = data.Email;
-                s.Db.Update(c);
-            }
+        //[Theory]
+        //[DefaultData]
+        //public void Create_ExistingEmail_Exception___UpdateExisting(
+        //    IDataContextScopeFactory dataScope,
+        //    CustomerCreate data,
+        //    CustomerManager sut)
+        //{
+        //    using (var s = dataScope.CreateDefault())
+        //    {
+        //        var c = s.Db.GetQuery<Customer>().First();
+        //        c.Email = data.Email;
+        //        s.Db.Update(c);
+        //    }
 
-            Assert.Throws<CustomerManager.EmailAlreadyExistsException>(() =>
-                sut.Create(data));
-        }
+        //    Assert.Throws<CustomerManager.EmailAlreadyExistsException>(() =>
+        //        sut.Create(data));
+        //}
 
         [Theory]
         [DefaultData]
