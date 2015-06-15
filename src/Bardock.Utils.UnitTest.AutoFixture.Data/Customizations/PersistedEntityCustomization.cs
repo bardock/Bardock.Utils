@@ -19,7 +19,7 @@ namespace Bardock.Utils.UnitTest.Data.AutoFixture.Customizations
 
         public void Customize(IFixture fixture)
         {
-            var db = fixture.Create<IDataContextWrapper>();
+            var db = fixture.Create<IDataContextScopeFactory>();
             fixture.Customizations.Add(new PersistedEntitySpecimenBuilder(this._entityType, db));
         }
     }
@@ -35,12 +35,12 @@ namespace Bardock.Utils.UnitTest.Data.AutoFixture.Customizations
     public class PersistedEntitySpecimenBuilder : ISpecimenBuilder
     {
         private Type _entityType;
-        private IDataContextWrapper _db;
+        private IDataContextScopeFactory _dataScope;
 
-        public PersistedEntitySpecimenBuilder(Type entityType, IDataContextWrapper db)
+        public PersistedEntitySpecimenBuilder(Type entityType, IDataContextScopeFactory dataScope)
         {
             _entityType = entityType;
-            _db = db;
+            _dataScope = dataScope;
         }
 
         public object Create(object request, ISpecimenContext context)
@@ -54,7 +54,10 @@ namespace Bardock.Utils.UnitTest.Data.AutoFixture.Customizations
             var e = context.Resolve(this._entityType);
             try
             {
-                _db.Add(e).Save();
+                using (var s = _dataScope.CreateDefault())
+                {
+                    s.Db.Add(e);
+                }
             }
             catch (Exception ex)
             {
