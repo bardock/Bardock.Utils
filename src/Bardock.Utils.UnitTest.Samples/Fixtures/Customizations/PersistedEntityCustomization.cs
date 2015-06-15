@@ -57,10 +57,11 @@ namespace Bardock.Utils.UnitTest.Samples.Fixtures.Customizations
             {
                 _db.Add(e).Save();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
+            
 
             return e;
         }

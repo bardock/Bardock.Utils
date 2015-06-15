@@ -63,11 +63,11 @@ namespace Bardock.Utils.UnitTest.Samples.Tests.Managers
             }
         }
 
-        public class WithInvalidEmailAsAdultPersistedAttribute : CompositeCustomizeAttribute
+        public class AsAdultPersistedAttribute : CompositeCustomizeAttribute
         {
             public override ICustomization[] GetCustomizations(ParameterInfo parameter)
             {
-                return new ICustomization[] { new AsAdultCustomization(), new WithInvalidEmailCustomization(), new PersistedEntityCustomization(parameter) };
+                return new ICustomization[] { new AsAdultCustomization(), new PersistedEntityCustomization(parameter) };
             }
         }
 
@@ -184,7 +184,7 @@ namespace Bardock.Utils.UnitTest.Samples.Tests.Managers
         [Theory]
         [DefaultData]
         public void Update_ExistingAdultCustomer_Success_Composed(
-            [WithInvalidEmailAsAdultPersisted] Customer e,
+            [AsAdultPersisted] Customer e,
             CustomerManager sut)
         {
             sut.Update(e.ID, null);
