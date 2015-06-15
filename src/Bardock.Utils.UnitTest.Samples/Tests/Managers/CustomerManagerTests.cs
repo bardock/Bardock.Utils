@@ -1,7 +1,9 @@
 ﻿using Bardock.Utils.UnitTest.Data;
+using Bardock.Utils.UnitTest.Data.AutoFixture.Customizations;
+using Bardock.Utils.UnitTest.AutoFixture.Extensions;
+using Bardock.Utils.UnitTest.AutoFixture.Xunit2.Data.Attributes;
 using Bardock.Utils.UnitTest.Samples.Fixtures.Attributes;
 using Bardock.Utils.UnitTest.Samples.Fixtures.Customizations;
-using Bardock.Utils.UnitTest.Samples.Fixtures.Helpers;
 using Bardock.Utils.UnitTest.Samples.SUT.DTOs;
 using Bardock.Utils.UnitTest.Samples.SUT.Entities;
 using Bardock.Utils.UnitTest.Samples.SUT.Infra;

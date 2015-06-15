@@ -2,9 +2,9 @@
 using System.Data.Entity;
 using System.Linq;
 
-namespace Bardock.Utils.UnitTest.Samples.Fixtures.Customizations
+namespace Bardock.Utils.UnitTest.AutoFixture.EF.Helpers
 {
-    public static class DbContextHelper
+    internal static class DbContextHelper
     {
         public static bool IsMappedEntity<TDbContext>(this Type type)
             where TDbContext : DbContext

@@ -4,7 +4,7 @@ using Ploeh.AutoFixture.Kernel;
 using System;
 using System.Linq;
 
-namespace Bardock.Utils.UnitTest.Samples.Fixtures.Helpers
+namespace Bardock.Utils.UnitTest.AutoFixture.Extensions
 {
     public static class IFixtureExtensions
     {

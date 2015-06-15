@@ -54,16 +54,16 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\NMemory.1.0.1\lib\net45\NMemory.dll</HintPath>
     </Reference>
-    <Reference Include="Ploeh.AutoFixture, Version=3.30.6.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\AutoFixture.3.30.6\lib\net40\Ploeh.AutoFixture.dll</HintPath>
+    <Reference Include="Ploeh.AutoFixture, Version=3.30.7.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\AutoFixture.3.30.7\lib\net40\Ploeh.AutoFixture.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Ploeh.AutoFixture.AutoMoq, Version=3.30.6.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
       <HintPath>..\..\packages\AutoFixture.AutoMoq.3.30.6\lib\net40\Ploeh.AutoFixture.AutoMoq.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Ploeh.AutoFixture.Xunit2, Version=3.30.6.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\AutoFixture.Xunit2.3.30.6\lib\net45\Ploeh.AutoFixture.Xunit2.dll</HintPath>
+    <Reference Include="Ploeh.AutoFixture.Xunit2, Version=3.30.7.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\AutoFixture.Xunit2.3.30.7\lib\net45\Ploeh.AutoFixture.Xunit2.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -91,23 +91,13 @@
   <ItemGroup>
     <Compile Include="Fixtures\Attributes\DefaultDataAttribute.cs" />
     <Compile Include="Fixtures\Attributes\InlineDefaultDataAttribute.cs" />
-    <Compile Include="Fixtures\Attributes\PersistedEntityAttribute.cs" />
-    <Compile Include="Fixtures\Customizations\DataAnnotationsCustomization.cs" />
     <Compile Include="Fixtures\Customizations\DataContextCustomization.cs" />
     <Compile Include="Fixtures\Customizations\DataContextWrapperCustomization.cs" />
-    <Compile Include="Fixtures\Customizations\DbContextHelper.cs" />
     <Compile Include="Fixtures\Customizations\DefaultCustomization.cs" />
-    <Compile Include="Fixtures\Customizations\EntityFrameworkCustomization.cs" />
-    <Compile Include="Fixtures\Customizations\EntityTypeStringConfigurationCustomization.cs" />
-    <Compile Include="Fixtures\Customizations\IgnoreEntityKeysCustomization.cs" />
-    <Compile Include="Fixtures\Customizations\IgnoreEntityNavigationPropsCustomization.cs" />
-    <Compile Include="Fixtures\Customizations\PersistedEntityCustomization.cs" />
-    <Compile Include="Fixtures\Customizations\PropertyInfoExtensions.cs" />
     <Compile Include="Fixtures\DataLoaders\AddressesDataLoader.cs" />
     <Compile Include="Fixtures\DataLoaders\CountriesDataLoader.cs" />
     <Compile Include="Fixtures\DataLoaders\CustomersDataLoader.cs" />
     <Compile Include="Fixtures\DataLoaders\LoaderFixture.cs" />
-    <Compile Include="Fixtures\Helpers\IFixtureExtensions.cs" />
     <Compile Include="SUT\DTOs\CustomerCreate.cs" />
     <Compile Include="SUT\Entities\Country.cs" />
     <Compile Include="SUT\Infra\DataContext.cs" />
@@ -137,6 +127,26 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\Bardock.Utils.UnitTest.AutoFixture.Data\Bardock.Utils.UnitTest.AutoFixture.Data.csproj">
+      <Project>{653a0cf2-97c4-4d01-811b-3e293bebd829}</Project>
+      <Name>Bardock.Utils.UnitTest.AutoFixture.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Bardock.Utils.UnitTest.AutoFixture.EF\Bardock.Utils.UnitTest.AutoFixture.EF.csproj">
+      <Project>{83caf1e2-bb1f-468c-91e1-371974e6e070}</Project>
+      <Name>Bardock.Utils.UnitTest.AutoFixture.EF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Bardock.Utils.UnitTest.AutoFixture.Xunit2\Bardock.Utils.UnitTest.AutoFixture.Xunit2.csproj">
+      <Project>{24c38686-3bab-48e0-bf88-ab15da49680e}</Project>
+      <Name>Bardock.Utils.UnitTest.AutoFixture.Xunit2</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Bardock.Utils.UnitTest.AutoFixture\Bardock.Utils.UnitTest.AutoFixture.csproj">
+      <Project>{a0f7f7d4-a180-4a7b-9199-1bc636381b91}</Project>
+      <Name>Bardock.Utils.UnitTest.AutoFixture</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Bardock.Utils.UnitTest.AutoFixture.Xunit2.Data\Bardock.Utils.UnitTest.AutoFixture.Xunit2.Data.csproj">
+      <Project>{e9bbd660-ff0b-45c5-94de-99cfb83a185b}</Project>
+      <Name>Bardock.Utils.UnitTest.AutoFixture.Xunit2.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders\Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders.csproj">
       <Project>{b0f8231c-0f0b-4a2d-940e-5303344848ee}</Project>
       <Name>Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders</Name>

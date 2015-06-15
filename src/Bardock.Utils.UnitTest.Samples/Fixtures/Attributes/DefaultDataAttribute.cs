@@ -6,19 +6,14 @@ using Ploeh.AutoFixture.Xunit2;
 
 namespace Bardock.Utils.UnitTest.Samples.Fixtures.Attributes
 {
-    public class DefaultDataAttribute : AutoDataAttribute
+    public class DefaultDataAttribute : Bardock.Utils.UnitTest.AutoFixture.Xunit2.Fixtures.Attributes.DefaultDataAttribute
     {
         public DefaultDataAttribute()
-            : base(new Fixture().Customize(new DefaultCustomization()))
+            : base(new DefaultCustomization())
         { }
 
         public DefaultDataAttribute(params Type[] customizationTypes)
-            : this()
-        {
-            this.Fixture.Customize(
-                new CompositeCustomization(
-                    customizationTypes.Select(t =>
-                        (ICustomization)Activator.CreateInstance(t, null))));
-        }
+            : base(new DefaultCustomization(), customizationTypes)
+        { }
     }
 }

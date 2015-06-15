@@ -1,10 +1,9 @@
-﻿using Bardock.Utils.UnitTest.Data;
-using Ploeh.AutoFixture;
+﻿using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.Kernel;
 using System;
 using System.Reflection;
 
-namespace Bardock.Utils.UnitTest.Samples.Fixtures.Customizations
+namespace Bardock.Utils.UnitTest.Data.AutoFixture.Customizations
 {
     public class PersistedEntityCustomization : ICustomization
     {
@@ -61,7 +60,6 @@ namespace Bardock.Utils.UnitTest.Samples.Fixtures.Customizations
             {
                 throw ex;
             }
-            
 
             return e;
         }

@@ -1,23 +1,25 @@
 ﻿using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.Kernel;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Data.Entity;
-using System.Data.Entity.Core.Metadata.Edm;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Bardock.Utils.UnitTest.Samples.Fixtures.Customizations
+namespace Bardock.Utils.UnitTest.AutoFixture.Customizations
 {
-    public class DataAnnotationsCustomization : ICustomization
+    public class DataAnnotationsCustomization : CompositeCustomization
     {
-        public void Customize(IFixture fixture)
+        public DataAnnotationsCustomization()
+            : base(
+                new Customization(),
+                new NoDataAnnotationsCustomization())
+        { }
+
+        private class Customization : ICustomization
         {
-            fixture.Customizations.Add(new DataAnnotationsSpecimenBuilder());
+            public void Customize(IFixture fixture)
+            {
+                fixture.Customizations.Add(new DataAnnotationsSpecimenBuilder());
+            }
         }
     }
 
@@ -116,7 +118,7 @@ namespace Bardock.Utils.UnitTest.Samples.Fixtures.Customizations
                 return stringLengthAttr.MaximumLength;
             }
 
-            var maxLengthAttr = pi.GetCustomAttribute<MaxLengthAttribute>(inherit: true); 
+            var maxLengthAttr = pi.GetCustomAttribute<MaxLengthAttribute>(inherit: true);
             if (maxLengthAttr != null)
             {
                 return maxLengthAttr.Length;

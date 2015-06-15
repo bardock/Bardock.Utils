@@ -1,11 +1,11 @@
 ﻿using Bardock.Utils.Extensions;
-using Bardock.Utils.UnitTest.Samples.SUT.Infra;
+using Bardock.Utils.UnitTest.AutoFixture.EF.Helpers;
 using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.Kernel;
 using System.Data.Entity;
 using System.Reflection;
 
-namespace Bardock.Utils.UnitTest.Samples.Fixtures.Customizations
+namespace Bardock.Utils.UnitTest.AutoFixture.EF.Customizations
 {
     public class IgnoreEntityNavigationPropsCustomization<TDbContext> : ICustomization
         where TDbContext : DbContext
@@ -29,7 +29,7 @@ namespace Bardock.Utils.UnitTest.Samples.Fixtures.Customizations
 
             if (!pi.PropertyType.IsPrimitive()
                 && pi.GetGetMethod().IsVirtual
-                && pi.DeclaringType.IsMappedEntity<DataContext>())
+                && pi.DeclaringType.IsMappedEntity<TDbContext>())
             {
                 return null;
             }

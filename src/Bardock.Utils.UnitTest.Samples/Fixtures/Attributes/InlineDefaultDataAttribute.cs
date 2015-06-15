@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Bardock.Utils.UnitTest.Samples.Fixtures.Attributes
 {
-    internal class InlineDefaultDataAttribute : InlineAutoDataAttribute
+    internal class InlineDefaultDataAttribute : Bardock.Utils.UnitTest.AutoFixture.Xunit2.Fixtures.Attributes.InlineDefaultDataAttribute
     {
         public InlineDefaultDataAttribute(params object[] values)
             : base(new DefaultDataAttribute(), values.Where(x => !(x is ICustomization)))

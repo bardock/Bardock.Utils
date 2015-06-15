@@ -1,0 +1,92 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31010.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bardock.Utils", "src\Bardock.Utils\Bardock.Utils.csproj", "{DFF10396-C6B8-43F7-BBDD-D7AD9F57E4BF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{AF83A4D6-17A9-4267-B0A0-AC58CFCA8592}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{987E5089-8501-49DA-B9FF-2CE89F845C16}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bardock.Utils.UnitTest.Data", "src\Bardock.Utils.UnitTest.Data\Bardock.Utils.UnitTest.Data.csproj", "{DF4A40F2-AF0C-4107-9A1C-35952555F3FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bardock.Utils.UnitTest.Data.EF", "src\Bardock.Utils.UnitTest.Data.EF\Bardock.Utils.UnitTest.Data.EF.csproj", "{19961FB9-5E3B-4E6C-B03A-5573D80FF891}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders", "src\Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders\Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders.csproj", "{B0F8231C-0F0B-4A2D-940E-5303344848EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders.Tests", "tests\Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders.Tests\Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders.Tests.csproj", "{B77170E5-B61D-41AB-87AF-B2989891ABF8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bardock.Utils.UnitTest.Samples", "src\Bardock.Utils.UnitTest.Samples\Bardock.Utils.UnitTest.Samples.csproj", "{F27675F1-5FEA-4E8C-9900-AB7C6EC21E00}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bardock.Utils.UnitTest.AutoFixture.Xunit2", "src\Bardock.Utils.UnitTest.AutoFixture.Xunit2\Bardock.Utils.UnitTest.AutoFixture.Xunit2.csproj", "{24C38686-3BAB-48E0-BF88-AB15DA49680E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bardock.Utils.UnitTest.AutoFixture.EF", "src\Bardock.Utils.UnitTest.AutoFixture.EF\Bardock.Utils.UnitTest.AutoFixture.EF.csproj", "{83CAF1E2-BB1F-468C-91E1-371974E6E070}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bardock.Utils.UnitTest.AutoFixture.Data", "src\Bardock.Utils.UnitTest.AutoFixture.Data\Bardock.Utils.UnitTest.AutoFixture.Data.csproj", "{653A0CF2-97C4-4D01-811B-3E293BEBD829}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bardock.Utils.UnitTest.AutoFixture", "src\Bardock.Utils.UnitTest.AutoFixture\Bardock.Utils.UnitTest.AutoFixture.csproj", "{A0F7F7D4-A180-4A7B-9199-1BC636381B91}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bardock.Utils.UnitTest.AutoFixture.Xunit2.Data", "src\Bardock.Utils.UnitTest.AutoFixture.Xunit2.Data\Bardock.Utils.UnitTest.AutoFixture.Xunit2.Data.csproj", "{E9BBD660-FF0B-45C5-94DE-99CFB83A185B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DFF10396-C6B8-43F7-BBDD-D7AD9F57E4BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFF10396-C6B8-43F7-BBDD-D7AD9F57E4BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFF10396-C6B8-43F7-BBDD-D7AD9F57E4BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFF10396-C6B8-43F7-BBDD-D7AD9F57E4BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF4A40F2-AF0C-4107-9A1C-35952555F3FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF4A40F2-AF0C-4107-9A1C-35952555F3FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF4A40F2-AF0C-4107-9A1C-35952555F3FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF4A40F2-AF0C-4107-9A1C-35952555F3FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19961FB9-5E3B-4E6C-B03A-5573D80FF891}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19961FB9-5E3B-4E6C-B03A-5573D80FF891}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19961FB9-5E3B-4E6C-B03A-5573D80FF891}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19961FB9-5E3B-4E6C-B03A-5573D80FF891}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0F8231C-0F0B-4A2D-940E-5303344848EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0F8231C-0F0B-4A2D-940E-5303344848EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0F8231C-0F0B-4A2D-940E-5303344848EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0F8231C-0F0B-4A2D-940E-5303344848EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B77170E5-B61D-41AB-87AF-B2989891ABF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B77170E5-B61D-41AB-87AF-B2989891ABF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B77170E5-B61D-41AB-87AF-B2989891ABF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B77170E5-B61D-41AB-87AF-B2989891ABF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F27675F1-5FEA-4E8C-9900-AB7C6EC21E00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F27675F1-5FEA-4E8C-9900-AB7C6EC21E00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F27675F1-5FEA-4E8C-9900-AB7C6EC21E00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F27675F1-5FEA-4E8C-9900-AB7C6EC21E00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24C38686-3BAB-48E0-BF88-AB15DA49680E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24C38686-3BAB-48E0-BF88-AB15DA49680E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24C38686-3BAB-48E0-BF88-AB15DA49680E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24C38686-3BAB-48E0-BF88-AB15DA49680E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83CAF1E2-BB1F-468C-91E1-371974E6E070}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83CAF1E2-BB1F-468C-91E1-371974E6E070}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83CAF1E2-BB1F-468C-91E1-371974E6E070}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83CAF1E2-BB1F-468C-91E1-371974E6E070}.Release|Any CPU.Build.0 = Release|Any CPU
+		{653A0CF2-97C4-4D01-811B-3E293BEBD829}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{653A0CF2-97C4-4D01-811B-3E293BEBD829}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{653A0CF2-97C4-4D01-811B-3E293BEBD829}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{653A0CF2-97C4-4D01-811B-3E293BEBD829}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0F7F7D4-A180-4A7B-9199-1BC636381B91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0F7F7D4-A180-4A7B-9199-1BC636381B91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0F7F7D4-A180-4A7B-9199-1BC636381B91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0F7F7D4-A180-4A7B-9199-1BC636381B91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9BBD660-FF0B-45C5-94DE-99CFB83A185B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9BBD660-FF0B-45C5-94DE-99CFB83A185B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9BBD660-FF0B-45C5-94DE-99CFB83A185B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9BBD660-FF0B-45C5-94DE-99CFB83A185B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B77170E5-B61D-41AB-87AF-B2989891ABF8} = {AF83A4D6-17A9-4267-B0A0-AC58CFCA8592}
+	EndGlobalSection
+EndGlobal

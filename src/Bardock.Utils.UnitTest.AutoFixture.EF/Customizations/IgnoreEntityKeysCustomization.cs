@@ -1,10 +1,10 @@
-﻿using Bardock.Utils.UnitTest.Samples.SUT.Infra;
+﻿using Bardock.Utils.UnitTest.AutoFixture.EF.Helpers;
 using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.Kernel;
 using System.Data.Entity;
 using System.Reflection;
 
-namespace Bardock.Utils.UnitTest.Samples.Fixtures.Customizations
+namespace Bardock.Utils.UnitTest.AutoFixture.EF.Customizations
 {
     public class IgnoreEntityKeysCustomization<TDbContext> : ICustomization
         where TDbContext : DbContext
@@ -27,7 +27,7 @@ namespace Bardock.Utils.UnitTest.Samples.Fixtures.Customizations
             }
 
             var propName = pi.GetGetMethod().Name;
-            if ((propName.EndsWith("ID") || propName.EndsWith("Id")) && pi.DeclaringType.IsMappedEntity<DataContext>())
+            if ((propName.EndsWith("ID") || propName.EndsWith("Id")) && pi.DeclaringType.IsMappedEntity<TDbContext>())
             {
                 return null;
             }

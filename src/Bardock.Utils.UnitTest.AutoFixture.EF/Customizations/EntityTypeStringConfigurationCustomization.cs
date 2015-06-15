@@ -1,17 +1,14 @@
-﻿using Ploeh.AutoFixture;
+﻿using Bardock.Utils.UnitTest.AutoFixture.Customizations;
+using Bardock.Utils.UnitTest.AutoFixture.EF.Helpers;
+using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.Kernel;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Bardock.Utils.UnitTest.Samples.Fixtures.Customizations
+namespace Bardock.Utils.UnitTest.AutoFixture.EF.Customizations
 {
     public class EntityFrameworkEntityConfigurationCustomization<TDbContext> : ICustomization
         where TDbContext : DbContext
@@ -65,5 +62,4 @@ namespace Bardock.Utils.UnitTest.Samples.Fixtures.Customizations
                         .FirstOrDefault();
         }
     }
-
 }

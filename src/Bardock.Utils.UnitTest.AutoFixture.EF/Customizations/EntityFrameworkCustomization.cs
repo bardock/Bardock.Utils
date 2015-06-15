@@ -1,12 +1,7 @@
 ﻿using Ploeh.AutoFixture;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Bardock.Utils.UnitTest.Samples.Fixtures.Customizations
+namespace Bardock.Utils.UnitTest.AutoFixture.EF.Customizations
 {
     public class EntityFrameworkCustomization<TDbContext> : CompositeCustomization
         where TDbContext : DbContext
@@ -17,7 +12,6 @@ namespace Bardock.Utils.UnitTest.Samples.Fixtures.Customizations
                 new IgnoreEntityNavigationPropsCustomization<TDbContext>(),
                 new IgnoreEntityKeysCustomization<TDbContext>())
         {
-
         }
     }
 }
