@@ -133,11 +133,17 @@ namespace Bardock.Utils.UnitTest.AutoFixture.Customizations
                 || pi.CustomAttributes.Any(a => typeof(EmailAddressAttribute).IsAssignableFrom(a.AttributeType));
         }
 
+        protected virtual bool IsRegex(PropertyInfo pi, ISpecimenContext context)
+        {
+            return pi.CustomAttributes.Any(a => typeof(RegularExpressionAttribute).IsAssignableFrom(a.AttributeType));
+        }
+
         protected virtual object CreateString(PropertyInfo pi, ISpecimenContext context)
         {
             var minLength = GetStringMinLength(pi, context) ?? 0;
             var maxLength = GetStringMaxLength(pi, context) ?? int.MaxValue;
             var isEmail = IsEmail(pi, context);
+            var isRegex = IsRegex(pi, context);
 
             string specimen = null;
             if (isEmail)
@@ -149,6 +155,15 @@ namespace Bardock.Utils.UnitTest.AutoFixture.Customizations
                             minLength,
                             maxLength - _emailHost.Length)),
                     _emailHost);
+            }
+            else if (isRegex)
+            {
+                specimen = (string)context.Resolve(
+                                new RegularExpressionRequest(
+                                     string.Format("{0}{{1},{2}}$", 
+                                     pi.GetCustomAttribute<RegularExpressionAttribute>().Pattern, 
+                                     minLength, 
+                                     maxLength)));
             }
             else
             {
