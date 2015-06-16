@@ -24,13 +24,13 @@ namespace Bardock.Utils.UnitTest.AutoFixture.Customizations
         }
     }
 
-    public class PropertyMappingCustomization : ICustomization
+    public class MapMembersCustomization : ICustomization
     {
         private Type _sourceType;
         private Type _destinationType;
         private IEnumerable<MemberMapping> _mappings;
 
-        public PropertyMappingCustomization(Type sourceType, Type destinationType, IEnumerable<MemberMapping> mappings)
+        public MapMembersCustomization(Type sourceType, Type destinationType, IEnumerable<MemberMapping> mappings)
         {
             _sourceType = sourceType;
             _destinationType = destinationType;
@@ -39,17 +39,24 @@ namespace Bardock.Utils.UnitTest.AutoFixture.Customizations
 
         public void Customize(IFixture fixture)
         {
-            fixture.Customizations.Add(new PropertyMappingSpecimenBuilder(_sourceType, _destinationType, _mappings));
+            fixture.Customizations.Add(new MapMembersSpecimenBuilder(_sourceType, _destinationType, _mappings));
         }
     }
 
-    public class PropertyMappingSpecimenBuilder : ISpecimenBuilder
+    public class MapMembersCustomization<TSource, TDestination> : MapMembersCustomization
+    {
+        public MapMembersCustomization(IEnumerable<MemberMapping> mappings)
+            : base(typeof(TSource), typeof(TDestination), mappings)
+        { }
+    }
+
+    public class MapMembersSpecimenBuilder : ISpecimenBuilder
     {
         private Type _sourceType;
         private Type _destinationType;
         private IEnumerable<MemberMapping> _mappings;
 
-        public PropertyMappingSpecimenBuilder(
+        public MapMembersSpecimenBuilder(
             Type sourceType, 
             Type destinationType, 
             IEnumerable<MemberMapping> mappings)
@@ -66,23 +73,22 @@ namespace Bardock.Utils.UnitTest.AutoFixture.Customizations
                 return new NoSpecimen(request);
             }
 
-            var pi = request as PropertyInfo;
-            if (pi == null || pi.DeclaringType != _sourceType)
+            var mi = request as MemberInfo;
+            if (mi == null || mi.DeclaringType != _sourceType)
             {
                 return new NoSpecimen(request);
             }
 
-            var prop = _mappings
-                        .Where(p => p.SourceMember is PropertyInfo)
-                        .Where(p => p.SourceMember == pi)
+            var mapping = _mappings
+                        .Where(p => p.SourceMember == mi)
                         .FirstOrDefault();
 
-            if (prop == null)
+            if (mapping == null)
             {
                 return new NoSpecimen(request);
             }
 
-            return context.Resolve(prop.DestinationMember);
+            return context.Resolve(mapping.DestinationMember);
         }
     }
 

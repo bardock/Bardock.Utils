@@ -18,6 +18,8 @@ using System.Linq;
 using System.Reflection;
 using Xunit;
 using Ploeh.SemanticComparison;
+using Bardock.Utils.UnitTest.AutoFixture.Customizations;
+using System.Collections.Generic;
 
 namespace Bardock.Utils.UnitTest.Samples.Tests.Managers
 {
@@ -76,28 +78,27 @@ namespace Bardock.Utils.UnitTest.Samples.Tests.Managers
             }
         }
 
-        public class ToCustomerAttribute : Bardock.Utils.UnitTest.AutoFixture.Xunit2.AutoMapper.Attributes.ToAttribute
+        public class AutoMapToCustomerAttribute : AutoMapMembersAttribute
         {
-            public ToCustomerAttribute()
+            public AutoMapToCustomerAttribute()
                 : base(typeof(Customer))
             { }
         }
 
-        public class ToCustomer2Attribute : Bardock.Utils.UnitTest.AutoFixture.Xunit2.Attributes.ToAttribute
+        public class MapToCustomerAttribute : MapMembersAttribute
         {
-            public ToCustomer2Attribute()
+            public MapToCustomerAttribute()
                 : base(typeof(Customer))
             { }
 
-            public override MemberMappingBuilder Configure(Type sourceType, Type destinationType)
+            public override IEnumerable<MemberMapping> Configure(Type sourceType, Type destinationType)
             {
-                //TODO: Improve builder
-                return new MemberMappingBuilder()
-                        .Map((CustomerCreate c) => c.FirstName, (Customer c) => c.FirstName)
-                        .Map((CustomerCreate c) => c.LastName, (Customer c) => c.LastName)
-                        .Map((CustomerCreate c) => c.Age, (Customer c) => c.Age)
-                        .Map((CustomerCreate c) => c.Email, (Customer c) => c.Email)
-                        .Map((CustomerCreate c) => c.StatusID, (Customer c) => c.StatusID);
+                return new MembersMappingComposer<CustomerCreate, Customer>()
+                            .Map(c => c.FirstName, c => c.FirstName)
+                            .Map(c => c.LastName, c => c.LastName)
+                            .Map(c => c.Age, c => c.Age)
+                            .Map(c => c.Email, c => c.Email)
+                            .Map(c => c.StatusID, c => c.StatusID);
             }
         }
 
@@ -117,7 +118,7 @@ namespace Bardock.Utils.UnitTest.Samples.Tests.Managers
         [Theory]
         [DefaultData]
         public void Create_ValidEmail_SendMail(
-            [ToCustomer] CustomerCreate data,
+            [AutoMapToCustomer] CustomerCreate data,
             [Frozen] Mock<IAuthService> authService,
             [Frozen] Mock<IMailer> mailer,
             CustomerManager sut)
@@ -130,7 +131,7 @@ namespace Bardock.Utils.UnitTest.Samples.Tests.Managers
         [Theory]
         [DefaultData]
         public void Create_ValidEmail_SendMail2(
-            [ToCustomer2] CustomerCreate data,
+            [MapToCustomer] CustomerCreate data,
             [Frozen] Mock<IAuthService> authService,
             [Frozen] Mock<IMailer> mailer,
             CustomerManager sut)
@@ -258,7 +259,7 @@ namespace Bardock.Utils.UnitTest.Samples.Tests.Managers
         [Theory]
         [DefaultData]
         public void Create_ValidData_LogCreate___Resemblance(
-            [ToCustomer] CustomerCreate data,
+            [AutoMapToCustomer] CustomerCreate data,
             [Frozen] Mock<ICustomerLogManager> customerLogManager,
             CustomerManager sut)
         {

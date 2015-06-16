@@ -47,7 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Customizations\DataAnnotationsCustomization.cs" />
-    <Compile Include="Customizations\PropertyMappingCustomization.cs">
+    <Compile Include="Customizations\MapMembersCustomization.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Extensions\IFixtureExtensions.cs" />

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.31010.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bardock.Utils", "src\Bardock.Utils\Bardock.Utils.csproj", "{DFF10396-C6B8-43F7-BBDD-D7AD9F57E4BF}"
 EndProject
@@ -33,6 +33,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bardock.Utils.UnitTest.AutoFixture.Xunit2.Data", "src\Bardock.Utils.UnitTest.AutoFixture.Xunit2.Data\Bardock.Utils.UnitTest.AutoFixture.Xunit2.Data.csproj", "{E9BBD660-FF0B-45C5-94DE-99CFB83A185B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bardock.Utils.UnitTest.AutoFixture.Xunit2.AutoMapper", "src\Bardock.Utils.UnitTest.AutoFixture.Xunit2.AutoMapper\Bardock.Utils.UnitTest.AutoFixture.Xunit2.AutoMapper.csproj", "{CE186CFC-632E-48AF-9D80-30837FC6B8E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bardock.Utils.UnitTest.AutoFixture.AutoMapper", "src\Bardock.Utils.UnitTest.AutoFixture.AutoMapper\Bardock.Utils.UnitTest.AutoFixture.AutoMapper.csproj", "{A0F2E8AD-BB91-4628-9590-63A745673896}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -88,6 +90,10 @@ Global
 		{CE186CFC-632E-48AF-9D80-30837FC6B8E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE186CFC-632E-48AF-9D80-30837FC6B8E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE186CFC-632E-48AF-9D80-30837FC6B8E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0F2E8AD-BB91-4628-9590-63A745673896}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0F2E8AD-BB91-4628-9590-63A745673896}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0F2E8AD-BB91-4628-9590-63A745673896}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0F2E8AD-BB91-4628-9590-63A745673896}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
