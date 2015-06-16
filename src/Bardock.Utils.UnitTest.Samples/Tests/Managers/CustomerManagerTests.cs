@@ -1,9 +1,9 @@
-﻿using Bardock.Utils.UnitTest.Data;
-using Bardock.Utils.UnitTest.Data.AutoFixture.Customizations;
-using Bardock.Utils.UnitTest.AutoFixture.Extensions;
+﻿using Bardock.Utils.UnitTest.AutoFixture.Extensions;
+using Bardock.Utils.UnitTest.AutoFixture.Xunit2.AutoMapper.Attributes;
 using Bardock.Utils.UnitTest.AutoFixture.Xunit2.Data.Attributes;
+using Bardock.Utils.UnitTest.Data;
+using Bardock.Utils.UnitTest.Data.AutoFixture.Customizations;
 using Bardock.Utils.UnitTest.Samples.Fixtures.Attributes;
-using Bardock.Utils.UnitTest.Samples.Fixtures.Customizations;
 using Bardock.Utils.UnitTest.Samples.SUT.DTOs;
 using Bardock.Utils.UnitTest.Samples.SUT.Entities;
 using Bardock.Utils.UnitTest.Samples.SUT.Infra;
@@ -73,6 +73,13 @@ namespace Bardock.Utils.UnitTest.Samples.Tests.Managers
             }
         }
 
+        public class ToCustomerAttribute : ToAttribute
+        {
+            public ToCustomerAttribute()
+                : base(typeof(Customer))
+            { }
+        }
+
         //NOTE: DO NOT DO THE FOLLOWING:
         //public class WithInvalidEmailAsAdultPersistedAttribute : AsAdultPersistedAttribute
         //{
@@ -89,7 +96,7 @@ namespace Bardock.Utils.UnitTest.Samples.Tests.Managers
         [Theory]
         [DefaultData]
         public void Create_ValidEmail_SendMail(
-            CustomerCreate data,
+            [ToCustomer] CustomerCreate data,
             [Frozen] Mock<IAuthService> authService,
             [Frozen] Mock<IMailer> mailer,
             CustomerManager sut)

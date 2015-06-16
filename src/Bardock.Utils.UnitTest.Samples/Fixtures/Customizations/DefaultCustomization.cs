@@ -19,6 +19,8 @@ namespace Bardock.Utils.UnitTest.Samples.Fixtures.Customizations
                 new DataContextCustomization(),
                 new DataContextWrapperCustomization(),
                 new AutoMoqCustomization())
-        { }
+        {
+            Bootstrapper.Init();
+        }
     }
 }
