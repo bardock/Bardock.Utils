@@ -65,7 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\DefaultDataAttribute.cs" />
-    <Compile Include="Attributes\InlineDefaultDataAttribute.cs" />
+    <Compile Include="Attributes\InlineAutoDataAndCustomizationsAttribute.cs" />
     <Compile Include="Attributes\ToAttribute.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -241,9 +241,9 @@ namespace Bardock.Utils.UnitTest.Samples.Tests.Managers
         }
 
         [Theory]
-        [InlineDefaultDataAttribute(false, false)]
-        [InlineDefaultDataAttribute(true, false, typeof(AsAdultCustomization))]
-        [InlineDefaultDataAttribute(true, true, typeof(AsAdultCustomization), typeof(PersistedEntityCustomization<Customer>))]
+        [InlineDefaultData(false, false)]
+        [InlineDefaultData(true, false, typeof(AsAdultCustomization))]
+        [InlineDefaultData(true, true, typeof(AsAdultCustomization), typeof(PersistedEntityCustomization<Customer>))]
         public void Update_AsAdult_Success___Inline(
             bool isAdult,
             bool isPersisted,
