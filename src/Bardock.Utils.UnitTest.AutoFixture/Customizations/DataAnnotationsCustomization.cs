@@ -85,7 +85,7 @@ namespace Bardock.Utils.UnitTest.AutoFixture.Customizations
 
             if (minimum != null && maximum != null)
             {
-                return new RangedNumberRequest(pi.PropertyType, minimum, maximum);
+                return context.Resolve(new RangedNumberRequest(pi.PropertyType, minimum, maximum));
             }
             else
             {
