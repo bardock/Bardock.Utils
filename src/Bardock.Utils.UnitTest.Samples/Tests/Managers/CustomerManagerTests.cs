@@ -12,10 +12,12 @@ using Bardock.Utils.UnitTest.Samples.SUT.Managers;
 using Moq;
 using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.Xunit2;
+using Ploeh.SemanticComparison.Fluent;
 using System;
 using System.Linq;
 using System.Reflection;
 using Xunit;
+using Ploeh.SemanticComparison;
 
 namespace Bardock.Utils.UnitTest.Samples.Tests.Managers
 {
@@ -251,6 +253,29 @@ namespace Bardock.Utils.UnitTest.Samples.Tests.Managers
         {
             Assert.Equal(isAdult, e.Age == 21);
             Assert.Equal(isPersisted, e.ID > 0);
+        }
+
+        [Theory]
+        [DefaultData]
+        public void Create_ValidData_LogCreate___Resemblance(
+            [ToCustomer] CustomerCreate data,
+            [Frozen] Mock<ICustomerLogManager> customerLogManager,
+            CustomerManager sut)
+        {
+            sut.Create(data);
+
+            var customerLikeness = data.AsSource().OfLikeness<Customer>()
+                .Without(x => x.ID)
+                .Without(x => x.NickName)
+                .Without(x => x.CreatedOn)
+                .Without(x => x.Addresses);
+
+            //customerLogManager.Verify(x => x.LogCreate(It.Is<Customer>(e => e.FirstName == data.FirstName)));
+
+            customerLogManager.Verify(x => x.LogCreate(It.Is<Customer>(c => customerLikeness.Equals(c))));
+
+            //var e = customerLikeness.CreateProxy();
+            //customerLogManager.Verify(x => x.LogCreate(e));
         }
     }
 }

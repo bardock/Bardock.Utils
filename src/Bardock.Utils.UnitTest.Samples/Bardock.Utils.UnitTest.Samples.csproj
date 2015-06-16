@@ -72,6 +72,10 @@
       <HintPath>..\..\packages\AutoFixture.Xunit2.3.30.7\lib\net45\Ploeh.AutoFixture.Xunit2.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Ploeh.SemanticComparison, Version=3.30.7.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SemanticComparison.3.30.7\lib\net40\Ploeh.SemanticComparison.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -112,6 +116,7 @@
     <Compile Include="SUT\Infra\IMailer.cs" />
     <Compile Include="SUT\Infra\SmtpMailer.cs" />
     <Compile Include="SUT\Managers\BaseManager.cs" />
+    <Compile Include="SUT\Managers\CustomerLogManager.cs" />
     <Compile Include="SUT\Managers\CustomerManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SUT\Entities\Address.cs" />
