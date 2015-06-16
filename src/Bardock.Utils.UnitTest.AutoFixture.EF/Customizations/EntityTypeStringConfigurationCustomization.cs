@@ -1,5 +1,5 @@
-﻿using Bardock.Utils.UnitTest.AutoFixture.Customizations;
-using Bardock.Utils.UnitTest.AutoFixture.EF.Helpers;
+﻿using Bardock.Utils.UnitTest.AutoFixture.EF.Helpers;
+using Bardock.Utils.UnitTest.AutoFixture.SpecimenBuilders;
 using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.Kernel;
 using System.Data.Entity;

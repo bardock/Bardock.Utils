@@ -52,6 +52,7 @@
     </Compile>
     <Compile Include="Extensions\IFixtureExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SpecimenBuilders\DataAnnotationsSpecimenBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
