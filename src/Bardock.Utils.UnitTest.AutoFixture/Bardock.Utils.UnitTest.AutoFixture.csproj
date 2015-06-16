@@ -47,6 +47,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Customizations\DataAnnotationsCustomization.cs" />
+    <Compile Include="Customizations\PropertyMappingCustomization.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Extensions\IFixtureExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

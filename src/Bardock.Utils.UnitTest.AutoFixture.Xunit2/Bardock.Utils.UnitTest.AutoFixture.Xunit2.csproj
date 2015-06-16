@@ -66,6 +66,9 @@
   <ItemGroup>
     <Compile Include="Attributes\DefaultDataAttribute.cs" />
     <Compile Include="Attributes\InlineDefaultDataAttribute.cs" />
+    <Compile Include="Attributes\ToAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -75,6 +78,10 @@
     <ProjectReference Include="..\Bardock.Utils.UnitTest.AutoFixture\Bardock.Utils.UnitTest.AutoFixture.csproj">
       <Project>{a0f7f7d4-a180-4a7b-9199-1bc636381b91}</Project>
       <Name>Bardock.Utils.UnitTest.AutoFixture</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Bardock.Utils\Bardock.Utils.csproj">
+      <Project>{dff10396-c6b8-43f7-bbdd-d7ad9f57e4bf}</Project>
+      <Name>Bardock.Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

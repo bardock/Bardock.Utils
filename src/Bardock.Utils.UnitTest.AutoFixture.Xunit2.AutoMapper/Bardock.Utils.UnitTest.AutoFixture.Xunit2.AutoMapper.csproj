@@ -34,6 +34,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=3.3.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Net4, Version=3.3.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.Net4.dll</HintPath>
+    </Reference>
     <Reference Include="Ploeh.AutoFixture">
       <HintPath>..\..\packages\AutoFixture.3.30.7\lib\net40\Ploeh.AutoFixture.dll</HintPath>
     </Reference>
@@ -62,9 +70,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Bardock.Utils.UnitTest.AutoFixture.AutoMapper\Bardock.Utils.UnitTest.AutoFixture.AutoMapper.csproj">
-      <Project>{1d2bd03b-819a-4de6-9738-2a094c975b1e}</Project>
-      <Name>Bardock.Utils.UnitTest.AutoFixture.AutoMapper</Name>
+    <ProjectReference Include="..\Bardock.Utils.UnitTest.AutoFixture.Xunit2\Bardock.Utils.UnitTest.AutoFixture.Xunit2.csproj">
+      <Project>{24c38686-3bab-48e0-bf88-ab15da49680e}</Project>
+      <Name>Bardock.Utils.UnitTest.AutoFixture.Xunit2</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Bardock.Utils.UnitTest.AutoFixture\Bardock.Utils.UnitTest.AutoFixture.csproj">
+      <Project>{a0f7f7d4-a180-4a7b-9199-1bc636381b91}</Project>
+      <Name>Bardock.Utils.UnitTest.AutoFixture</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -76,6 +88,7 @@
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
     <Error Condition="!Exists('..\..\packages\xunit.core.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\xunit.core.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props'))" />
   </Target>
+  <Import Project="..\..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

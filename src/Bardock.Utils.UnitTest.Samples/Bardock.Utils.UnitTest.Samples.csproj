@@ -134,10 +134,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\Bardock.Utils.UnitTest.AutoFixture.AutoMapper\Bardock.Utils.UnitTest.AutoFixture.AutoMapper.csproj">
-      <Project>{1d2bd03b-819a-4de6-9738-2a094c975b1e}</Project>
-      <Name>Bardock.Utils.UnitTest.AutoFixture.AutoMapper</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Bardock.Utils.UnitTest.AutoFixture.Data\Bardock.Utils.UnitTest.AutoFixture.Data.csproj">
       <Project>{653a0cf2-97c4-4d01-811b-3e293bebd829}</Project>
       <Name>Bardock.Utils.UnitTest.AutoFixture.Data</Name>

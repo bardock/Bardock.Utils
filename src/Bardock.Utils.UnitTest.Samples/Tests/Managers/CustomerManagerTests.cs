@@ -1,4 +1,5 @@
 ﻿using Bardock.Utils.UnitTest.AutoFixture.Extensions;
+using Bardock.Utils.UnitTest.AutoFixture.Xunit2.Attributes;
 using Bardock.Utils.UnitTest.AutoFixture.Xunit2.AutoMapper.Attributes;
 using Bardock.Utils.UnitTest.AutoFixture.Xunit2.Data.Attributes;
 using Bardock.Utils.UnitTest.Data;
@@ -73,11 +74,29 @@ namespace Bardock.Utils.UnitTest.Samples.Tests.Managers
             }
         }
 
-        public class ToCustomerAttribute : ToAttribute
+        public class ToCustomerAttribute : Bardock.Utils.UnitTest.AutoFixture.Xunit2.AutoMapper.Attributes.ToAttribute
         {
             public ToCustomerAttribute()
                 : base(typeof(Customer))
             { }
+        }
+
+        public class ToCustomer2Attribute : Bardock.Utils.UnitTest.AutoFixture.Xunit2.Attributes.ToAttribute
+        {
+            public ToCustomer2Attribute()
+                : base(typeof(Customer))
+            { }
+
+            public override MemberMappingBuilder Configure(Type sourceType, Type destinationType)
+            {
+                //TODO: Improve builder
+                return new MemberMappingBuilder()
+                        .Map((CustomerCreate c) => c.FirstName, (Customer c) => c.FirstName)
+                        .Map((CustomerCreate c) => c.LastName, (Customer c) => c.LastName)
+                        .Map((CustomerCreate c) => c.Age, (Customer c) => c.Age)
+                        .Map((CustomerCreate c) => c.Email, (Customer c) => c.Email)
+                        .Map((CustomerCreate c) => c.StatusID, (Customer c) => c.StatusID);
+            }
         }
 
         //NOTE: DO NOT DO THE FOLLOWING:
@@ -97,6 +116,19 @@ namespace Bardock.Utils.UnitTest.Samples.Tests.Managers
         [DefaultData]
         public void Create_ValidEmail_SendMail(
             [ToCustomer] CustomerCreate data,
+            [Frozen] Mock<IAuthService> authService,
+            [Frozen] Mock<IMailer> mailer,
+            CustomerManager sut)
+        {
+            sut.Create(data);
+
+            mailer.Verify(x => x.Send(data.Email, "Welcome"));
+        }
+
+        [Theory]
+        [DefaultData]
+        public void Create_ValidEmail_SendMail2(
+            [ToCustomer2] CustomerCreate data,
             [Frozen] Mock<IAuthService> authService,
             [Frozen] Mock<IMailer> mailer,
             CustomerManager sut)
