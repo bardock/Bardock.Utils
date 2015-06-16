@@ -239,5 +239,18 @@ namespace Bardock.Utils.UnitTest.Samples.Tests.Managers
         {
             sut.Update(e.ID, null);
         }
+
+        [Theory]
+        [InlineDefaultDataAttribute(false, false)]
+        [InlineDefaultDataAttribute(true, false, typeof(AsAdultCustomization))]
+        [InlineDefaultDataAttribute(true, true, typeof(AsAdultCustomization), typeof(PersistedEntityCustomization<Customer>))]
+        public void Update_AsAdult_Success___Inline(
+            bool isAdult,
+            bool isPersisted,
+            Customer e)
+        {
+            Assert.Equal(isAdult, e.Age == 21);
+            Assert.Equal(isPersisted, e.ID > 0);
+        }
     }
 }

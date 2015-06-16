@@ -1,18 +1,12 @@
-﻿using Ploeh.AutoFixture;
-using Ploeh.AutoFixture.Xunit2;
-using System.Linq;
+﻿using Bardock.Utils.UnitTest.AutoFixture.Xunit2.Attributes;
 
 namespace Bardock.Utils.UnitTest.Samples.Fixtures.Attributes
 {
-    internal class InlineDefaultDataAttribute : Bardock.Utils.UnitTest.AutoFixture.Xunit2.Fixtures.Attributes.InlineDefaultDataAttribute
+    internal class InlineDefaultDataAttribute : InlineAutoDataAndCustomizationsAttribute
     {
-        public InlineDefaultDataAttribute(params object[] values)
-            : base(new DefaultDataAttribute(), values.Where(x => !(x is ICustomization)))
+        public InlineDefaultDataAttribute(params object[] valuesAndCustomizationTypes)
+            : base(new DefaultDataAttribute(), valuesAndCustomizationTypes)
         {
-            foreach (var c in values.Where(x => x is ICustomization).Cast<ICustomization>())
-            {
-                this.AutoDataAttribute.Fixture.Customize(c);
-            }
         }
     }
 }
