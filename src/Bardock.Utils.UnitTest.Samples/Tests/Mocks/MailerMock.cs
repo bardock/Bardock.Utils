@@ -1,5 +1,5 @@
-﻿using System;
-using Bardock.Utils.UnitTest.Samples.SUT.Infra;
+﻿using Bardock.Utils.UnitTest.Samples.SUT.Infra;
+using System;
 
 namespace Bardock.Utils.UnitTest.Samples.Tests.Mocks
 {

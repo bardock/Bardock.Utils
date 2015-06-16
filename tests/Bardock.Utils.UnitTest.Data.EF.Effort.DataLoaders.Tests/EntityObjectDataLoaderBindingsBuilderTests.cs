@@ -1,5 +1,4 @@
 ﻿using Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders.Tests.DataLoaders;
-using Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders.Tests.Entities;
 using System.Linq;
 using Xunit;
 

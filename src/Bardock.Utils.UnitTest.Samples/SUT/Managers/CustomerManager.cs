@@ -1,8 +1,8 @@
-﻿using System;
-using System.Linq;
-using Bardock.Utils.UnitTest.Samples.SUT.DTOs;
+﻿using Bardock.Utils.UnitTest.Samples.SUT.DTOs;
 using Bardock.Utils.UnitTest.Samples.SUT.Entities;
 using Bardock.Utils.UnitTest.Samples.SUT.Infra;
+using System;
+using System.Linq;
 
 namespace Bardock.Utils.UnitTest.Samples.SUT.Managers
 {

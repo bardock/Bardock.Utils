@@ -1,11 +1,6 @@
 ﻿using AutoMapper;
 using Bardock.Utils.UnitTest.Samples.SUT.DTOs;
 using Bardock.Utils.UnitTest.Samples.SUT.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bardock.Utils.UnitTest.Samples.SUT.Infra
 {

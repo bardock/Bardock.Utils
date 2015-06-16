@@ -1,7 +1,7 @@
-﻿using System;
-using System.Linq;
-using Ploeh.AutoFixture;
+﻿using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.Xunit2;
+using System;
+using System.Linq;
 
 namespace Bardock.Utils.UnitTest.AutoFixture.Xunit2.Attributes
 {

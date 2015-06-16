@@ -160,9 +160,9 @@ namespace Bardock.Utils.UnitTest.AutoFixture.Customizations
             {
                 specimen = (string)context.Resolve(
                                 new RegularExpressionRequest(
-                                     string.Format("{0}{{1},{2}}$", 
-                                     pi.GetCustomAttribute<RegularExpressionAttribute>().Pattern, 
-                                     minLength, 
+                                     string.Format("{0}{{1},{2}}$",
+                                     pi.GetCustomAttribute<RegularExpressionAttribute>().Pattern,
+                                     minLength,
                                      maxLength)));
             }
             else

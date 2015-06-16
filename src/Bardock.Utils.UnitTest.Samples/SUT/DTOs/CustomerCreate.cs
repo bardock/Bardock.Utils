@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-namespace Bardock.Utils.UnitTest.Samples.SUT.DTOs
+﻿namespace Bardock.Utils.UnitTest.Samples.SUT.DTOs
 {
     public class CustomerCreate
     {

@@ -1,13 +1,9 @@
-﻿using Bardock.Utils.Linq.Expressions;
-using Ploeh.AutoFixture;
+﻿using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.Kernel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bardock.Utils.UnitTest.AutoFixture.Customizations
 {
@@ -57,8 +53,8 @@ namespace Bardock.Utils.UnitTest.AutoFixture.Customizations
         private IEnumerable<MemberMapping> _mappings;
 
         public MapMembersSpecimenBuilder(
-            Type sourceType, 
-            Type destinationType, 
+            Type sourceType,
+            Type destinationType,
             IEnumerable<MemberMapping> mappings)
         {
             _sourceType = sourceType;
@@ -91,7 +87,4 @@ namespace Bardock.Utils.UnitTest.AutoFixture.Customizations
             return context.Resolve(mapping.DestinationMember);
         }
     }
-
-
-
 }

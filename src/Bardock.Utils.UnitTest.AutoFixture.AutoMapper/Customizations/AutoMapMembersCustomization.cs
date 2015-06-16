@@ -1,11 +1,7 @@
 ﻿using AutoMapper;
 using Bardock.Utils.UnitTest.AutoFixture.Customizations;
-using Ploeh.AutoFixture;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bardock.Utils.UnitTest.AutoFixture.AutoMapper.Customizations
 {
@@ -13,8 +9,8 @@ namespace Bardock.Utils.UnitTest.AutoFixture.AutoMapper.Customizations
     {
         public AutoMapMembersCustomization(Type sourceType, Type destinationType)
             : base(
-                sourceType, 
-                destinationType, 
+                sourceType,
+                destinationType,
                 mappings: Mapper.GetAllTypeMaps()
                             .Where(m => m.SourceType == sourceType)
                             .Where(m => m.DestinationType == destinationType)
@@ -25,7 +21,7 @@ namespace Bardock.Utils.UnitTest.AutoFixture.AutoMapper.Customizations
 
     public class AutoMapMembersCustomization<TSource, TDestination> : AutoMapMembersCustomization
     {
-        public AutoMapMembersCustomization() 
+        public AutoMapMembersCustomization()
             : base(typeof(TSource), typeof(TDestination))
         { }
     }

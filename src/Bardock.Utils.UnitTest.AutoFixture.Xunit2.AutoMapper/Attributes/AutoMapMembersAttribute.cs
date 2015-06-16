@@ -1,14 +1,7 @@
-﻿using AutoMapper;
-using Bardock.Utils.UnitTest.AutoFixture.AutoMapper.Customizations;
-using Bardock.Utils.UnitTest.AutoFixture.Customizations;
-using Bardock.Utils.UnitTest.AutoFixture.Xunit2.Attributes;
+﻿using Bardock.Utils.UnitTest.AutoFixture.AutoMapper.Customizations;
 using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.Xunit2;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bardock.Utils.UnitTest.AutoFixture.Xunit2.AutoMapper.Attributes
 {

@@ -45,7 +45,7 @@ namespace Bardock.Utils.UnitTest.AutoFixture.Xunit2.Attributes
             _mappings = mappings;
         }
 
-        public MembersMappingComposer<TSource,TDestination> Map<TReturn>(
+        public MembersMappingComposer<TSource, TDestination> Map<TReturn>(
             Expression<Func<TSource, TReturn>> source,
             Expression<Func<TDestination, TReturn>> destination)
         {
@@ -56,7 +56,7 @@ namespace Bardock.Utils.UnitTest.AutoFixture.Xunit2.Attributes
                     ((MemberExpression)ExpressionHelper.RemoveConvert(source).Body).Member,
                     ((MemberExpression)ExpressionHelper.RemoveConvert(destination).Body).Member));
 
-            return new MembersMappingComposer<TSource,TDestination>(mappings);
+            return new MembersMappingComposer<TSource, TDestination>(mappings);
         }
 
         public IEnumerator<MemberMapping> GetEnumerator()

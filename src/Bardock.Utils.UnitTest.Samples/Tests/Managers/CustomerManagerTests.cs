@@ -1,4 +1,5 @@
-﻿using Bardock.Utils.UnitTest.AutoFixture.Extensions;
+﻿using Bardock.Utils.UnitTest.AutoFixture.Customizations;
+using Bardock.Utils.UnitTest.AutoFixture.Extensions;
 using Bardock.Utils.UnitTest.AutoFixture.Xunit2.Attributes;
 using Bardock.Utils.UnitTest.AutoFixture.Xunit2.AutoMapper.Attributes;
 using Bardock.Utils.UnitTest.AutoFixture.Xunit2.Data.Attributes;
@@ -14,12 +15,10 @@ using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.Xunit2;
 using Ploeh.SemanticComparison.Fluent;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Xunit;
-using Ploeh.SemanticComparison;
-using Bardock.Utils.UnitTest.AutoFixture.Customizations;
-using System.Collections.Generic;
 
 namespace Bardock.Utils.UnitTest.Samples.Tests.Managers
 {

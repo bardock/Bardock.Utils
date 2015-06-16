@@ -1,9 +1,5 @@
 ﻿using Bardock.Utils.UnitTest.AutoFixture.Customizations;
 using Bardock.Utils.UnitTest.AutoFixture.EF.Customizations;
-using Bardock.Utils.UnitTest.Data.AutoFixture.Customizations;
-using Bardock.Utils.UnitTest.Data.EF;
-using Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders;
-using Bardock.Utils.UnitTest.Samples.Fixtures.DataLoaders;
 using Bardock.Utils.UnitTest.Samples.SUT.Infra;
 using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.AutoMoq;
