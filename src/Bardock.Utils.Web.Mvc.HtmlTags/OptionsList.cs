@@ -38,6 +38,23 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
                 display: display ?? (x => Resources.Current.GetValue(x.Name)),
                 value: x => x.Value);
         }
+
+        public static OptionsList<SelectListItem> CreateForBoolean(
+            string displayTrue = null, string displayFalse = null, bool? value = null)
+        {
+            displayTrue = displayTrue ?? bool.TrueString;
+            displayFalse = displayFalse ?? bool.FalseString;
+
+            var options = OptionsList.Create(new List<SelectListItem>() {
+                new SelectListItem() { Text = displayTrue, Value = bool.TrueString },
+                new SelectListItem() { Text = displayFalse, Value = bool.FalseString },
+            }); 
+            
+            if (value != null) 
+                 options.SelectedValue(value.Value.ToString());
+
+            return options;
+        }
     }
 
     public class OptionsList<TItem> : IEnumerable<OptionItem>
@@ -71,6 +88,15 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
 
         public OptionsList<TItem> SelectedValue(object value)
         {
+            if(value == null)
+            {
+                return this.IsSelected(x => false);
+            }
+            if (!(value is string) && typeof(IEnumerable).IsAssignableFrom(value.GetType()))
+            {
+                return this.SelectedValues((IEnumerable)value);
+            }
+
             return this.IsSelected(
                 x => ValueSerializer.Serialize(value) == ValueSerializer.Serialize(this.Value(x)));
         }
@@ -81,12 +107,10 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
             {
                 return this.IsSelected(x => false);
             }
-            else
-            {
-                var objValues = values.Cast<object>();
-                return this.IsSelected(
-                    x => objValues.Any(value => ValueSerializer.Serialize(value) == ValueSerializer.Serialize(this.Value(x))));
-            }
+
+            var objValues = values.Cast<object>();
+            return this.IsSelected(
+                x => objValues.Any(value => ValueSerializer.Serialize(value) == ValueSerializer.Serialize(this.Value(x))));
         }
 
         protected Expression<Action<TItem, HtmlTag>> _configure;

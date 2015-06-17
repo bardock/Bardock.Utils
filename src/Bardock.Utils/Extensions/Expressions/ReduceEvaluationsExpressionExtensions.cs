@@ -22,7 +22,7 @@ namespace Bardock.Utils.Extensions
             {
                 anyReduced = false;
                 expr = this.Visit(expr);
-            } 
+            }
             while (anyReduced);
 
             return expr;

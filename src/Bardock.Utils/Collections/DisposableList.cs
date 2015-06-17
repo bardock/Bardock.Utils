@@ -6,8 +6,8 @@ namespace Bardock.Utils.Collections
     /// <summary>
     /// Represents a strongly typed list of disposable objects.
     /// </summary>
-	public class DisposableList<T> : List<T>, IDisposable where T : IDisposable
-	{
+    public class DisposableList<T> : List<T>, IDisposable where T : IDisposable
+    {
         public void Dispose()
         {
             foreach (var x in this)
@@ -18,6 +18,5 @@ namespace Bardock.Utils.Collections
                 }
             }
         }
-	}
-
+    }
 }

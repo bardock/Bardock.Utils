@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 
 namespace Bardock.Utils.Sync
 {
     /// <summary>
-    /// Provides a way to lock based on a string. 
+    /// Provides a way to lock based on a string.
     /// Instanciate one StringLocker for every use case you might have.
     /// </summary>
     public class StringLocker

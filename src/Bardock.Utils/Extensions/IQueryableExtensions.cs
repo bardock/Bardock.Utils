@@ -1,8 +1,9 @@
-﻿using Bardock.Utils.Linq.Expressions;
-using System;
+﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using Bardock.Utils.Linq.Expressions;
+using System.Collections.Generic;
 
 namespace Bardock.Utils.Extensions
 {
@@ -53,7 +54,7 @@ namespace Bardock.Utils.Extensions
 
             if (fromDate.HasValue)
             {
-                if(removeTime)
+                if (removeTime)
                 {
                     fromDate = fromDate.Value.ToDayStart();
                 }
@@ -86,6 +87,70 @@ namespace Bardock.Utils.Extensions
             Expression<Func<TSource, bool>> predicate = Expression.Lambda<Func<TSource, bool>>(exp, dateExp.Parameters);
 
             return source.Where(predicate);
+        }
+
+        private static readonly MethodInfo _ContainsMethod = typeof(Enumerable).GetMethods().Where(method => method.Name == "Contains").Where(method => method.GetParameters().Length == 2).Single();
+
+        private static Expression BuildContainsExpression<TSource, TProp>(
+            Expression<Func<TSource, TProp>> selector,
+            IEnumerable<TProp> items)
+        {
+            return Expression.Call(
+                _ContainsMethod.MakeGenericMethod(typeof(TProp)),
+                Expression.Constant(items),
+                selector.Body);
+        }
+
+        /// <summary>
+        /// Filters a sequence of values based on a specified range of values of the selected property
+        /// </summary>
+        public static IQueryable<TSource> Where<TSource, TProp>(
+            this IQueryable<TSource> source,
+            Expression<Func<TSource, TProp>> selector,
+            IEnumerable<TProp> items)
+        {
+            if (items == null)
+                return source;
+
+            return source.Where(Expression.Lambda<Func<TSource, bool>>(
+                BuildContainsExpression(selector, items),
+                selector.Parameters));
+        }
+
+        /// <summary>
+        /// Filters a sequence of values based on a specified range of values of the selected property
+        /// </summary>
+        public static IQueryable<TSource> Where<TSource, TProp>(
+            this IQueryable<TSource> source,
+            Expression<Func<TSource, TProp?>> selector,
+            IEnumerable<TProp> items)
+            where TProp : struct
+        {
+            if (items == null)
+                return source;
+
+            var predicate = Expression.Lambda<Func<TSource, bool>>(
+                Expression.AndAlso(
+                    Expression.Property(selector.Body, "HasValue"),
+                    BuildContainsExpression(selector, items.Cast<TProp?>())),
+                selector.Parameters);
+
+            return source.Where(predicate);
+        }
+
+        /// <summary>
+        /// Filters a sequence of values based on a specified range of values of the selected property
+        /// </summary>
+        public static IQueryable<TSource> Where<TSource, TProp>(
+            this IQueryable<TSource> source,
+            Expression<Func<TSource, TProp>> selector,
+            IEnumerable<TProp?> items)
+            where TProp : struct
+        {
+            if (items == null)
+                return source;
+
+            return source.Where(selector, items.Where(x => x.HasValue).Select(x => x.Value));
         }
 
         private static readonly MethodInfo _OrderByMethod = typeof(Queryable).GetMethods().Where(method => method.Name == "OrderBy").Where(method => method.GetParameters().Length == 2).Single();
@@ -123,6 +188,37 @@ namespace Bardock.Utils.Extensions
 	        });
             return (IOrderedQueryable<TSource>)ret;
         }
-	}
 
+        private static readonly MethodInfo _StringToLowerMethod = typeof(string).GetMethods().Where(m => m.Name == "ToLower" && m.GetParameters().Length == 0).FirstOrDefault();
+        private static readonly MethodInfo _StringContainsMethod = typeof(string).GetMethods().Where(m => m.Name == "Contains" && m.GetParameters().Length == 1).FirstOrDefault();
+
+        public static IQueryable<T> Search<T>(this IQueryable<T> query, string searchTerm, Expression<Func<T, string>> searchExpression)
+        {
+	        return query.Search(searchTerm, new Expression<Func<T, string>>[] { searchExpression });
+        }
+
+        public static IQueryable<T> Search<T>(this IQueryable<T> query, string searchTerm, params Expression<Func<T, string>>[] searchExpressions)
+        {
+            return query.Search(searchTerm, searchExpressions.AsEnumerable());
+        }
+
+        public static IQueryable<T> Search<T>(this IQueryable<T> query, string searchTerm, IEnumerable<Expression<Func<T, string>>> searchExpressions)
+        {
+	        if (string.IsNullOrWhiteSpace(searchTerm) || !searchExpressions.Any()) {
+		        return query;
+	        }
+
+	        Expression<Func<T, bool>> predicate = (T x) => false;
+	        foreach (var searchExpression in searchExpressions) {
+		        var _x_tolower_contains_search_tolower = Expression.Lambda(
+                    Expression.Call(
+                        Expression.Call(searchExpression.Body, _StringToLowerMethod), _StringContainsMethod, Expression.Constant(searchTerm.ToLower())
+                    ), 
+                    searchExpression.Parameters);
+
+		        predicate = ExpressionHelper.OrElse(predicate, (Expression<Func<T, bool>>)_x_tolower_contains_search_tolower);
+	        }
+	        return query.Where(predicate);
+        }
+    }
 }

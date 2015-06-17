@@ -30,9 +30,3 @@ namespace Bardock.Utils.Extensions
         }
     }
 }
-
-
-
-
-
-

@@ -1,5 +1,6 @@
 :: nuget spec
+set "project=Bardock.Utils"
 set /p version=Version number:
-nuget pack Bardock.Utils.csproj -Prop Configuration=Debug -Symbols -IncludeReferencedProjects -Version %version%
-nuget push Bardock.Utils.%version%.nupkg
+nuget pack %project%.csproj -Prop Configuration=Debug -Symbols -IncludeReferencedProjects -Version %version%
+nuget push %project%.%version%.nupkg
 pause;

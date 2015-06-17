@@ -1,12 +1,9 @@
-﻿using System.Runtime.CompilerServices;
-using System.Globalization;
-using Bardock.Utils.Globalization;
+﻿using System.Globalization;
 
 namespace Bardock.Utils.Extensions
 {
     public static class DecimalFormatExtensions
     {
-
         /// <summary>
         /// Returns string representation with currency format without symbol
         /// </summary>
@@ -61,7 +58,5 @@ namespace Bardock.Utils.Extensions
         {
             get { return 2; }
         }
-
     }
-
 }

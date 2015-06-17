@@ -119,5 +119,160 @@ namespace Bardock.Utils.Tests.Extensions
 
             Assert.Equal(list.Sum(), acc);
         }
+
+        public class WhereInDTO
+        {
+            public int Property1 { get; set; }
+            public string Property2 { get; set; }
+            public int? Property3 { get; set; }
+
+            public WhereInDTO(int property1, string property2, int? property3)
+            {
+                Property1 = property1;
+                Property2 = property2;
+                Property3 = property3;
+            }
+        }
+
+        [Fact]
+        public void Where_In_TProp_TPropItems_ReturnDTO1()
+        {
+            var dto1 = new WhereInDTO(1, "zzz", 1);
+            var dto2 = new WhereInDTO(2, "aaa", null);
+            var dto3 = new WhereInDTO(3, "hhh", 3);
+
+            var items = Enumerable.Range(1, 1);
+
+            var query = Coll.Array(dto1, dto2, dto3);
+
+            var res = query.Where(x => x.Property1, items);
+
+            Assert.Equal(dto1, res.ElementAt(0));
+            Assert.Equal(1, res.Count());
+
+        }
+
+        [Fact]
+        public void Where_In_TProp_TPropItems_NullItems_ReturnsAll()
+        {
+            var dto1 = new WhereInDTO(1, "zzz", 1);
+            var dto2 = new WhereInDTO(2, "aaa", null);
+            var dto3 = new WhereInDTO(3, "hhh", 3);
+
+            IEnumerable<int> items = null;
+
+            var query = Coll.Array(dto1, dto2, dto3);
+
+            var res = query.Where(x => x.Property1, items);
+
+            Assert.Equal(dto1, res.ElementAt(0));
+            Assert.Equal(dto2, res.ElementAt(1));
+            Assert.Equal(dto3, res.ElementAt(2));
+        }
+
+        [Fact]
+        public void Where_In_TPropNullable_TPropNullableItems_ReturnDTO1()
+        {
+            var dto1 = new WhereInDTO(1, "zzz", 1);
+            var dto2 = new WhereInDTO(2, "aaa", null);
+            var dto3 = new WhereInDTO(3, "hhh", 3);
+
+            var items = Enumerable.Range(1, 1).Cast<int?>();
+
+            var query = Coll.Array(dto1, dto2, dto3);
+
+            var res = query.Where(x => x.Property3, items);
+
+            Assert.Equal(dto1, res.ElementAt(0));
+            Assert.Equal(1, res.Count());
+        }
+
+        [Fact]
+        public void Where_In_TPropNullable_TPropNullableItems_NullItems_ReturnsAll()
+        {
+            var dto1 = new WhereInDTO(1, "zzz", 1);
+            var dto2 = new WhereInDTO(2, "aaa", null);
+            var dto3 = new WhereInDTO(3, "hhh", 3);
+
+            IEnumerable<int?> items = null;
+
+            var query = Coll.Array(dto1, dto2, dto3);
+
+            var res = query.Where(x => x.Property3, items);
+
+            Assert.Equal(dto1, res.ElementAt(0));
+            Assert.Equal(dto2, res.ElementAt(1));
+            Assert.Equal(dto3, res.ElementAt(2));
+        }
+
+        [Fact]
+        public void Where_In_TPropNullable_TPropItems_ReturnsDTO1()
+        {
+            var dto1 = new WhereInDTO(1, "zzz", 1);
+            var dto2 = new WhereInDTO(2, "aaa", null);
+            var dto3 = new WhereInDTO(3, "hhh", 3);
+
+            var items = Enumerable.Range(1, 1);
+
+            var query = Coll.Array(dto1, dto2, dto3);
+
+            var res = query.Where(x => x.Property3, items);
+
+            Assert.Equal(dto1, res.ElementAt(0));
+            Assert.Equal(1, res.Count());
+        }
+
+        [Fact]
+        public void Where_In_TPropNullable_TPropItems_NullItems_ReturnsAll()
+        {
+            var dto1 = new WhereInDTO(1, "zzz", 1);
+            var dto2 = new WhereInDTO(2, "aaa", null);
+            var dto3 = new WhereInDTO(3, "hhh", 3);
+
+            IEnumerable<int> items = null;
+
+            var query = Coll.Array(dto1, dto2, dto3);
+
+            var res = query.Where(x => x.Property3, items);
+
+            Assert.Equal(dto1, res.ElementAt(0));
+            Assert.Equal(dto2, res.ElementAt(1));
+            Assert.Equal(dto3, res.ElementAt(2));
+        }
+
+        [Fact]
+        public void Where_In_TProp_TPropNullableItems_ReturnsDTO1()
+        {
+            var dto1 = new WhereInDTO(1, "zzz", 1);
+            var dto2 = new WhereInDTO(2, "aaa", null);
+            var dto3 = new WhereInDTO(3, "hhh", 3);
+
+            var items = Enumerable.Range(1, 1).Cast<int?>();
+
+            var query = Coll.Array(dto1, dto2, dto3);
+
+            var res = query.Where(x => x.Property1, items);
+
+            Assert.Equal(dto1, res.ElementAt(0));
+            Assert.Equal(1, res.Count());
+        }
+
+        [Fact]
+        public void Where_In_TProp_TPropNullableItems_NullItems_ReturnsAll()
+        {
+            var dto1 = new WhereInDTO(1, "zzz", 1);
+            var dto2 = new WhereInDTO(2, "aaa", null);
+            var dto3 = new WhereInDTO(3, "hhh", 3);
+
+            IEnumerable<int?> items = null;
+
+            var query = Coll.Array(dto1, dto2, dto3);
+
+            var res = query.Where(x => x.Property1, items);
+
+            Assert.Equal(dto1, res.ElementAt(0));
+            Assert.Equal(dto2, res.ElementAt(1));
+            Assert.Equal(dto3, res.ElementAt(2));
+        }
 	}
 }

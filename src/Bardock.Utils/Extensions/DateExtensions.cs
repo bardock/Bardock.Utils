@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 
 namespace Bardock.Utils.Extensions
 {
@@ -67,7 +66,7 @@ namespace Bardock.Utils.Extensions
 
         /// <summary>
         /// Formats date and time to ISO format.
-        /// It will depend on date's kind. Examples: 
+        /// It will depend on date's kind. Examples:
         ///     Unespecified    = 2013-01-05T12:45:06.1230000
         ///     Utc             = 2013-01-05T12:45:06.1230000Z
         ///     Local           = 2013-01-05T12:45:06.1230000-03:00
@@ -92,11 +91,11 @@ namespace Bardock.Utils.Extensions
         /// Clones the date. Optionally overrides with specified parameters.
         /// </summary>
         public static DateTime Clone(
-            this DateTime d, int? year = null, int? month = null, int? day = null, 
+            this DateTime d, int? year = null, int? month = null, int? day = null,
             int? hour = null, int? minute = null, int? second = null, int? millisecond = null, DateTimeKind? kind = null)
         {
             return new DateTime(
-                year ?? d.Year, month ?? d.Month, day ?? d.Day, 
+                year ?? d.Year, month ?? d.Month, day ?? d.Day,
                 hour ?? d.Hour, minute ?? d.Minute, second ?? d.Second, millisecond ?? d.Millisecond, kind ?? d.Kind);
         }
 

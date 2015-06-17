@@ -38,23 +38,26 @@
   <ItemGroup>
     <Compile Include="Collections\Coll.cs" />
     <Compile Include="DataAnnotations\EmailAttribute.cs" />
+    <Compile Include="Extensions\ExceptionExtensions.cs" />
     <Compile Include="Extensions\ByteExtensions.cs" />
     <Compile Include="Extensions\Expressions\ConvertExpressionExtensions.cs" />
     <Compile Include="Extensions\Expressions\ConstantExpressionExtensions.cs" />
     <Compile Include="Extensions\Expressions\MemberInitExpressionExtensions.cs" />
+    <Compile Include="Extensions\Expressions\MemberExpressionExtensions.cs" />
     <Compile Include="Extensions\Expressions\ReduceEvaluationsExpressionExtensions.cs" />
     <Compile Include="Extensions\Expressions\ReplaceEqualsMethodByOperatorExpressionExtensions.cs" />
     <Compile Include="Extensions\Expressions\ReduceConstantsExpressionExtensions.cs" />
     <Compile Include="Extensions\Expressions\PartialApplyExpressionExtensions.cs" />
     <Compile Include="Extensions\DoubleExtensions.cs" />
+    <Compile Include="Extensions\LongExtensions.cs" />
     <Compile Include="Extensions\GenericExtensions.cs" />
     <Compile Include="Extensions\ArrayExtensions.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\IntegerExtensions.cs" />
     <Compile Include="Extensions\IQueryableExtensions.cs" />
     <Compile Include="Extensions\StreamExtensions.cs" />
-    <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Extensions\StringHashingExtensions.cs" />
+    <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Extensions\WebRequestExtensions.cs" />
     <Compile Include="Extensions\CharExtensions.cs" />
     <Compile Include="Extensions\StringBuilderExtensions.cs" />
