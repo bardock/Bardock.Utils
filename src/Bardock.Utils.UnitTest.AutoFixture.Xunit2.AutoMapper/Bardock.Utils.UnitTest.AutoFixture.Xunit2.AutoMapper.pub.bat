@@ -1,4 +1,4 @@
-set "project=Bardock.Utils.UnitTest.Data.EF"
+set "project=Bardock.Utils.UnitTest.AutoFixture.Xunit2.AutoMapper"
 set "localSourcePath=\\Origin-10\NuGetPackages"
 set /p version=Version number: 
 

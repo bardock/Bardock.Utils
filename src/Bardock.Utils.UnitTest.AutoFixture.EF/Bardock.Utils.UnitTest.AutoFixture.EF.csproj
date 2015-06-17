@@ -77,6 +77,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Bardock.Utils.UnitTest.AutoFixture.EF.nuspec" />
+    <None Include="Bardock.Utils.UnitTest.AutoFixture.EF.pub.bat" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

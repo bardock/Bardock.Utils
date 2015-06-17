@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Bardock.Utils.UnitTest.Data.AutoFixture")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Bardock.Utils.UnitTest.AutoFixture.Data")]
+[assembly: AssemblyDescription("Utilities for Autofixture and Data Access")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Bardock.Utils.UnitTest.Data.AutoFixture")]
+[assembly: AssemblyCompany("bardock")]
+[assembly: AssemblyProduct("Bardock.Utils.UnitTest.AutoFixture.Data")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -31,5 +31,6 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyInformationalVersion("0.1.0")]
+[assembly: AssemblyVersion("0.1.0")]
+[assembly: AssemblyFileVersion("0.1.0")]

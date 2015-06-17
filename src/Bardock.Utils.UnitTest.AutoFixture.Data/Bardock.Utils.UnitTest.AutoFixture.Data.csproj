@@ -7,8 +7,8 @@
     <ProjectGuid>{653A0CF2-97C4-4D01-811B-3E293BEBD829}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Bardock.Utils.UnitTest.Data.AutoFixture</RootNamespace>
-    <AssemblyName>Bardock.Utils.UnitTest.Data.AutoFixture</AssemblyName>
+    <RootNamespace>Bardock.Utils.UnitTest.AutoFixture.Data</RootNamespace>
+    <AssemblyName>Bardock.Utils.UnitTest.AutoFixture.Data</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -55,6 +55,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Bardock.Utils.UnitTest.AutoFixture.Data.nuspec" />
+    <None Include="Bardock.Utils.UnitTest.AutoFixture.Data.pub.bat" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>

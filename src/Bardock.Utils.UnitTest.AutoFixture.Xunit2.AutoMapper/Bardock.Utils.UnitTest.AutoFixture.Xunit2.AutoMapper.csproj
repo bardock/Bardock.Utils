@@ -67,6 +67,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Bardock.Utils.UnitTest.AutoFixture.Xunit2.AutoMapper.nuspec" />
+    <None Include="Bardock.Utils.UnitTest.AutoFixture.Xunit2.AutoMapper.pub.bat" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

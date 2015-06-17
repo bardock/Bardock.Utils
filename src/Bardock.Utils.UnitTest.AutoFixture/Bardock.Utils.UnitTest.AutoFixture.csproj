@@ -55,6 +55,8 @@
     <Compile Include="SpecimenBuilders\DataAnnotationsSpecimenBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Bardock.Utils.UnitTest.AutoFixture.nuspec" />
+    <None Include="Bardock.Utils.UnitTest.AutoFixture.pub.bat" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
