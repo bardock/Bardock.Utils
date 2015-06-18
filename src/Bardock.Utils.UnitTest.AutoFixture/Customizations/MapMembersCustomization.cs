@@ -1,47 +1,14 @@
-﻿using Ploeh.AutoFixture;
-using Ploeh.AutoFixture.Kernel;
+﻿using Bardock.Utils.UnitTest.AutoFixture.SpecimenBuilders;
+using Ploeh.AutoFixture;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 
 namespace Bardock.Utils.UnitTest.AutoFixture.Customizations
 {
     /// <summary>
-    /// Represents a relation between two members.
-    /// </summary>
-    public class MemberMapping
-    {
-        /// <summary>
-        /// Gets the source member.
-        /// </summary>
-        /// <value>
-        /// The source member.
-        /// </value>
-        public MemberInfo SourceMember { get; private set; }
-
-        /// <summary>
-        /// Gets the destination member.
-        /// </summary>
-        /// <value>
-        /// The destination member.
-        /// </value>
-        public MemberInfo DestinationMember { get; private set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MemberMapping"/> class.
-        /// </summary>
-        /// <param name="sourceMember">The source member.</param>
-        /// <param name="destinationMember">The destination member.</param>
-        public MemberMapping(MemberInfo sourceMember, MemberInfo destinationMember)
-        {
-            SourceMember = sourceMember;
-            DestinationMember = destinationMember;
-        }
-    }
-
-    /// <summary>
-    /// TODO
+    /// A customization that maps the generation of specimens of the <paramref name="sourceType"/> to the <paramref name="destinationType"/>
+    /// given the specified <paramref name="mappings"/> collection
     /// </summary>
     public class MapMembersCustomization : ICustomization
     {
@@ -73,7 +40,8 @@ namespace Bardock.Utils.UnitTest.AutoFixture.Customizations
     }
 
     /// <summary>
-    ///
+    /// A customization that maps the generation of specimens of the <typeparamref name="TSource"/> to the <typeparamref name="TDestination"/>
+    /// given the specified <paramref name="mappings"/> collection
     /// </summary>
     /// <typeparam name="TSource">The type of the source.</typeparam>
     /// <typeparam name="TDestination">The type of the destination.</typeparam>
@@ -89,61 +57,35 @@ namespace Bardock.Utils.UnitTest.AutoFixture.Customizations
     }
 
     /// <summary>
-    /// TODO
+    /// Represents a relation between two members.
     /// </summary>
-    public class MapMembersSpecimenBuilder : ISpecimenBuilder
+    public class MemberMapping
     {
-        private Type _sourceType;
-        private Type _destinationType;
-        private IEnumerable<MemberMapping> _mappings;
+        /// <summary>
+        /// Gets the source member.
+        /// </summary>
+        /// <value>
+        /// The source member.
+        /// </value>
+        public MemberInfo SourceMember { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MapMembersSpecimenBuilder"/> class.
+        /// Gets the destination member.
         /// </summary>
-        /// <param name="sourceType">Type of the source.</param>
-        /// <param name="destinationType">Type of the destination.</param>
-        /// <param name="mappings">The mappings.</param>
-        public MapMembersSpecimenBuilder(
-            Type sourceType,
-            Type destinationType,
-            IEnumerable<MemberMapping> mappings)
-        {
-            _sourceType = sourceType;
-            _destinationType = destinationType;
-            _mappings = mappings;
-        }
+        /// <value>
+        /// The destination member.
+        /// </value>
+        public MemberInfo DestinationMember { get; private set; }
 
         /// <summary>
-        /// Creates a new specimen based on a request.
+        /// Initializes a new instance of the <see cref="MemberMapping"/> class.
         /// </summary>
-        /// <param name="request">The request that describes what to create.</param>
-        /// <param name="context">A context that can be used to create other specimens.</param>
-        /// <returns>
-        /// A valid specimen for the requested member if possible; otherwise a <see cref="T:Ploeh.AutoFixture.Kernel.NoSpecimen" /> instance.
-        /// </returns>
-        public object Create(object request, ISpecimenContext context)
+        /// <param name="sourceMember">The source member.</param>
+        /// <param name="destinationMember">The destination member.</param>
+        public MemberMapping(MemberInfo sourceMember, MemberInfo destinationMember)
         {
-            if (_mappings == null || !_mappings.Any())
-            {
-                return new NoSpecimen(request);
-            }
-
-            var mi = request as MemberInfo;
-            if (mi == null || mi.DeclaringType != _sourceType)
-            {
-                return new NoSpecimen(request);
-            }
-
-            var mapping = _mappings
-                        .Where(p => p.SourceMember == mi)
-                        .FirstOrDefault();
-
-            if (mapping == null)
-            {
-                return new NoSpecimen(request);
-            }
-
-            return context.Resolve(mapping.DestinationMember);
+            SourceMember = sourceMember;
+            DestinationMember = destinationMember;
         }
     }
 }

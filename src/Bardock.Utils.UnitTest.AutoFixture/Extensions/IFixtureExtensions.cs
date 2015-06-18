@@ -8,23 +8,36 @@ namespace Bardock.Utils.UnitTest.AutoFixture.Extensions
 {
     public static class IFixtureExtensions
     {
-        public static void Customize<T>(this IFixture @this, Func<ICustomizationComposer<T>, ISpecimenBuilder> composerTransformation, bool append)
+        /// <summary>
+        /// Customizes the specified composer transformation.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="fixture">The fixture.</param>
+        /// <param name="composerTransformation">The composer transformation.</param>
+        /// <param name="append">if set to <c>true</c> [append].</param>
+        public static void Customize<T>(this IFixture fixture, Func<ICustomizationComposer<T>, ISpecimenBuilder> composerTransformation, bool append)
         {
             if (append)
             {
-                var composer = @this.GetCurrentCustomizationComposer<T>();
+                var composer = fixture.GetCurrentCustomizationComposer<T>();
                 if (composer != null)
                 {
-                    @this.Customize<T>(b => composerTransformation(composer));
+                    fixture.Customize<T>(b => composerTransformation(composer));
                     return;
                 }
             }
-            @this.Customize(composerTransformation);
+            fixture.Customize(composerTransformation);
         }
 
-        public static ICustomizationComposer<T> GetCurrentCustomizationComposer<T>(this IFixture @this)
+        /// <summary>
+        /// Gets the current customization composer.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="fixture">The fixture.</param>
+        /// <returns></returns>
+        public static ICustomizationComposer<T> GetCurrentCustomizationComposer<T>(this IFixture fixture)
         {
-            return @this.Customizations
+            return fixture.Customizations
                 .Where(xf => xf is ICustomizationComposer<T>)
                 .Cast<ICustomizationComposer<T>>()
                 .FirstOrDefault();

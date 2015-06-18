@@ -1,21 +1,17 @@
 ﻿using Bardock.Utils.UnitTest.AutoFixture.SpecimenBuilders;
 using Ploeh.AutoFixture;
-using Ploeh.AutoFixture.Kernel;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Reflection;
 
 namespace Bardock.Utils.UnitTest.AutoFixture.Customizations
 {
     /// <summary>
     /// A customization that removes AutoFixture DataAnnotations default support and
-    /// adds custom combined support for the following DataAnnotation attributes
-    ///     StringLengthAttribute
-    ///     MinLengthAttribute
-    ///     MaxLengthAttribute
-    ///     RangeAttribute
-    ///     RegularExpressionAttribute
-    ///     EmailAddressAttribute
+    /// adds custom combined support for DataAnnotation attributes.
+    /// <remarks>
+    /// Adds custom combined support for <see cref="StringLengthAttribute"/>,
+    /// <see cref="MinLengthAttribute"/>, <see cref="MaxLengthAttribute"/>,
+    /// <see cref="RangeAttribute"/>, <see cref="RegularExpressionAttribute"/>
+    /// and <see cref="EmailAddressAttribute"/>.
+    /// </remarks>
     /// </summary>
     public class DataAnnotationsCustomization : CompositeCustomization
     {
