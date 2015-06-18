@@ -6,6 +6,12 @@ namespace Bardock.Utils.UnitTest.AutoFixture.EF.Helpers
 {
     internal static class DbContextHelper
     {
+        /// <summary>
+        /// Determines whether a type corresponds to a mapped entity in entity framework.
+        /// </summary>
+        /// <typeparam name="TDbContext">The type of the database context.</typeparam>
+        /// <param name="type">The type.</param>
+        /// <returns></returns>
         public static bool IsMappedEntity<TDbContext>(this Type type)
             where TDbContext : DbContext
         {

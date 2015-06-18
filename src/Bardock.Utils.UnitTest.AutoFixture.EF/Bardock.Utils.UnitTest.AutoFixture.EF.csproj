@@ -74,6 +74,7 @@
     <Compile Include="Customizations\IgnoreEntityNavigationPropsCustomization.cs" />
     <Compile Include="Helpers\DbContextHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SpecimenBuilders\EntityFrameworkEntityConfigurationSpecimenBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
