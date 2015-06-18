@@ -7,7 +7,7 @@ using System.Reflection;
 namespace Bardock.Utils.UnitTest.AutoFixture.Customizations
 {
     /// <summary>
-    /// A customization that maps the generation of specimens of the <paramref name="sourceType"/> to the <paramref name="destinationType"/>
+    /// A customization that maps the generation of member specimens of the <paramref name="sourceType"/> to the <paramref name="destinationType"/>
     /// given the specified <paramref name="mappings"/> collection
     /// </summary>
     public class MapMembersCustomization : ICustomization
