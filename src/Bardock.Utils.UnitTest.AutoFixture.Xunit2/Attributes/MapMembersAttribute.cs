@@ -13,7 +13,7 @@ namespace Bardock.Utils.UnitTest.AutoFixture.Xunit2.Attributes
 {
     /// <summary>
     /// An attribute that can be applied to parameters in an <see cref="AutoDataAttribute"/>-driven
-    /// Theory to indicate that the parameter value should have its members mapped to the 
+    /// Theory to indicate that the parameter value should have its members mapped to the
     /// <paramref name="destinationType"/> members.
     /// </summary>
     public abstract class MapMembersAttribute : CustomizeAttribute
@@ -47,7 +47,6 @@ namespace Bardock.Utils.UnitTest.AutoFixture.Xunit2.Attributes
                 Configure(sourceType, _destinationType));
         }
 
-
         /// <summary>
         /// Configures member mapping for the specified source type.
         /// </summary>
@@ -58,7 +57,6 @@ namespace Bardock.Utils.UnitTest.AutoFixture.Xunit2.Attributes
         /// </returns>
         public abstract IEnumerable<MemberMapping> Configure(Type sourceType, Type destinationType);
     }
-
 
     /// <summary>
     /// A composer that maps members of a <typeparamref name="TSource"/> to a <typeparamref name="TDestination"/>
@@ -81,7 +79,6 @@ namespace Bardock.Utils.UnitTest.AutoFixture.Xunit2.Attributes
             _mappings = mappings;
         }
 
-
         /// <summary>
         /// Maps the specified source and returns a new modified instance of the composer.
         /// </summary>
@@ -102,7 +99,6 @@ namespace Bardock.Utils.UnitTest.AutoFixture.Xunit2.Attributes
 
             return new MembersMappingComposer<TSource, TDestination>(mappings);
         }
-
 
         /// <summary>
         /// Returns an enumerator that iterates through the collection.

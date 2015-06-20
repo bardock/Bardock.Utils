@@ -25,7 +25,7 @@ namespace Bardock.Utils.UnitTest.AutoFixture.Data.SpecimenBuilders
         }
 
         /// <summary>
-        /// Creates a new specimen based on a request. 
+        /// Creates a new specimen based on a request.
         /// If request is a <see cref="ParameterInfo"/> of specified entity type, resolve entity instance and persist it.
         /// </summary>
         /// <param name="request">The request that describes what to create.</param>

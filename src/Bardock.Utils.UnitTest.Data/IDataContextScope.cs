@@ -7,7 +7,6 @@ namespace Bardock.Utils.UnitTest.Data
     /// </summary>
     public interface IDataContextScope : IDisposable
     {
-
         /// <summary>
         /// Gets the <see cref="IDataContextScope"/> instance.
         /// </summary>

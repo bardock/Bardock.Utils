@@ -95,7 +95,7 @@ namespace Bardock.Utils.UnitTest.Data
         IDataContextWrapper Save();
 
         /// <summary>
-        /// This method applies all the changes to the database asynchronously 
+        /// This method applies all the changes to the database asynchronously
         /// and detachs all related entities.
         /// </summary>
         /// <returns>
