@@ -11,5 +11,5 @@ A set of utilities for .NET Framework.
 * [Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders](./src/Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders) - Provides a typed Effort data loader 
 * [Bardock.Utils.Web](./src/Bardock.Utils.Web) - ASP.NET core extensions and helpers 
 * [Bardock.Utils.Web.Mvc](./src/Bardock.Utils.Web.Mvc) - ASP.NET MVC extensions and helpers 
-* [Bardock.Utils.Web.Mvc.HtmlTags](./src/Bardock.Utils.Web.Mvc.HtmlTags) - Helpers for generating HTML for ASP.NET MVC applying the builder pattern using [HtmlTags](https://github.com/darthfubumvc/htmltags) library
+* [Bardock.Utils.Web.Mvc.HtmlTags](./src/Bardock.Utils.Web.Mvc.HtmlTags) - ASP.NET MVC Helpers for generating HTML applying the builder pattern using [HtmlTags](https://github.com/darthfubumvc/htmltags) library
 * [Bardock.Utils.Web.WebApi](./src/Bardock.Utils.Web.WebApi) - ASP.NET Web API 2 extensions and helpers 
