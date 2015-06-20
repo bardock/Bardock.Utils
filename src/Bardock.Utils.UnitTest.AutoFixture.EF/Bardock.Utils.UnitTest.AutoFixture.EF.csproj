@@ -69,12 +69,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Customizations\EntityFrameworkCustomization.cs" />
-    <Compile Include="Customizations\EntityTypeStringConfigurationCustomization.cs" />
+    <Compile Include="Customizations\EntityFrameworkEntityConfigurationCustomization.cs" />
     <Compile Include="Customizations\IgnoreEntityKeysCustomization.cs" />
     <Compile Include="Customizations\IgnoreEntityNavigationPropsCustomization.cs" />
     <Compile Include="Helpers\DbContextHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpecimenBuilders\EntityFrameworkEntityConfigurationSpecimenBuilder.cs" />
+    <Compile Include="SpecimenBuilders\IgnoreEntityKeysSpecimenBuilder.cs" />
+    <Compile Include="SpecimenBuilders\IgnoreEntityNavigationPropsSpecimenBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace Bardock.Utils.UnitTest.Data.EF
 {
+    /// <summary>
+    /// A wrapper for a <see cref="DbContext"/>
+    /// </summary>
     public class DataContextWrapper : IDataContextWrapper
     {
         internal DbContext _db;
