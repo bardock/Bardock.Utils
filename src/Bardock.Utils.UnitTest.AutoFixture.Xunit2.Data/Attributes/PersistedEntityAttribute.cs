@@ -5,6 +5,10 @@ using System.Reflection;
 
 namespace Bardock.Utils.UnitTest.AutoFixture.Xunit2.Data.Attributes
 {
+    /// <summary>
+    /// Applies a <see cref="PersistedEntityCustomization"/> to parameters in methods
+    /// decorated with Ploeh.AutoFixture.Xunit2.AutoDataAttribute
+    /// </summary>
     public class PersistedEntityAttribute : CustomizeAttribute
     {
         public override ICustomization GetCustomization(ParameterInfo parameter)
