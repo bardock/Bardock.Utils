@@ -6,17 +6,19 @@ using System.Reflection;
 namespace Bardock.Utils.UnitTest.AutoFixture.SpecimenBuilders
 {
     /// <summary>
-    /// A specimen builder that generates specimens for class members that have a ValidationAttribute
+    /// A specimen builder that generates specimens for class string members that have a ValidationAttribute
+    /// like <see cref="StringLengthAttribute"/>, <see cref="MinLengthAttribute"/>, <see cref="MaxLengthAttribute"/> and
+    /// <see cref="EmailAddressAttribute"/>
     /// </summary>
-    public class DataAnnotationsSpecimenBuilder : ISpecimenBuilder
+    public class StringDataAnnotationsSpecimenBuilder : ISpecimenBuilder
     {
         private string _emailHost;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DataAnnotationsSpecimenBuilder"/> class.
+        /// Initializes a new instance of the <see cref="StringDataAnnotationsSpecimenBuilder"/> class.
         /// </summary>
         /// <param name="emailHost">The email host.</param>
-        public DataAnnotationsSpecimenBuilder(string emailHost = "@email.com")
+        public StringDataAnnotationsSpecimenBuilder(string emailHost = "@email.com")
         {
             this._emailHost = emailHost;
         }
@@ -33,16 +35,10 @@ namespace Bardock.Utils.UnitTest.AutoFixture.SpecimenBuilders
         {
             var pi = request as PropertyInfo;
             if (pi != null
+                && pi.PropertyType == typeof(string)
                 && IsValidType(pi))
             {
-                if (pi.PropertyType == typeof(string))
-                {
-                    return CreateString(pi, context);
-                }
-                else
-                {
-                    return CreateObject(pi, context);
-                }
+                return CreateString(pi, context);
             }
 
             return new NoSpecimen(request);
@@ -51,43 +47,6 @@ namespace Bardock.Utils.UnitTest.AutoFixture.SpecimenBuilders
         protected virtual bool IsValidType(PropertyInfo pi)
         {
             return pi.CustomAttributes.Any(a => typeof(ValidationAttribute).IsAssignableFrom(a.AttributeType));
-        }
-
-        protected virtual object GetMinimumRange(PropertyInfo pi, ISpecimenContext context)
-        {
-            var attr = pi.GetCustomAttribute<RangeAttribute>(inherit: true);
-            if (attr != null)
-            {
-                return attr.Minimum;
-            }
-
-            return null;
-        }
-
-        protected virtual object GetMaximumRange(PropertyInfo pi, ISpecimenContext context)
-        {
-            var attr = pi.GetCustomAttribute<RangeAttribute>(inherit: true);
-            if (attr != null)
-            {
-                return attr.Maximum;
-            }
-
-            return null;
-        }
-
-        protected virtual object CreateObject(PropertyInfo pi, ISpecimenContext context)
-        {
-            var minimum = GetMinimumRange(pi, context);
-            var maximum = GetMaximumRange(pi, context);
-
-            if (minimum != null && maximum != null)
-            {
-                return context.Resolve(new RangedNumberRequest(pi.PropertyType, minimum, maximum));
-            }
-            else
-            {
-                return new NoSpecimen();
-            }
         }
 
         protected virtual int? GetStringMinLength(PropertyInfo pi, ISpecimenContext context)
@@ -130,44 +89,34 @@ namespace Bardock.Utils.UnitTest.AutoFixture.SpecimenBuilders
                 || pi.CustomAttributes.Any(a => typeof(EmailAddressAttribute).IsAssignableFrom(a.AttributeType));
         }
 
-        protected virtual bool IsRegex(PropertyInfo pi, ISpecimenContext context)
-        {
-            return pi.CustomAttributes.Any(a => typeof(RegularExpressionAttribute).IsAssignableFrom(a.AttributeType));
-        }
-
         protected virtual object CreateString(PropertyInfo pi, ISpecimenContext context)
         {
-            var minLength = GetStringMinLength(pi, context) ?? 0;
-            var maxLength = GetStringMaxLength(pi, context) ?? int.MaxValue;
+            var minLength = GetStringMinLength(pi, context);
+            var maxLength = GetStringMaxLength(pi, context);
             var isEmail = IsEmail(pi, context);
-            var isRegex = IsRegex(pi, context);
+
+            if (!minLength.HasValue && !maxLength.HasValue && !isEmail)
+                return new NoSpecimen(pi);
 
             string specimen = null;
             if (isEmail)
             {
+                minLength = GetStringMinLength(pi, context) ?? 0;
+
                 specimen = string.Format(
                     "{0}{1}",
                     context.Resolve(
                         new ConstrainedStringRequest(
-                            minLength,
-                            maxLength - _emailHost.Length)),
+                            (minLength ?? 0),
+                            (maxLength ?? int.MaxValue) - _emailHost.Length)),
                     _emailHost);
-            }
-            else if (isRegex)
-            {
-                specimen = (string)context.Resolve(
-                                new RegularExpressionRequest(
-                                     string.Format("{0}{{1},{2}}$",
-                                     pi.GetCustomAttribute<RegularExpressionAttribute>().Pattern,
-                                     minLength,
-                                     maxLength)));
             }
             else
             {
                 specimen = (string)context.Resolve(
                                 new ConstrainedStringRequest(
-                                    minLength,
-                                    maxLength));
+                                    minLength ?? 0,
+                                    maxLength ?? int.MaxValue));
             }
             return specimen;
         }

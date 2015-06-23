@@ -11,7 +11,7 @@ namespace Bardock.Utils.UnitTest.Samples.Fixtures.Customizations
         public DefaultCustomization()
             : base(
                 new EntityFrameworkCustomization<DataContext>(),
-                new DataAnnotationsCustomization(),
+                new StringDataAnnotationsCustomization(),
                 new DataContextCustomization(),
                 new DataContextWrapperCustomization(),
                 new AutoMoqCustomization())

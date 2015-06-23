@@ -15,7 +15,7 @@ namespace Bardock.Utils.UnitTest.AutoFixture.EF.SpecimenBuilders
     /// by adding support for entity frameworks fluent configuration
     /// </summary>
     /// <typeparam name="TDbContext">The type of the database context.</typeparam>
-    public class EntityFrameworkEntityConfigurationSpecimenBuilder<TDbContext> : DataAnnotationsSpecimenBuilder
+    public class EntityFrameworkEntityConfigurationSpecimenBuilder<TDbContext> : StringDataAnnotationsSpecimenBuilder
         where TDbContext : DbContext
     {
         protected override bool IsValidType(PropertyInfo pi)
