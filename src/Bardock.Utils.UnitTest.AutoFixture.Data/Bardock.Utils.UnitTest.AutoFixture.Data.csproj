@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Customizations\PersistedEntityCustomization.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SpecimenBuilders\PersistedEntitiesSpecimenBuilder.cs" />
     <Compile Include="SpecimenBuilders\PersistedEntitySpecimenBuilder.cs" />
   </ItemGroup>
   <ItemGroup>

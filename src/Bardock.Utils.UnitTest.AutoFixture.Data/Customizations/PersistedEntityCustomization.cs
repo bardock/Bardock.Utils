@@ -29,13 +29,15 @@ namespace Bardock.Utils.UnitTest.Data.AutoFixture.Customizations
             : this(parameter.ParameterType) { }
 
         /// <summary>
-        /// Customizes the specified fixture by adding a <see cref="PersistedEntitySpecimenBuilder"/> instance.
+        /// Customizes the specified fixture by adding a <see cref="PersistedEntitySpecimenBuilder"/> 
+        /// and a <see cref="PersistedEntitiesSpecimenBuilder"/> instance.
         /// </summary>
         /// <param name="fixture">The fixture to customize.</param>
         public void Customize(IFixture fixture)
         {
             var db = fixture.Create<IDataContextScopeFactory>();
             fixture.Customizations.Add(new PersistedEntitySpecimenBuilder(this._entityType, db));
+            fixture.Customizations.Add(new PersistedEntitiesSpecimenBuilder(this._entityType, db));
         }
     }
 
