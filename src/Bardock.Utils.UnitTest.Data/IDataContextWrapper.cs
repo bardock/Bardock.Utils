@@ -10,13 +10,13 @@ namespace Bardock.Utils.UnitTest.Data
     public interface IDataContextWrapper
     {
         /// <summary>
-        /// Gets a query for <typeparamref name="T"/>.
+        /// Gets a query for access to entities of the given type in the context />.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">The type entity for which a set should be returned</typeparam>
         /// <returns>
-        /// A query for a specified <typeparamref name="T"/>.
+        /// A set for the given entity type.
         /// </returns>
-        IQueryable<T> GetQuery<T>()
+        IQueryable<T> Set<T>()
             where T : class;
 
         /// <summary>

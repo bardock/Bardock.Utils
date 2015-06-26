@@ -194,7 +194,7 @@ namespace Bardock.Utils.UnitTest.Samples.Tests.Managers
             CustomerCreate data,
             CustomerManager sut)
         {
-            data.Email = db.GetQuery<Customer>().Select(x => x.Email).First();
+            data.Email = db.Set<Customer>().Select(x => x.Email).First();
 
             Assert.Throws<CustomerManager.EmailAlreadyExistsException>(() =>
                 sut.Create(data));

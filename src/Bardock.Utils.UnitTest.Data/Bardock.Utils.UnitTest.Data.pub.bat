@@ -1,5 +1,5 @@
 set "project=Bardock.Utils.UnitTest.Data"
-set "localSourcePath=\\Origin-10\NuGetPackages"
+set "localSourcePath=V:\_NuGetPackages"
 set /p version=Version number: 
 
 :: create package
