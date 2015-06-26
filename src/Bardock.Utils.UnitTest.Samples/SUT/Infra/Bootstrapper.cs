@@ -13,7 +13,14 @@ namespace Bardock.Utils.UnitTest.Samples.SUT.Infra
 
         private static void InitMappings()
         {
-            Mapper.CreateMap<CustomerCreate, Customer>();
+            Mapper.CreateMap<CustomerCreate, Customer>()
+                .ForMember(c => c.LastName, o => o.MapFrom(dto => dto.Surname))
+                .ReverseMap();
+
+            Mapper.CreateMap<CustomerUpdate, Customer>()
+                .ForMember(c => c.ID, o => o.Ignore())
+                .ForMember(c => c.LastName, o => o.MapFrom(dto => dto.Surname))
+                .ReverseMap();
         }
     }
 }

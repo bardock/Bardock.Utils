@@ -1,4 +1,9 @@
-﻿using Bardock.Utils.UnitTest.AutoFixture.Customizations;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using Bardock.Utils.UnitTest.AutoFixture.AutoMapper.Customizations;
+using Bardock.Utils.UnitTest.AutoFixture.Customizations;
 using Bardock.Utils.UnitTest.AutoFixture.Extensions;
 using Bardock.Utils.UnitTest.AutoFixture.Xunit2.Attributes;
 using Bardock.Utils.UnitTest.AutoFixture.Xunit2.AutoMapper.Attributes;
@@ -13,11 +18,6 @@ using Bardock.Utils.UnitTest.Samples.SUT.Managers;
 using Moq;
 using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.Xunit2;
-using Ploeh.SemanticComparison.Fluent;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using Xunit;
 
 namespace Bardock.Utils.UnitTest.Samples.Tests.Managers
@@ -94,7 +94,7 @@ namespace Bardock.Utils.UnitTest.Samples.Tests.Managers
             {
                 return new MembersMappingComposer<CustomerCreate, Customer>()
                             .Map(c => c.FirstName, c => c.FirstName)
-                            .Map(c => c.LastName, c => c.LastName)
+                            .Map(c => c.Surname, c => c.LastName)
                             .Map(c => c.Age, c => c.Age)
                             .Map(c => c.Email, c => c.Email)
                             .Map(c => c.StatusID, c => c.StatusID);
@@ -219,7 +219,7 @@ namespace Bardock.Utils.UnitTest.Samples.Tests.Managers
         //}
 
         [Theory]
-        [DefaultData]
+        [DefaultData(typeof(AutoMapMembersCustomization<CustomerUpdate, Customer>))]
         public void Update_ExistingAdultCustomer_Success(
             //warning: the declaring order of the attrs
             //does not guarantee that customizations will
@@ -228,18 +228,28 @@ namespace Bardock.Utils.UnitTest.Samples.Tests.Managers
             //CompositeCustomizeAttribute like the example
             //below
             [PersistedEntity][AsAdult] Customer e,
-            CustomerManager sut)
+            CustomerManager sut,
+            IFixture fixture)
         {
-            sut.Update(e.ID, null);
+            var data = fixture.Build<CustomerUpdate>()
+                .With(x => x.ID, e.ID)
+                .Create();
+
+            sut.Update(data);
         }
 
         [Theory]
-        [DefaultData]
+        [DefaultData(typeof(AutoMapMembersCustomization<CustomerUpdate, Customer>))]
         public void Update_ExistingAdultCustomer_Success_Composed(
             [AsAdultPersisted] Customer e,
-            CustomerManager sut)
+            CustomerManager sut,
+            IFixture fixture)
         {
-            sut.Update(e.ID, null);
+            var data = fixture.Build<CustomerUpdate>()
+                .With(x => x.ID, e.ID)
+                .Create();
+
+            sut.Update(data);
         }
 
         [Theory]
@@ -257,25 +267,14 @@ namespace Bardock.Utils.UnitTest.Samples.Tests.Managers
 
         [Theory]
         [DefaultData]
-        public void Create_ValidData_LogCreate___Resemblance(
+        public void Create_ValidData_LogCreate(
             [AutoMapToCustomer] CustomerCreate data,
             [Frozen] Mock<ICustomerLogManager> customerLogManager,
             CustomerManager sut)
         {
-            sut.Create(data);
+            var e = sut.Create(data);
 
-            var customerLikeness = data.AsSource().OfLikeness<Customer>()
-                .Without(x => x.ID)
-                .Without(x => x.NickName)
-                .Without(x => x.CreatedOn)
-                .Without(x => x.Addresses);
-
-            //customerLogManager.Verify(x => x.LogCreate(It.Is<Customer>(e => e.FirstName == data.FirstName)));
-
-            customerLogManager.Verify(x => x.LogCreate(It.Is<Customer>(c => customerLikeness.Equals(c))));
-
-            //var e = customerLikeness.CreateProxy();
-            //customerLogManager.Verify(x => x.LogCreate(e));
+            customerLogManager.Verify(x => x.LogCreate(e));
         }
     }
 }

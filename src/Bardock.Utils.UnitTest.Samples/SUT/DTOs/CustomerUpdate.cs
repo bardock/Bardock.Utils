@@ -1,7 +1,9 @@
 ﻿namespace Bardock.Utils.UnitTest.Samples.SUT.DTOs
 {
-    public class CustomerCreate
+    public class CustomerUpdate
     {
+        public int ID { get; set; }
+
         public string FirstName { get; set; }
 
         public string Surname { get; set; }

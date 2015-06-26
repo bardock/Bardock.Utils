@@ -30,7 +30,7 @@ namespace Bardock.Utils.UnitTest.Samples.SUT.Managers
         /// <summary>
         /// Method used for demonstrate interaction testing
         /// </summary>
-        public void Create(CustomerCreate data)
+        public Customer Create(CustomerCreate data)
         {
             _authService.Authorize(this.UserName, "customer_create");
 
@@ -40,15 +40,8 @@ namespace Bardock.Utils.UnitTest.Samples.SUT.Managers
             if (_db.Customers.Any(x => x.Email == data.Email))
                 throw new EmailAlreadyExistsException();
 
-            var e = new Customer()
-            {
-                FirstName = data.FirstName,
-                LastName = data.LastName,
-                Email = data.Email,
-                Age = data.Age,
-                StatusID = data.StatusID,
-                CreatedOn = DateTime.Now
-            };
+            var e = AutoMapper.Mapper.Map<Entities.Customer>(data);
+
             _db.Customers.Add(e);
 
             _customerLogManager.LogCreate(e);
@@ -56,11 +49,19 @@ namespace Bardock.Utils.UnitTest.Samples.SUT.Managers
             _db.SaveChanges();
 
             _mailer.Send(data.Email, "Welcome");
+
+            return e;
         }
 
-        public void Update(int id, CustomerCreate data)
+        public void Update(CustomerUpdate data)
         {
-            var e = _db.Customers.First(x => x.ID == id);
+            var e = _db.Customers.First(x => x.ID == data.ID);
+
+            AutoMapper.Mapper.Map(data, e);
+
+            _db.SaveChanges();
+
+            _customerLogManager.LogUpdate(e);
         }
 
         public class EmailAlreadyExistsException : Exception { }

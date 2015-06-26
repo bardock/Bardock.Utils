@@ -5,6 +5,8 @@ namespace Bardock.Utils.UnitTest.Samples.SUT.Managers
     public interface ICustomerLogManager
     {
         void LogCreate(Customer e);
+
+        void LogUpdate(Customer e);
     }
 
     public class CustomerLogManager : BaseManager, ICustomerLogManager
@@ -15,6 +17,10 @@ namespace Bardock.Utils.UnitTest.Samples.SUT.Managers
         }
 
         public void LogCreate(Customer c)
+        {
+        }
+
+        public void LogUpdate(Customer e)
         {
         }
     }
