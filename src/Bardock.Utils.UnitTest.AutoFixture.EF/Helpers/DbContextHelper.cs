@@ -19,7 +19,7 @@ namespace Bardock.Utils.UnitTest.AutoFixture.EF.Helpers
                 .GetProperties()
                 .Select(prop => prop.PropertyType)
                 .Where(propType => propType.IsGenericType)
-                .Where(propType => typeof(IDbSet<>).IsAssignableFrom(propType.GetGenericTypeDefinition()))
+                .Where(propType => typeof(IDbSet<>).MakeGenericType(propType.GetGenericArguments()[0]).IsAssignableFrom(propType))
                 .Select(propType => propType.GetGenericArguments()[0])
                 .Any(entityType => entityType.IsAssignableFrom(type));
         }
