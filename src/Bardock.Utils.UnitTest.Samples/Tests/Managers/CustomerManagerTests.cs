@@ -228,14 +228,17 @@ namespace Bardock.Utils.UnitTest.Samples.Tests.Managers
             //CompositeCustomizeAttribute like the example
             //below
             [PersistedEntity][AsAdult] Customer e,
-            CustomerManager sut,
-            IFixture fixture)
+            IFixture fixture,
+            [Frozen] Mock<ICustomerLogManager> customerLogManager,
+            CustomerManager sut)
         {
             var data = fixture.Build<CustomerUpdate>()
                 .With(x => x.ID, e.ID)
                 .Create();
 
             sut.Update(data);
+
+            customerLogManager.Verify(x => x.LogUpdate(It.Is<Customer>(c => c.ID == data.ID)));
         }
 
         [Theory]
