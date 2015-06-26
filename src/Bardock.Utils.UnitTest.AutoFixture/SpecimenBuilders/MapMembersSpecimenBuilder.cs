@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Bardock.Utils.UnitTest.AutoFixture.Extensions;
 
 namespace Bardock.Utils.UnitTest.AutoFixture.SpecimenBuilders
 {
@@ -16,6 +17,7 @@ namespace Bardock.Utils.UnitTest.AutoFixture.SpecimenBuilders
         private Type _sourceType;
         private Type _destinationType;
         private IEnumerable<MemberMapping> _mappings;
+        private object _destination;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MapMembersSpecimenBuilder"/> class.
@@ -28,6 +30,7 @@ namespace Bardock.Utils.UnitTest.AutoFixture.SpecimenBuilders
             _sourceType = sourceType;
             _destinationType = destinationType;
             _mappings = mappings;
+            _destination = null;
         }
 
         /// <summary>
@@ -52,15 +55,26 @@ namespace Bardock.Utils.UnitTest.AutoFixture.SpecimenBuilders
             }
 
             var mapping = _mappings
-                        .Where(p => p.SourceMember == mi)
-                        .FirstOrDefault();
+                            .Where(p => p.SourceMember == mi)
+                            .FirstOrDefault();
 
             if (mapping == null)
             {
                 return new NoSpecimen(request);
             }
 
-            return context.Resolve(mapping.DestinationMember);
+            //Since AutoFixture registers an Omitter when a Member is
+            //customized via fixture.Customize<>(c => c.With(x => x.Member, <value>))
+            //then if a call to context.Resolve is made using that member an
+            //OmitSpecimen is returned
+            //return context.Resolve(mapping.DestinationMember); -> OmitSpecimen
+            if (_destination == null)
+                //fetch an instance of destinationType, for performance
+                //we will always use the same instance to provide the
+                //values for the requested members
+                _destination = context.Resolve(_destinationType);
+
+            return mapping.DestinationMember.GetValue(_destination);            
         }
     }
 }
