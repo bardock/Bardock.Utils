@@ -64,7 +64,7 @@ namespace Bardock.Utils.UnitTest.AutoFixture.SpecimenBuilders
             }
 
             //Since AutoFixture registers an Omitter when a Member is
-            //customized via fixture.Customize<>(c => c.With(x => x.Member, <value>))
+            //customized via fixture.Customize<T>(c => c.With(x => x.<Member>, <value>))
             //then if a call to context.Resolve is made using that member an
             //OmitSpecimen is returned
             //return context.Resolve(mapping.DestinationMember); -> OmitSpecimen
