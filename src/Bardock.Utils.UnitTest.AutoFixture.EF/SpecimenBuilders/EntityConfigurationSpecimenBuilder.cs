@@ -12,10 +12,10 @@ namespace Bardock.Utils.UnitTest.AutoFixture.EF.SpecimenBuilders
 {
     /// <summary>
     /// A specimen builder that creates valid instances for entities of entity framework
-    /// by adding support for entity frameworks fluent configuration
+    /// by adding support for entity framework's fluent configuration
     /// </summary>
     /// <typeparam name="TDbContext">The type of the database context.</typeparam>
-    public class EntityFrameworkEntityConfigurationSpecimenBuilder<TDbContext> : StringDataAnnotationsSpecimenBuilder
+    public class EntityConfigurationSpecimenBuilder<TDbContext> : StringDataAnnotationsSpecimenBuilder
         where TDbContext : DbContext
     {
         protected override bool IsValidType(PropertyInfo pi)

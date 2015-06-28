@@ -14,7 +14,7 @@ namespace Bardock.Utils.UnitTest.AutoFixture.EF.Customizations
     {
         public EntityFrameworkCustomization()
             : base(
-                new EntityFrameworkEntityConfigurationCustomization<TDbContext>(),
+                new EntityConfigurationCustomization<TDbContext>(),
                 new IgnoreEntityNavigationPropsCustomization<TDbContext>(),
                 new IgnoreEntityKeysCustomization<TDbContext>())
         {

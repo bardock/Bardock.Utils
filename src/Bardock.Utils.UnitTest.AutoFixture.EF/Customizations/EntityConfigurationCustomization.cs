@@ -8,7 +8,7 @@ namespace Bardock.Utils.UnitTest.AutoFixture.EF.Customizations
     /// A customization that provides support for generating valid specimens for an entity framework <see cref="DbContext"/>
     /// </summary>
     /// <typeparam name="TDbContext">The type of the database context.</typeparam>
-    public class EntityFrameworkEntityConfigurationCustomization<TDbContext> : ICustomization
+    public class EntityConfigurationCustomization<TDbContext> : ICustomization
         where TDbContext : DbContext
     {
         /// <summary>
@@ -17,7 +17,7 @@ namespace Bardock.Utils.UnitTest.AutoFixture.EF.Customizations
         /// <param name="fixture">The fixture to customize.</param>
         public void Customize(IFixture fixture)
         {
-            fixture.Customizations.Add(new EntityFrameworkEntityConfigurationSpecimenBuilder<TDbContext>());
+            fixture.Customizations.Add(new EntityConfigurationSpecimenBuilder<TDbContext>());
         }
     }
 }
