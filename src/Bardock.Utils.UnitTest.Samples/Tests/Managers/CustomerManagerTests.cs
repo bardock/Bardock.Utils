@@ -227,7 +227,7 @@ namespace Bardock.Utils.UnitTest.Samples.Tests.Managers
             //then combine multiple customizations using
             //CompositeCustomizeAttribute like the example
             //below
-            [PersistedEntity][AsAdult] Customer e,
+            [Persisted][AsAdult] Customer e,
             IFixture fixture,
             [Frozen] Mock<ICustomerLogManager> customerLogManager,
             CustomerManager sut)
