@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 
 namespace Bardock.Utils.Sync
 {
@@ -9,9 +10,12 @@ namespace Bardock.Utils.Sync
     [Obsolete("Please use LockeableObjectFactory instead")]
     public class StringLocker : LockeableObjectFactory<string>
     {
+        private readonly ConcurrentDictionary<string, string> _locks =
+            new ConcurrentDictionary<string, string>();
+
         public string GetLockObject(string s)
         {
-            return this.Get(s);
+            return _locks.GetOrAdd(s, String.Copy);
         }
     }
 }

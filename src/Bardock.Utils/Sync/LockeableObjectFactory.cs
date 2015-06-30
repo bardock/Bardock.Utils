@@ -4,22 +4,26 @@ using System.Collections.Concurrent;
 namespace Bardock.Utils.Sync
 {
     /// <summary>
-    /// Creates objects based on instances of T that can be used to acquire an exclusive lock.
+    /// Creates objects based on instances of TSeed that can be used to acquire an exclusive lock.
     /// Instanciate one factory for every use case you might have.
-    /// Inspired by Eugene Beresovsky solution: http://stackoverflow.com/a/19375402
+    /// Inspired by Eugene Beresovsky's solution: http://stackoverflow.com/a/19375402
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public class LockeableObjectFactory<T> where T : ICloneable
+    /// <typeparam name="TSeed">Type of the object you want lock on</typeparam>
+    public class LockeableObjectFactory<TSeed>
     {
-        private readonly ConcurrentDictionary<T, T> _lockeableObjects = new ConcurrentDictionary<T, T>();
+        private readonly ConcurrentDictionary<TSeed, object> _lockeableObjects = new ConcurrentDictionary<TSeed, object>();
 
         /// <summary>
-        /// Returns always the same instance by the specified string
+        /// Creates or uses an existing object instance by specified seed
         /// </summary>
-        /// <param name="name">The name of the object</param>
-        public T Get(T instance)
+        /// <param name="seed">
+        /// The object used to generate a new lockeable object.
+        /// The default EqualityComparer<TSeed> is used to determine if two seeds are equal. 
+        /// The same object instance is returned for equal seeds, otherwise a new object is created.
+        /// </param>
+        public object Get(TSeed seed)
         {
-            return _lockeableObjects.GetOrAdd(instance, valueFactory: x => (T)x.Clone());
+            return _lockeableObjects.GetOrAdd(seed, valueFactory: x => new object());
         }
     }
 }
