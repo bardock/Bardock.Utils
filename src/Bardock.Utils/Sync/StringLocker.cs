@@ -8,7 +8,7 @@ namespace Bardock.Utils.Sync
     /// Instanciate one StringLocker for every use case you might have.
     /// </summary>
     [Obsolete("Please use LockeableObjectFactory instead")]
-    public class StringLocker : LockeableObjectFactory<string>
+    public class StringLocker
     {
         private readonly ConcurrentDictionary<string, string> _locks =
             new ConcurrentDictionary<string, string>();
