@@ -72,6 +72,7 @@
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Extensions\StringNormalizeExtensions.cs" />
+    <Compile Include="Sync\LockeableObjectFactory.cs" />
     <Compile Include="Sync\StringLocker.cs" />
     <Compile Include="Types\EnumOption.cs" />
     <Compile Include="Types\EnumType.cs" />

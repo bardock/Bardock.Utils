@@ -7,18 +7,22 @@ using Xunit;
 
 namespace Bardock.Utils.Tests.Types
 {
-    public class StringLockerTest
+    public class LockeableObjectFactoryTest
     {
         private const int NUM_TASKS = 20000;
-        private static StringLocker _stringLocker = new StringLocker();
+        private static LockeableObjectFactory<string> _lockeableStringFactory = new LockeableObjectFactory<string>();
 
+        /// <summary>
+        /// This test only demostrates that not using LockeableObjectFactory produces race condition.
+        /// The same process is used later to verify that LockeableObjectFactory solves this problem.
+        /// </summary>
         [Fact]
         public void LockUsingSameStringButDifferentInstance_RaceCondition()
         {
             var c = 0;
             Action incrementer = () =>
             {
-                lock (GetKey())
+                lock (GenerateKey())
                 {
                     c++;
                 }
@@ -26,16 +30,16 @@ namespace Bardock.Utils.Tests.Types
 
             Task.WaitAll(StartTasks(NUM_TASKS, incrementer).ToArray());
 
-            Assert.True(NUM_TASKS > c, "Race condition is expected, so the final value of 'c' must be lower than the number of tasks that increment it");
+            Assert.True(c < NUM_TASKS, "Race condition is expected, so the final value of 'c' must be lower than the number of tasks that increment it");
         }
 
         [Fact]
-        public void LockUsingStringLockerObjectPassingSameStringButDifferentInstance_Synced()
+        public void LockUsingLockeableObjectFactoryPassingSameStringButDifferentInstance_Synced()
         {
             var c = 0;
             Action incrementer = () =>
             {
-                lock (_stringLocker.GetLockObject(GetKey()))
+                lock (_lockeableStringFactory.Get(GenerateKey()))
                 {
                     c++;
                 }
@@ -46,7 +50,7 @@ namespace Bardock.Utils.Tests.Types
             Assert.Equal(NUM_TASKS, c);
         }
 
-        private string GetKey()
+        private string GenerateKey()
         {
             return new String("key".ToCharArray());
         }
