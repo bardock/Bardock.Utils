@@ -10,7 +10,7 @@ namespace Bardock.Utils.Tests.Sync
 {
     public class LockeableObjectFactoryTest
     {
-        private const int NUM_TASKS = 2;
+        private const int NUM_TASKS = 10;
         private static LockeableObjectFactory<string> _lockeableStringFactory = new LockeableObjectFactory<string>();
 
         /// <summary>
