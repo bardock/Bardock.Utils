@@ -18,7 +18,7 @@ namespace Bardock.Utils.Sync
         /// </summary>
         /// <param name="seed">
         /// The object used to generate a new lockeable object.
-        /// The default EqualityComparer<TSeed> is used to determine if two seeds are equal. 
+        /// The default EqualityComparer is used to determine if two seeds are equal. 
         /// The same object instance is returned for equal seeds, otherwise a new object is created.
         /// </param>
         public object Get(TSeed seed)
