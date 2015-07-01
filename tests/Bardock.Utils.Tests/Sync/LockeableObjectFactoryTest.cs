@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Bardock.Utils.Sync;
 using Xunit;
@@ -9,7 +10,7 @@ namespace Bardock.Utils.Tests.Sync
 {
     public class LockeableObjectFactoryTest
     {
-        private const int NUM_TASKS = 20000;
+        private const int NUM_TASKS = 2;
         private static LockeableObjectFactory<string> _lockeableStringFactory = new LockeableObjectFactory<string>();
 
         /// <summary>
@@ -24,7 +25,9 @@ namespace Bardock.Utils.Tests.Sync
             {
                 lock (GenerateKey())
                 {
-                    c++;
+                    var prev = c;
+                    Thread.Sleep(5);
+                    c = prev + 1;
                 }
             };
 
@@ -41,7 +44,9 @@ namespace Bardock.Utils.Tests.Sync
             {
                 lock (_lockeableStringFactory.Get(GenerateKey()))
                 {
-                    c++;
+                    var prev = c;
+                    Thread.Sleep(5);
+                    c = prev + 1;
                 }
             };
 
@@ -52,7 +57,7 @@ namespace Bardock.Utils.Tests.Sync
 
         private string GenerateKey()
         {
-            return new String("key".ToCharArray());
+            return new String(new[] { 'k' });
         }
 
         private IEnumerable<Task> StartTasks(int q, Action action)
