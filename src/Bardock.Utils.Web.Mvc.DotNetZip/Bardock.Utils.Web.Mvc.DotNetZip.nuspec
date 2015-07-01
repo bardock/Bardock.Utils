@@ -12,5 +12,12 @@
     <description>$description$</description>
     <copyright>Copyright 2015</copyright>
     <tags>.net4 utils web asp.net mvc zip dotnetzip</tags>
+    <dependencies>
+      <dependency id="DotNetZip" version="[1.9.3,2)" />
+      <dependency id="Microsoft.AspNet.Mvc" version="[5,6)" />
+      <dependency id="Microsoft.AspNet.Razor" version="[3,4)" />
+      <dependency id="Microsoft.AspNet.WebPages" version="[3,4)" />
+      <dependency id="Microsoft.Web.Infrastructure" version="[1,2)" />
+    </dependencies>
   </metadata>
 </package>
