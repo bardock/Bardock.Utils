@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Bardock.Utils.Sync;
 using Xunit;
 
-namespace Bardock.Utils.Tests.Types
+namespace Bardock.Utils.Tests.Sync
 {
     public class LockeableObjectFactoryTest
     {
