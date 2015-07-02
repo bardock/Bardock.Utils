@@ -5,6 +5,16 @@ namespace Bardock.Utils.Extensions
     public static class TypeExtensions
     {
         /// <summary>
+        /// Determines whether the specified Type is primitive or not.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static bool IsPrimitive(this Type type)
+        {
+            return (type == typeof(object) || Type.GetTypeCode(type) != TypeCode.Object);
+        }
+
+        /// <summary>
         /// Returns the underlying type argument of the specified nullable type.
         /// </summary>
         /// <returns>The type argument of the nullableType parameter, if the nullableType
