@@ -69,6 +69,7 @@
     <Compile Include="Extensions\DecimalExtensionsTest.cs" />
     <Compile Include="Extensions\DateExtensionsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scoping\ScopeTest.cs" />
     <Compile Include="Types\EnumTypeTest.cs" />
     <Compile Include="Sync\LockeableObjectFactoryTest.cs" />
   </ItemGroup>
