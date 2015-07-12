@@ -59,6 +59,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -82,6 +83,7 @@
     <Compile Include="AutoMoqData.cs" />
     <Compile Include="Collections\CollTest.cs" />
     <Compile Include="Collections\DisposableListTest.cs" />
+    <Compile Include="DataAnnotations\EmailAttributeTest.cs" />
     <Compile Include="Extensions\ArrayExtensionsTest.cs" />
     <Compile Include="Extensions\Expressions\MemberInitExpressionExtensionsTest.cs" />
     <Compile Include="Extensions\Expressions\ConstantExpressionExtensionsTest.cs" />
