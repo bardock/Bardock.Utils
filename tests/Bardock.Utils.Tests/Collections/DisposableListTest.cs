@@ -14,28 +14,28 @@ namespace Bardock.Utils.Tests.Collections
             IEnumerable<IDisposable> items)
         {
             //Setup
-            var list = new DisposableList<IDisposable>();
-            list.AddRange(items);
+            var sut = new DisposableList<IDisposable>();
+            sut.AddRange(items);
 
             //Exercise
-            list.Dispose();
+            sut.Dispose();
 
             //Verify
-            list.Should().NotBeEmpty();
-            list.ForEach(item => Mock.Get(item).Verify(x => x.Dispose()));
+            sut.Should().NotBeEmpty();
+            sut.ForEach(item => Mock.Get(item).Verify(x => x.Dispose()));
         }
 
         [Theory, AutoMoqData]
         public void Dispose_EmptyList_ShouldDoNothing()
         {
             //Setup
-            var list = new DisposableList<IDisposable>();
+            var sut = new DisposableList<IDisposable>();
 
             //Exercise
-            list.Dispose();
+            sut.Dispose();
 
             //Verify
-            list.Should().BeEmpty();
+            sut.Should().BeEmpty();
         }
     }
 }
