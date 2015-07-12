@@ -1,33 +1,41 @@
-﻿using System;
+﻿using Bardock.Utils.Collections;
+using FluentAssertions;
+using Moq;
+using System;
 using System.Collections.Generic;
 using Xunit;
-using System.Linq;
-using Bardock.Utils.Collections;
 
 namespace Bardock.Utils.Tests.Collections
 {
-	public class DisposableListTest
-	{
-        private class MyDisposable : IDisposable
+    public class DisposableListTest
+    {
+        [Theory, AutoMoqData]
+        public void Dispose_ListWithManyItems_ShouldDisposeAllItems(
+            IEnumerable<IDisposable> items)
         {
-            public bool IsDisposed { get; private set; }
+            //Setup
+            var list = new DisposableList<IDisposable>();
+            list.AddRange(items);
 
-            public void Dispose()
-            {
-                IsDisposed = true;
-            }
-        }
-
-        [Fact]
-        public void Dispose()
-        {
-            var list = new DisposableList<MyDisposable>();
-
-            Assert.True(list.All(x => !x.IsDisposed));
-
+            //Exercise
             list.Dispose();
 
-            Assert.True(list.All(x => x.IsDisposed));
+            //Verify
+            list.Should().NotBeEmpty();
+            list.ForEach(item => Mock.Get(item).Verify(x => x.Dispose()));
         }
-	}
+
+        [Theory, AutoMoqData]
+        public void Dispose_EmptyList_ShouldDoNothing()
+        {
+            //Setup
+            var list = new DisposableList<IDisposable>();
+
+            //Exercise
+            list.Dispose();
+
+            //Verify
+            list.Should().BeEmpty();
+        }
+    }
 }
