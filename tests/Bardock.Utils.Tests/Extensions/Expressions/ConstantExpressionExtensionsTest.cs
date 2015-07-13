@@ -1,28 +1,17 @@
 ﻿using Bardock.Utils.Extensions;
+using Bardock.Utils.Types;
 using FluentAssertions;
-using System;
-using System.Linq.Expressions;
 using Xunit;
 
 namespace Bardock.Utils.Tests.Extensions
 {
     public class ConstantExpressionExtensionsTest
     {
-        private Expression<Func<TResult>> Expr<TResult>(Expression<Func<TResult>> f)
-        {
-            return f;
-        }
-
-        private Expression<Func<TArg, TResult>> Expr<TArg, TResult>(Expression<Func<TArg, TResult>> f)
-        {
-            return f;
-        }
-
         [Fact]
         public void IsConstant_UseConstantBoolExpression_ShouldReturnTrue()
         {
             //Setup
-            var expr = Expr(() => true);
+            var expr = Lambda.Expr(() => true);
 
             //Exercise
             var actual = expr.Body.IsConstant(true);
@@ -35,7 +24,7 @@ namespace Bardock.Utils.Tests.Extensions
         public void IsConstant_UseConstantStringExpression_ShouldReturnTrue()
         {
             //Setup
-            var expr = Expr(() => "true");
+            var expr = Lambda.Expr(() => "true");
 
             //Exercise
             var actual = expr.Body.IsConstant("true");
@@ -48,7 +37,7 @@ namespace Bardock.Utils.Tests.Extensions
         public void IsConstant_UseConstantNullExpression_ShouldReturnTrue()
         {
             //Setup
-            var expr = Expr<string>(() => null);
+            var expr = Lambda.Expr<string>(() => null);
 
             //Exercise
             var actual = expr.Body.IsConstant(null);
@@ -61,7 +50,7 @@ namespace Bardock.Utils.Tests.Extensions
         public void IsConstant_UseConstantStringExpressionAndPassDifferentValue_ShouldReturnFalse()
         {
             //Setup
-            var expr = Expr(() => "true");
+            var expr = Lambda.Expr(() => "true");
 
             //Exercise
             var actual = expr.Body.IsConstant("true ");
@@ -74,7 +63,7 @@ namespace Bardock.Utils.Tests.Extensions
         public void IsConstant_UseConstantBoolExpressionAndPassStringValue_ShouldReturnFalse()
         {
             //Setup
-            var expr = Expr(() => true);
+            var expr = Lambda.Expr(() => true);
 
             //Exercise
             var actual = expr.Body.IsConstant(true.ToString());
@@ -87,7 +76,7 @@ namespace Bardock.Utils.Tests.Extensions
         public void IsConstant_UseVariableStringExpression_ShouldReturnFalse()
         {
             //Setup
-            var expr = Expr((object x) => x.ToString());
+            var expr = Lambda.Expr((object x) => x.ToString());
 
             //Exercise
             var actual = expr.Body.IsConstant("");
