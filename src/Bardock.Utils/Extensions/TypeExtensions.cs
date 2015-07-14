@@ -7,11 +7,20 @@ namespace Bardock.Utils.Extensions
         /// <summary>
         /// Determines whether the specified Type is primitive or not.
         /// </summary>
-        /// <param name="type"></param>
-        /// <returns></returns>
+        /// <param name="type">The System.Type to evaluate</param>
         public static bool IsPrimitive(this Type type)
         {
-            return (type == typeof(object) || Type.GetTypeCode(type) != TypeCode.Object);
+            if (type.IsNullable())
+                type = type.GetNullableUnderlyingType();
+
+            return Type.GetTypeCode(type) != TypeCode.Object
+                || type.In(
+                    typeof(object),
+                    typeof(Enum),
+                    typeof(Guid),
+                    typeof(DateTime),
+                    typeof(DateTimeOffset),
+                    typeof(TimeSpan));
         }
 
         /// <summary>
