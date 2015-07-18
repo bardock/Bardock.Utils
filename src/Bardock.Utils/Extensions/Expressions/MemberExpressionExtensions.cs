@@ -18,8 +18,7 @@ namespace Bardock.Utils.Extensions
         [Obsolete("Please use propInfo.ToExpression().ToLambda()")]
         public static LambdaExpression ToLambdaExpression(this PropertyInfo prop, string parameterName = "x")
         {
-            var expr = prop.ToExpression(parameterName: parameterName);
-            return Expression.Lambda(expr, (ParameterExpression)expr.Expression);
+            return prop.ToExpression().ToLambda();
         }
 
         public static MemberExpression ToExpression(this FieldInfo field, string parameterName = "x")

@@ -85,6 +85,7 @@
     <Compile Include="Collections\DisposableListTest.cs" />
     <Compile Include="DataAnnotations\EmailAttributeTest.cs" />
     <Compile Include="Extensions\ArrayExtensionsTest.cs" />
+    <Compile Include="Extensions\Expressions\LambdaExpressionExtensionsTest.cs" />
     <Compile Include="Extensions\Expressions\MemberExpressionExtensionsTest.cs" />
     <Compile Include="Extensions\Expressions\ConvertExpressionExtensionsTest.cs" />
     <Compile Include="Extensions\Expressions\MemberInitExpressionExtensionsTest.cs" />
