@@ -12,5 +12,10 @@ namespace Bardock.Utils.Extensions
             }
             return expr;
         }
+
+        public static Expression RemoveConvert(this LambdaExpression expr)
+        {
+            return expr.Body.RemoveConvert();
+        }
     }
 }

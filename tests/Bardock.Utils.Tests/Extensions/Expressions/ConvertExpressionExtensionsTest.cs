@@ -15,8 +15,8 @@ namespace Bardock.Utils.Tests.Extensions
             var expr = Lambda.Expr<object>(() => true);
 
             //Exercise
-            var actual = expr.Body.RemoveConvert();
-            
+            var actual = expr.RemoveConvert();
+
             //Verify
             actual.Should().NotBeNull().And.BeOfType<ConstantExpression>()
                 .Which.Value.Should().Be(true);
@@ -29,7 +29,7 @@ namespace Bardock.Utils.Tests.Extensions
             var expr = Lambda.Expr<string, object>(x => x.IsNormalized() && x.Length == 1);
 
             //Exercise
-            var actual = expr.Body.RemoveConvert();
+            var actual = expr.RemoveConvert();
 
             //Verify
             actual.Should().NotBeNull().And.BeAssignableTo<BinaryExpression>()
