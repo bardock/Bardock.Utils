@@ -22,13 +22,16 @@ namespace Bardock.Utils.Tests.Extensions
         {
             //Setup
             var prop = typeof(Dummy).GetProperty("Prop");
+            const string paramName = "z";
 
             //Exercise
-            var actual = prop.ToExpression();
+            var actual = prop.ToExpression(parameterName: paramName);
 
             //Verify
-            actual.Should().NotBeNull().And.BeAssignableTo<MemberExpression>()
-                .Which.Member.Should().BeSameAs(prop);
+            actual.Should().NotBeNull();
+            actual.Member.Should().BeSameAs(prop);
+            actual.Expression.Should().BeAssignableTo<ParameterExpression>()
+                .Which.Name.Should().Be(paramName);
         }
 
         [Fact]

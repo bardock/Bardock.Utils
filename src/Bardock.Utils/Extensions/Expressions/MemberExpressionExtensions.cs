@@ -11,7 +11,7 @@ namespace Bardock.Utils.Extensions
             if (prop == null)
                 throw new ArgumentException("prop is null");
 
-            var parameter = Expression.Parameter(prop.DeclaringType, "x");
+            var parameter = Expression.Parameter(prop.DeclaringType, parameterName);
             return Expression.Property(parameter, prop);
         }
 
@@ -27,7 +27,7 @@ namespace Bardock.Utils.Extensions
             if (field == null)
                 throw new ArgumentException("field is null");
 
-            var parameter = Expression.Parameter(field.DeclaringType, "x");
+            var parameter = Expression.Parameter(field.DeclaringType, parameterName);
             return Expression.Field(parameter, field);
         }
     }
