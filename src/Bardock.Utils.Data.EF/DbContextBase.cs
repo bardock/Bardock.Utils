@@ -15,7 +15,7 @@ namespace Bardock.Utils.Data.EF
         protected DbContextBase()
             : base()
         {
-            _exceptionMapper = new NullExceptionMapper();
+            SetExceptionMapper(null);
         }
 
         public DbContextBase(
@@ -72,8 +72,7 @@ namespace Bardock.Utils.Data.EF
 
         private void SetExceptionMapper(IExceptionMapper exceptionMapper)
         {
-            if (exceptionMapper != null)
-                _exceptionMapper = exceptionMapper;
+            _exceptionMapper = exceptionMapper ?? new NullExceptionMapper();
         }
 
         public override int SaveChanges()
