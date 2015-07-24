@@ -42,6 +42,8 @@
     <Compile Include="Extensions\ByteExtensions.cs" />
     <Compile Include="Extensions\Expressions\ConvertExpressionExtensions.cs" />
     <Compile Include="Extensions\Expressions\ConstantExpressionExtensions.cs" />
+    <Compile Include="Extensions\Expressions\ParameterExpressionExtensions.cs" />
+    <Compile Include="Extensions\Expressions\LambdaExpressionExtensions.cs" />
     <Compile Include="Extensions\Expressions\MemberInitExpressionExtensions.cs" />
     <Compile Include="Extensions\Expressions\MemberExpressionExtensions.cs" />
     <Compile Include="Extensions\Expressions\ReduceEvaluationsExpressionExtensions.cs" />
@@ -77,6 +79,7 @@
     <Compile Include="Sync\StringLocker.cs" />
     <Compile Include="Types\EnumOption.cs" />
     <Compile Include="Types\EnumType.cs" />
+    <Compile Include="Types\Lambda.cs" />
     <Compile Include="Types\TypeActivator.cs" />
     <Compile Include="Validation\EmailValidator.cs" />
   </ItemGroup>

@@ -1,6 +1,6 @@
-﻿using System;
-using System.Linq.Expressions;
-using Bardock.Utils.Extensions;
+﻿using Bardock.Utils.Extensions;
+using Bardock.Utils.Types;
+using FluentAssertions;
 using Xunit;
 
 namespace Bardock.Utils.Tests.Extensions
@@ -8,38 +8,81 @@ namespace Bardock.Utils.Tests.Extensions
     public class ConstantExpressionExtensionsTest
     {
         [Fact]
-        public void IsConstant_Bool()
+        public void IsConstant_UseConstantBoolExpression_ShouldReturnTrue()
         {
-            Expression<Func<string, bool>> exp = (x => true);
-            Assert.True(exp.IsConstant(true));
+            //Setup
+            var expr = Lambda.Expr(() => true);
+
+            //Exercise
+            var actual = expr.Body.IsConstant(true);
+
+            //Verify
+            actual.Should().BeTrue();
         }
 
         [Fact]
-        public void IsConstant_String()
+        public void IsConstant_UseConstantStringExpression_ShouldReturnTrue()
         {
-            Expression<Func<string, string>> exp = (x => "asd");
-            Assert.True(exp.IsConstant("asd"));
+            //Setup
+            var expr = Lambda.Expr(() => "true");
+
+            //Exercise
+            var actual = expr.Body.IsConstant("true");
+
+            //Verify
+            actual.Should().BeTrue();
         }
 
         [Fact]
-        public void IsConstant_DifferentValue()
+        public void IsConstant_UseConstantNullExpression_ShouldReturnTrue()
         {
-            Expression<Func<bool, string>> exp = (x => "true");
-            Assert.False(exp.IsConstant("true "));
+            //Setup
+            var expr = Lambda.Expr<string>(() => null);
+
+            //Exercise
+            var actual = expr.Body.IsConstant(null);
+
+            //Verify
+            actual.Should().BeTrue();
         }
 
         [Fact]
-        public void IsConstant_DifferentType()
+        public void IsConstant_UseConstantStringExpressionAndPassDifferentValue_ShouldReturnFalse()
         {
-            Expression<Func<bool, string>> exp = (x => "true");
-            Assert.False(exp.IsConstant(true));
+            //Setup
+            var expr = Lambda.Expr(() => "true");
+
+            //Exercise
+            var actual = expr.Body.IsConstant("true ");
+
+            //Verify
+            actual.Should().BeFalse();
         }
 
         [Fact]
-        public void IsConstant_Method()
+        public void IsConstant_UseConstantBoolExpressionAndPassStringValue_ShouldReturnFalse()
         {
-            Expression<Func<bool, string>> exp = (x => x.ToString());
-            Assert.False(exp.IsConstant(""));
+            //Setup
+            var expr = Lambda.Expr(() => true);
+
+            //Exercise
+            var actual = expr.Body.IsConstant(true.ToString());
+
+            //Verify
+            actual.Should().BeFalse();
+        }
+
+        [Fact]
+        public void IsConstant_UseVariableStringExpression_ShouldReturnFalse()
+        {
+            //Setup
+            var expr = Lambda.Expr((object x) => x.ToString());
+
+            //Exercise
+            var actual = expr.Body.IsConstant("");
+
+            //Verify
+            actual.Should().BeFalse();
         }
     }
 }

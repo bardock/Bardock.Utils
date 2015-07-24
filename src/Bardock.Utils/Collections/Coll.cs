@@ -1,5 +1,8 @@
-﻿namespace Bardock.Utils.Collections
+﻿using System;
+
+namespace Bardock.Utils.Collections
 {
+    [Obsolete("Please use native array initializers")]
     public class Coll
     {
         /// <summary>
