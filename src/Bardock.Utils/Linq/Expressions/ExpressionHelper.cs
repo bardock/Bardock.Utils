@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using Bardock.Utils.Extensions;
 
 namespace Bardock.Utils.Linq.Expressions
 {
@@ -13,17 +14,14 @@ namespace Bardock.Utils.Linq.Expressions
         /// <summary>
         /// Obtains the member name string of a specified expression
         /// </summary>
-        public static string GetMemberName<T>(Expression<System.Func<T, object>> expression)
+        public static string GetMemberName<T, TReturn>(Expression<Func<T, TReturn>> expression)
         {
-            if (expression.Body is MemberExpression)
-            {
-                return ((MemberExpression)expression.Body).Member.Name;
-            }
-            else
-            {
-                var op = (((UnaryExpression)expression.Body).Operand);
-                return ((MemberExpression)op).Member.Name;
-            }
+            var body = expression.RemoveConvert() as MemberExpression;
+
+            if (body == null)
+                throw new ArgumentException("expression must be a MemberExpression");
+
+            return body.Member.Name;
         }
 
         /// <summary>
