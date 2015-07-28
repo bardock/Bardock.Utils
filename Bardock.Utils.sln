@@ -17,11 +17,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{AF83A4D6
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bardock.Utils.Tests", "tests\Bardock.Utils.Tests\Bardock.Utils.Tests.csproj", "{5FA9477F-0362-4D86-831F-1DB1696F6AA9}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{987E5089-8501-49DA-B9FF-2CE89F845C16}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\packages.config = .nuget\packages.config
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bardock.Utils.Logger.Demo", "src\Bardock.Utils.Logger.Demo\Bardock.Utils.Logger.Demo.csproj", "{BD3782CB-1D92-49C9-A504-B6B6274B66D9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bardock.Utils.Web.WebApi", "src\Bardock.Utils.Web.WebApi\Bardock.Utils.Web.WebApi.csproj", "{B9DCAF67-DE27-461E-9259-CDD44BC885DA}"
