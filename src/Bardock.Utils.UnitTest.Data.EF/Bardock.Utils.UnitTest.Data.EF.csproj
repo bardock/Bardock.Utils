@@ -55,12 +55,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Bardock.Utils.UnitTest.Data\Bardock.Utils.UnitTest.Data.csproj">
-      <Project>{df4a40f2-af0c-4107-9a1c-35952555f3fa}</Project>
-      <Name>Bardock.Utils.UnitTest.Data</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.config" />
     <None Include="Bardock.Utils.UnitTest.Data.EF.nuspec" />
     <None Include="Bardock.Utils.UnitTest.Data.EF.pub.bat" />

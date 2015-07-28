@@ -30,14 +30,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bardock.Utils.Web.Mvc.HtmlT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bardock.Utils.Web.Mvc.HtmlTags.Tests", "tests\Bardock.Utils.Web.Mvc.HtmlTags.Tests\Bardock.Utils.Web.Mvc.HtmlTags.Tests.csproj", "{6CFC21A7-F400-4670-B135-BC655230E442}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bardock.Utils.UnitTest.Data", "src\Bardock.Utils.UnitTest.Data\Bardock.Utils.UnitTest.Data.csproj", "{DF4A40F2-AF0C-4107-9A1C-35952555F3FA}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bardock.Utils.UnitTest.Data.EF", "src\Bardock.Utils.UnitTest.Data.EF\Bardock.Utils.UnitTest.Data.EF.csproj", "{19961FB9-5E3B-4E6C-B03A-5573D80FF891}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders", "src\Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders\Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders.csproj", "{B0F8231C-0F0B-4A2D-940E-5303344848EE}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders.Tests", "src\Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders.Tests\Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders.Tests.csproj", "{B77170E5-B61D-41AB-87AF-B2989891ABF8}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bardock.Utils.Data.EF", "src\Bardock.Utils.Data.EF\Bardock.Utils.Data.EF.csproj", "{89FE2B31-5E28-46E1-BB50-817EF51954CD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bardock.Utils.Data.EF.Effort", "src\Bardock.Utils.Data.EF.Effort\Bardock.Utils.Data.EF.Effort.csproj", "{6DED5D77-9737-4D22-9528-61CC34FC0515}"
@@ -92,22 +84,6 @@ Global
 		{6CFC21A7-F400-4670-B135-BC655230E442}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6CFC21A7-F400-4670-B135-BC655230E442}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6CFC21A7-F400-4670-B135-BC655230E442}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DF4A40F2-AF0C-4107-9A1C-35952555F3FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DF4A40F2-AF0C-4107-9A1C-35952555F3FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DF4A40F2-AF0C-4107-9A1C-35952555F3FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DF4A40F2-AF0C-4107-9A1C-35952555F3FA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{19961FB9-5E3B-4E6C-B03A-5573D80FF891}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{19961FB9-5E3B-4E6C-B03A-5573D80FF891}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{19961FB9-5E3B-4E6C-B03A-5573D80FF891}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{19961FB9-5E3B-4E6C-B03A-5573D80FF891}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B0F8231C-0F0B-4A2D-940E-5303344848EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B0F8231C-0F0B-4A2D-940E-5303344848EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B0F8231C-0F0B-4A2D-940E-5303344848EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B0F8231C-0F0B-4A2D-940E-5303344848EE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B77170E5-B61D-41AB-87AF-B2989891ABF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B77170E5-B61D-41AB-87AF-B2989891ABF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B77170E5-B61D-41AB-87AF-B2989891ABF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B77170E5-B61D-41AB-87AF-B2989891ABF8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{89FE2B31-5E28-46E1-BB50-817EF51954CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{89FE2B31-5E28-46E1-BB50-817EF51954CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89FE2B31-5E28-46E1-BB50-817EF51954CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -131,6 +107,5 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{5FA9477F-0362-4D86-831F-1DB1696F6AA9} = {AF83A4D6-17A9-4267-B0A0-AC58CFCA8592}
 		{6CFC21A7-F400-4670-B135-BC655230E442} = {AF83A4D6-17A9-4267-B0A0-AC58CFCA8592}
-		{B77170E5-B61D-41AB-87AF-B2989891ABF8} = {AF83A4D6-17A9-4267-B0A0-AC58CFCA8592}
 	EndGlobalSection
 EndGlobal

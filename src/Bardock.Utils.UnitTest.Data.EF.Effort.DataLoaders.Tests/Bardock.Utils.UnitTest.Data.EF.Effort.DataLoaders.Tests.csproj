@@ -80,10 +80,6 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders\Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders.csproj">
-      <Project>{b0f8231c-0f0b-4a2d-940e-5303344848ee}</Project>
-      <Name>Bardock.Utils.UnitTest.Data.EF.Effort.DataLoaders</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Bardock.Utils\Bardock.Utils.csproj">
       <Project>{dff10396-c6b8-43f7-bbdd-d7ad9f57e4bf}</Project>
       <Name>Bardock.Utils</Name>
