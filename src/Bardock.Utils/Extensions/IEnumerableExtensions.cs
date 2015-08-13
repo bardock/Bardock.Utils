@@ -124,15 +124,71 @@ namespace Bardock.Utils.Extensions
             return resultList;
         }
 
-        public static IEnumerable<TSource> ForEach<TSource>(this IEnumerable<TSource> source, Action<TSource> action)
+        /// <summary>
+        /// Apply an action to each element.
+        /// </summary>
+        public static IEnumerable<TSource> ForEach<TSource>(
+            this IEnumerable<TSource> source,
+            Action<TSource> action)
         {
-            source.ToList().ForEach(action);
+            return source.ForEach((e, i) => action(e));
+        }
+
+        public static IEnumerable<TSource> ForEach<TSource>(
+            this IEnumerable<TSource> source,
+            Action<TSource, int> action)
+        {
+            var i = 0;
+            foreach (var e in source)
+            {
+                action(e, i);
+                i++;
+            }
             return source;
         }
 
+        /// <summary>
+        /// Determines whether a sequence contains any of the items
+        /// </summary>
         public static bool ContainsAny<TSource>(this IEnumerable<TSource> source, params TSource[] items)
         {
             return items.Any(item => source.Contains(item));
+        }
+
+        /// <summary>
+        /// Determines whether a sequence contains all of the items
+        /// </summary>
+        public static bool ContainsAll<TSource>(this IEnumerable<TSource> source, params TSource[] items)
+        {
+            return items.All(item => source.Contains(item));
+        }
+
+        /// <summary>
+        /// Adds an item to the end of the sequence
+        /// </summary>
+        public static IEnumerable<TSource> AddItem<TSource>(
+            this IEnumerable<TSource> source,
+            TSource item)
+        {
+            return source.Concat(new TSource[] { item });
+        }
+
+        /// <summary>
+        /// Adds an item to the specific index of the sequence
+        /// </summary>
+        public static IEnumerable<TSource> InsertItem<TSource>(
+            this IEnumerable<TSource> source,
+            TSource item,
+            int index)
+        {
+            index = index - 1 > 0
+                        ? index - 1
+                        : 0;
+
+            return source
+                    .Take(index)
+                    .AddItem(item)
+                    .Concat(source.Skip(index));
         }
     }
 }

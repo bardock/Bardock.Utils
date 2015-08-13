@@ -91,8 +91,15 @@ namespace Bardock.Utils.Extensions
         /// Clones the date. Optionally overrides with specified parameters.
         /// </summary>
         public static DateTime Clone(
-            this DateTime d, int? year = null, int? month = null, int? day = null,
-            int? hour = null, int? minute = null, int? second = null, int? millisecond = null, DateTimeKind? kind = null)
+            this DateTime d, 
+            int? year = null, 
+            int? month = null, 
+            int? day = null,
+            int? hour = null, 
+            int? minute = null, 
+            int? second = null, 
+            int? millisecond = null, 
+            DateTimeKind? kind = null)
         {
             return new DateTime(
                 year ?? d.Year, month ?? d.Month, day ?? d.Day,
@@ -146,6 +153,7 @@ namespace Bardock.Utils.Extensions
         {
             return d.ToYearStart().AddYears(1).AddDays(-1);
         }
+
 
         /// <summary>
         /// Obtains the date and time format pattern.
