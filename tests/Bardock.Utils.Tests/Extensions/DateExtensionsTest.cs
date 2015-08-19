@@ -91,5 +91,44 @@ namespace Bardock.Utils.Tests.Extensions
             var r = DATE1.ToMonthEnd();
             Assert.Equal(new DateTime(2013, 01, 31, 23, 59, 59, 999), r);
         }
+
+        [Fact]
+        public void ToMonthYearString_ValidDate_NameOfMothAnYear()
+        {
+            // Setup
+
+            // Exercise && Verify
+            var r = DATE1.ToMonthYearString();
+            Assert.Equal("enero de 2013", r);
+        }
+
+        [Fact]
+        public void ToMonthString_ValidDate_NameOfMonth_()
+        {
+            // Setup
+
+            // Exercise && Verify
+            var r = DATE1.ToMonthString();
+            Assert.Equal("enero", r);
+        }
+        [Fact]
+        public void ToShortMonthString_ValidDate_ShortNameOfMonth_()
+        {
+            // Setup
+
+            // Exercise && Verify
+            var r = DATE1.ToShortMonthString();
+            Assert.Equal("ene", r);
+        }
+        [Fact]
+        public void ToDayMonthString_ValidDate_NumberDayNameOfMonth_()
+        {
+            // Setup
+
+            // Exercise && Verify
+            var r = DATE1.ToDayMonthString();
+            Assert.Equal("05 enero", r);
+        }
+        
     }
 }

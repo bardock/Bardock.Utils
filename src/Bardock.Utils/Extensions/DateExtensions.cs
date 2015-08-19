@@ -154,6 +154,37 @@ namespace Bardock.Utils.Extensions
             return d.ToYearStart().AddYears(1).AddDays(-1);
         }
 
+        /// <summary>
+        /// Gets the custom format string for a year and month value.
+        /// </summary>
+        public static string ToMonthYearString(this System.DateTime d)
+        {
+            return d.ToString(System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.YearMonthPattern);
+        }
+
+        /// <summary>
+        /// Gets the culture-specific name of the month
+        /// </summary>
+        public static string ToMonthString(this System.DateTime d)
+        {
+            return System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(d.Month);
+        }
+
+        /// <summary>
+        /// Gets the culture-specific abbreviated name of the month
+        /// </summary>
+        public static string ToShortMonthString(this System.DateTime d)
+        {
+            return System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(d.Month);
+        }
+
+        /// <summary>
+        /// Gets the custom format string for a month and day value.
+        /// </summary>
+        public static string ToDayMonthString(this System.DateTime d)
+        {
+            return d.ToString(System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.MonthDayPattern);
+        }
 
         /// <summary>
         /// Obtains the date and time format pattern.
