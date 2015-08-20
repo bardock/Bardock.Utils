@@ -79,14 +79,13 @@ namespace Bardock.Utils.Tests.Extensions
         public void ContainsAny_ArrayItems_ShouldContainAnyItems()
         {
             // Setup
-            var list = Coll.Array(1, 2, 3, 4, 5, 6, 7, 8);
+            var sut = Coll.Array(1, 2, 3, 4, 5, 6, 7, 8);
 
-            //Exercise
+            // Exercise
+            var actual = sut.ContainsAny(new int[] { 1, 3, 5 });
 
             // Verify
-            Assert.True(list.ContainsAny(new int[] { 1, 3, 5 }));
-            Assert.True(list.ContainsAny(new int[] { 4, 13, 15 }));
-            Assert.False(list.ContainsAny(new int[] { 9, 15, 22 }));
+            Assert.True(actual);
         }
 
         [Fact]
@@ -94,47 +93,44 @@ namespace Bardock.Utils.Tests.Extensions
         {
             // Setup
             var sut = Coll.Array(1, 2, 3, 4, 5, 6, 7, 8);
-            var expectedContainedArray = new int[] { 1, 2, 3, 4, 5, 6, 7, 8 };
-            var notExpectedContainedArray = new int[] { 1, 2, 3, 4, 9 };
+            var expectedContainedArray = new int[] { 1, 2, 3, 4 };
 
-            // Exercise & Verify
-            Assert.True(sut.ContainsAll(expectedContainedArray));
-            Assert.False(sut.ContainsAll(notExpectedContainedArray));
+            // Exercise
+            var actual = sut.ContainsAll(expectedContainedArray);
+
+            // Verify
+            Assert.True(actual);
         }
 
         [Fact]
         public void AddItem_NotNullValue_ShouldContainItem()
         {
             // Setup
-            var sut = Coll.Array(1, 2, 3, 4, 5, 6, 7);
-            var item = 8;
+            var sut = new List<int>() { 1, 2, 3, 4, 5, 6, 7 }.AsEnumerable();
+            var expectedItem = 8;
 
             // Exercise
-            sut = sut.AddItem(item).ToArray();
-            var lastIndex = sut.Count() > 0
-                            ? sut.Count() - 1
-                            : 0;
+            sut = sut.AddItem(expectedItem);
+            var actual = sut.Last();
+
             //Verify
-            Assert.True(sut.Contains(item));
-            Assert.True(sut.ElementAt(lastIndex) == item);
+            Assert.Equal(expectedItem, actual);
         }
 
         [Fact]
         public void InsertItem_NotNullValue_ShouldContainItemInSpecificIndex()
         {
             // Setup
-            var sut = Coll.Array(1, 2, 3, 4, 5, 6, 7);
-            var item = 8;
-            var index = 1;
+            var sut = new List<int>() { 1, 2, 3, 4, 5, 6, 7 }.AsEnumerable();
+            var expectedItem = 8;
+            var expectedIndex = 1;
 
             // Exercise
-            sut = sut.InsertItem(item, index).ToArray();
-            index = index > 0
-                           ? index - 1
-                           : 0;
+            sut = sut.InsertItem(expectedItem, expectedIndex);
+            var actual = sut.ElementAt(expectedIndex);
+
             //Verify
-            Assert.True(sut.Contains(item));
-            Assert.True(sut.ElementAt(index) == item);
+            Assert.Equal(expectedItem, actual);
         }
 
         [Fact]

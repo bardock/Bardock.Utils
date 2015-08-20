@@ -49,7 +49,6 @@
     <Compile Include="Extensions\Expressions\ReduceConstantsExpressionExtensions.cs" />
     <Compile Include="Extensions\Expressions\PartialApplyExpressionExtensions.cs" />
     <Compile Include="Extensions\DoubleExtensions.cs" />
-    <Compile Include="Extensions\IListExtensions.cs" />
     <Compile Include="Extensions\LongExtensions.cs" />
     <Compile Include="Extensions\GenericExtensions.cs" />
     <Compile Include="Extensions\ArrayExtensions.cs" />

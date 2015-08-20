@@ -181,8 +181,8 @@ namespace Bardock.Utils.Extensions
             TSource item,
             int index)
         {
-            index = index - 1 > 0
-                        ? index - 1
+            index = index - 1 >= 0
+                        ? index
                         : 0;
 
             return source

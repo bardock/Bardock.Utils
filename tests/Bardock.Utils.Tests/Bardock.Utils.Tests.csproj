@@ -55,7 +55,6 @@
     <Compile Include="Extensions\Expressions\ReplaceEqualsMethodByOperatorExpressionExtensionsTest.cs" />
     <Compile Include="Extensions\Expressions\ReduceConstantsExpressionExtensionsTest.cs" />
     <Compile Include="Extensions\Expressions\PartialApplyExpressionExtensionsTest.cs" />
-    <Compile Include="Extensions\IListExtensionsTest.cs" />
     <Compile Include="Extensions\IQueryableExtensionsTest.cs" />
     <Compile Include="Extensions\IEnumerableExtensionsTest.cs" />
     <Compile Include="Extensions\ByteExtensionsTest.cs" />
