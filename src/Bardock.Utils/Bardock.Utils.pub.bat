@@ -1,3 +1,4 @@
+
 set "project=Bardock.Utils"
 set "localSourcePath=\\Origin-10\NuGetPackages"
 set /p version=Version number: 
