@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Bardock.Utils.Extensions;
+using System;
 using Xunit;
-using Bardock.Utils.Extensions;
-using Bardock.Utils.Globalization;
 
 namespace Bardock.Utils.Tests.Extensions
 {
@@ -28,6 +23,14 @@ namespace Bardock.Utils.Tests.Extensions
         }
 
         [Fact]
+        public void ApplyOrDefault_Null_NullableIntToCustomDefault()
+        {
+            int? nullable = null;
+            var r = nullable.ApplyOrDefault(x => x * 2, defaultValue: 10);
+            Assert.Equal(10, r);
+        }
+
+        [Fact]
         public void ApplyOrDefault_Valued_NullableStruct()
         {
             int? nullable = 1;
@@ -41,6 +44,14 @@ namespace Bardock.Utils.Tests.Extensions
             Object nullable = null;
             var r = nullable.ApplyOrDefault(x => "ok");
             Assert.Equal(null, r);
+        }
+
+        [Fact]
+        public void ApplyOrDefault_Null_NullableClassToCustomDefault()
+        {
+            Object nullable = null;
+            var r = nullable.ApplyOrDefault(x => "ok", defaultValue: "wasnull");
+            Assert.Equal("wasnull", r);
         }
 
         [Fact]

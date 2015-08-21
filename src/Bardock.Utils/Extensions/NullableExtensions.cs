@@ -7,21 +7,27 @@ namespace Bardock.Utils.Extensions
         /// <summary>
         /// Applies a specified function if current instance is not null. Otherwise, returns null.
         /// </summary>
-        public static TReturn ApplyOrDefault<T, TReturn>(this T? d, Func<T, TReturn> apply) where T : struct
+        public static TReturn ApplyOrDefault<T, TReturn>(
+            this T? @this, 
+            Func<T, TReturn> apply, 
+            TReturn defaultValue = default(TReturn)) where T : struct
         {
-            if (d.HasValue)
-                return apply(d.Value);
-            return default(TReturn);
+            return @this.HasValue
+                ? apply(@this.Value)
+                : defaultValue;
         }
 
         /// <summary>
         /// Applies a specified function if current instance is not null. Otherwise, returns null.
         /// </summary>
-        public static TReturn ApplyOrDefault<T, TReturn>(this T d, Func<T, TReturn> apply) where T : class
+        public static TReturn ApplyOrDefault<T, TReturn>(
+            this T @this, 
+            Func<T, TReturn> apply,
+            TReturn defaultValue = default(TReturn)) where T : class
         {
-            if (d != null)
-                return apply(d);
-            return default(TReturn);
+            return @this != null
+                ? apply(@this)
+                : defaultValue;
         }
     }
 }

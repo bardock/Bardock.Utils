@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 using Bardock.Utils.Extensions;
+using System.Globalization;
 
 namespace Bardock.Utils.Tests.Extensions
 {
@@ -91,5 +92,56 @@ namespace Bardock.Utils.Tests.Extensions
             var r = DATE1.ToMonthEnd();
             Assert.Equal(new DateTime(2013, 01, 31, 23, 59, 59, 999), r);
         }
+
+        [Fact]
+        public void ToMonthYearString_ValidDate_NameOfMothAnYear()
+        {
+            // Setup
+            var expected = DATE1.ToString(System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.YearMonthPattern);
+
+            // Exercise
+            var actual = DATE1.ToMonthYearString();
+
+            // Verify
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void ToMonthString_ValidDate_NameOfMonth()
+        {
+            // Setup
+            var expected = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(DATE1.Month);
+
+            // Exercise
+            var actual = DATE1.ToMonthString();
+
+            // Verify
+            Assert.Equal(expected, actual);
+        }
+        [Fact]
+        public void ToShortMonthString_ValidDate_ShortNameOfMonth()
+        {
+            // Setup
+            var expected = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(DATE1.Month);
+            
+            // Exercise
+            var actual = DATE1.ToShortMonthString();
+
+            // Verify
+            Assert.Equal(expected, actual);
+        }
+        [Fact]
+        public void ToDayMonthString_ValidDate_NumberDayNameOfMonth()
+        {
+            // Setup
+            var expected = DATE1.ToString(System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.MonthDayPattern);
+
+            // Exercise 
+            var actual = DATE1.ToDayMonthString();
+
+            // Verify
+            Assert.Equal(expected, actual);
+        }
+        
     }
 }
