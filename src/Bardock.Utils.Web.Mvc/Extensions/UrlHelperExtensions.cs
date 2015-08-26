@@ -25,7 +25,7 @@ namespace Bardock.Utils.Web.Mvc.Extensions
 			return url.Absolute(string.Empty);
 		}
         
-        public static string Api(this UrlHelper helper, string controllerName, string action = null, object values = null)
+        public static string Api(this UrlHelper helper, string controllerName, string action = null, object values = null, string route = null)
 		{
 			RouteValueDictionary routeValues = new RouteValueDictionary 
             {
@@ -42,11 +42,11 @@ namespace Bardock.Utils.Web.Mvc.Extensions
 			if (action != null) 
             {
 				routeValues.Add("action", action);
-				return helper.RouteUrl("DefaultApiAction", routeValues);
+				return helper.RouteUrl(route ?? "DefaultApiAction", routeValues);
 			} 
             else 
             {
-				return helper.RouteUrl("DefaultApi", routeValues);
+				return helper.RouteUrl(route ?? "DefaultApi", routeValues);
 			}
 		}
 

@@ -5,9 +5,15 @@ namespace Bardock.Utils.Web.Mvc.Extensions
 {
 	public static class JsonExtensions
 	{
-        public static MvcHtmlString Json<TModel>(this HtmlHelper<TModel> helper, object instance)
+        public static MvcHtmlString Json<TModel>(this HtmlHelper<TModel> helper, object instance, bool camelCase = false)
 		{
-			return new MvcHtmlString(JsonConvert.SerializeObject(instance));
+            var settings = new JsonSerializerSettings()
+            {
+                ContractResolver = camelCase
+                                        ? new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver()
+                                        : new Newtonsoft.Json.Serialization.DefaultContractResolver()
+            };
+			return new MvcHtmlString(JsonConvert.SerializeObject(instance, settings));
 		}
 	}
 }

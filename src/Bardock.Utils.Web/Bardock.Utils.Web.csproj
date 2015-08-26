@@ -63,6 +63,7 @@
     <Compile Include="Bundles\MyScriptBundle.cs" />
     <Compile Include="Extensions\HttpCookieCollectionExtensions.cs" />
     <Compile Include="Extensions\HttpRequestExtensions.cs" />
+    <Compile Include="Extensions\HttpResponseExtensions.cs" />
     <Compile Include="Extensions\RouteCollectionExtensions.cs" />
     <Compile Include="Filters\AccessCodeFilter.cs" />
     <Compile Include="RequestNotifications.cs" />
