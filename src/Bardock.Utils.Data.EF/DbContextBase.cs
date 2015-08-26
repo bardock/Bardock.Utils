@@ -1,78 +1,155 @@
-﻿using System;
+﻿using Bardock.Utils.Data.EF.Exceptions.Mappers;
+using Bardock.Utils.Data.EF.Operations;
+using System;
 using System.Data.Common;
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
 using System.Threading.Tasks;
-using Bardock.Utils.Data.EF.Exceptions.Mappers;
 
 namespace Bardock.Utils.Data.EF
 {
     public class DbContextBase : DbContext
     {
         private IExceptionMapper _exceptionMapper;
+        private IEntityAdder _entityAdder;
+        private IEntityUpdater _entityUpdater;
+        private IEntityDeleter _entityDeleter;
+        private IEntityDetacher _entityDetacher;
 
-        protected DbContextBase()
+        protected DbContextBase(
+            IExceptionMapper exceptionMapper = null,
+            IEntityAdder entityAdder = null,
+            IEntityUpdater entityUpdater = null,
+            IEntityDeleter entityDeleter = null,
+            IEntityDetacher entityDetacher = null)
             : base()
         {
-            SetExceptionMapper(null);
-        }
-
-        public DbContextBase(
-            IExceptionMapper exceptionMapper)
-            : base()
-        {
-            SetExceptionMapper(exceptionMapper);
+            Init(exceptionMapper, entityAdder, entityUpdater, entityDeleter, entityDetacher);
         }
 
         public DbContextBase(
             string nameOrConnectionString,
-            IExceptionMapper exceptionMapper = null)
+            IExceptionMapper exceptionMapper = null,
+            IEntityAdder entityAdder = null,
+            IEntityUpdater entityUpdater = null,
+            IEntityDeleter entityDeleter = null,
+            IEntityDetacher entityDetacher = null)
             : base(nameOrConnectionString)
         {
-            SetExceptionMapper(exceptionMapper);
+            Init(exceptionMapper, entityAdder, entityUpdater, entityDeleter, entityDetacher);
         }
 
         public DbContextBase(
             DbConnection existingConnection,
             bool contextOwnsConnection,
-            IExceptionMapper exceptionMapper = null)
+            IExceptionMapper exceptionMapper = null,
+            IEntityAdder entityAdder = null,
+            IEntityUpdater entityUpdater = null,
+            IEntityDeleter entityDeleter = null,
+            IEntityDetacher entityDetacher = null)
             : base(existingConnection, contextOwnsConnection)
         {
-            SetExceptionMapper(exceptionMapper);
+            Init(exceptionMapper, entityAdder, entityUpdater, entityDeleter, entityDetacher);
         }
 
         public DbContextBase(
             ObjectContext objectContext,
             bool dbContextOwnsObjectContext,
-            IExceptionMapper exceptionMapper = null)
+            IExceptionMapper exceptionMapper = null,
+            IEntityAdder entityAdder = null,
+            IEntityUpdater entityUpdater = null,
+            IEntityDeleter entityDeleter = null,
+            IEntityDetacher entityDetacher = null)
             : base(objectContext, dbContextOwnsObjectContext)
         {
-            SetExceptionMapper(exceptionMapper);
+            Init(exceptionMapper, entityAdder, entityUpdater, entityDeleter, entityDetacher);
         }
 
         public DbContextBase(
             string nameOrConnectionString,
             DbCompiledModel model,
-            IExceptionMapper exceptionMapper = null)
+            IExceptionMapper exceptionMapper = null,
+            IEntityAdder entityAdder = null,
+            IEntityUpdater entityUpdater = null,
+            IEntityDeleter entityDeleter = null,
+            IEntityDetacher entityDetacher = null)
             : base(nameOrConnectionString, model)
         {
-            SetExceptionMapper(exceptionMapper);
+            Init(exceptionMapper, entityAdder, entityUpdater, entityDeleter, entityDetacher);
         }
 
         public DbContextBase(
             DbConnection existingConnection,
             DbCompiledModel model,
             bool contextOwnsConnection,
-            IExceptionMapper exceptionMapper = null)
+            IExceptionMapper exceptionMapper = null,
+            IEntityAdder entityAdder = null,
+            IEntityUpdater entityUpdater = null,
+            IEntityDeleter entityDeleter = null,
+            IEntityDetacher entityDetacher = null)
             : base(existingConnection, model, contextOwnsConnection)
         {
-            SetExceptionMapper(exceptionMapper);
+            Init(exceptionMapper, entityAdder, entityUpdater, entityDeleter, entityDetacher);
         }
 
-        private void SetExceptionMapper(IExceptionMapper exceptionMapper)
+        protected virtual void SetExceptionMapper(IExceptionMapper exceptionMapper)
         {
             _exceptionMapper = exceptionMapper ?? new NullExceptionMapper();
+        }
+
+        protected virtual void SetEntityAdder(IEntityAdder entityAdder)
+        {
+            _entityAdder = entityAdder ?? new EntityAdder();
+        }
+
+        protected virtual void SetEntityUpdater(IEntityUpdater entityUpdater)
+        {
+            _entityUpdater = entityUpdater ?? new EntityUpdater();
+        }
+
+        protected virtual void SetEntityDeleter(IEntityDeleter entityDeleter)
+        {
+            _entityDeleter = entityDeleter ?? new EntityDeleter();
+        }
+
+        protected virtual void SetEntityDetacher(IEntityDetacher entityDetacher)
+        {
+            _entityDetacher = entityDetacher ?? new EntityDetacher();
+        }
+
+        private void Init(
+            IExceptionMapper exceptionMapper,
+            IEntityAdder entityAdder,
+            IEntityUpdater entityUpdater,
+            IEntityDeleter entityDeleter,
+            IEntityDetacher entityDetacher)
+        {
+            SetExceptionMapper(exceptionMapper);
+            SetEntityAdder(entityAdder);
+            SetEntityUpdater(entityUpdater);
+            SetEntityDeleter(entityDeleter);
+            SetEntityDetacher(entityDetacher);
+        }
+
+        internal void Delete(object e)
+        {
+            _entityDeleter.Delete(this, e);
+        }
+
+        internal void Update(object e)
+        {
+            _entityUpdater.Update(this, e);
+        }
+
+        internal void Detach(object e)
+        {
+            _entityDetacher.Detach(this, e);
+        }
+
+        internal void Add(object e)
+        {
+            _entityAdder.Add(this, e);
         }
 
         public override int SaveChanges()

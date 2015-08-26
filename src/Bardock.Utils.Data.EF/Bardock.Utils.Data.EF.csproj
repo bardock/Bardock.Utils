@@ -52,8 +52,17 @@
     <Compile Include="EntityTypeConfigurationExtensions.cs" />
     <Compile Include="Exceptions\DuplicatedEntryException.cs" />
     <Compile Include="Exceptions\Mappers\CompositeExceptionMapper.cs" />
+    <Compile Include="Operations\Decorators\EntityUpdaterConcurrencyDecorator.cs" />
+    <Compile Include="Operations\EntityAdder.cs" />
+    <Compile Include="Operations\EntityDetacher.cs" />
+    <Compile Include="Operations\EntityDeleter.cs" />
+    <Compile Include="Operations\EntityUpdater.cs" />
     <Compile Include="Exceptions\Mappers\IExceptionMapper.cs" />
     <Compile Include="Exceptions\Mappers\NullExceptionMapper.cs" />
+    <Compile Include="Operations\IEntityAdder.cs" />
+    <Compile Include="Operations\IEntityDetacher.cs" />
+    <Compile Include="Operations\IEntityDeleter.cs" />
+    <Compile Include="Operations\IEntityUpdater.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -68,6 +77,7 @@
       <Name>Bardock.Utils</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
