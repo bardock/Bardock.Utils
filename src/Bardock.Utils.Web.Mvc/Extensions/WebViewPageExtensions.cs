@@ -14,5 +14,10 @@ namespace Bardock.Utils.Web.Mvc.Extensions
 		{
 			return string.Equals(view.ViewContext.RouteData.Values["controller"].ToString(), controllerName, StringComparison.InvariantCultureIgnoreCase);
 		}
+
+        public static bool IsAction(this WebViewPage view, string actionName)
+        {
+            return string.Equals(view.ViewContext.RouteData.Values["action"].ToString(), actionName, StringComparison.InvariantCultureIgnoreCase);
+        }
 	}
 }
