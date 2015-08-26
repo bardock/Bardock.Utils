@@ -8,12 +8,19 @@ namespace Bardock.Utils.Extensions
     /// </summary>
     public static class DateExtensions
     {
+        public static string NormalizedDateFormatString { get; set; }
+
+        static DateExtensions()
+        {
+            NormalizedDateFormatString = "yyyy-MM-dd";
+        }
+
         /// <summary>
         /// Formats date and time to a normalized format: "yyyy-MM-dd HH:mm:ss"
         /// </summary>
         public static string NormalizedFormat(this DateTime d)
         {
-            return d.ToString("yyyy-MM-dd HH:mm:ss");
+            return d.ToString(string.Format("{0} {1}", NormalizedDateFormatString, "HH:mm:ss"));
         }
 
         /// <summary>
@@ -21,7 +28,7 @@ namespace Bardock.Utils.Extensions
         /// </summary>
         public static string NormalizedDateFormat(this DateTime d)
         {
-            return d.ToString("yyyy-MM-dd");
+            return d.ToString(NormalizedDateFormatString);
         }
 
         /// <summary>
@@ -201,5 +208,6 @@ namespace Bardock.Utils.Extensions
         {
             return System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern;
         }
+
     }
 }
