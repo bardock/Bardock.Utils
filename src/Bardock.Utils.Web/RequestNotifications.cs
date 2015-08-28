@@ -13,6 +13,11 @@ namespace Bardock.Utils.Web
 
         private static readonly string KEY = typeof(RequestNotifications).FullName;
 
+        static RequestNotifications()
+        {
+            ContractResolver = new DefaultContractResolver();
+        }
+
         private static HttpRequest Request { get { return HttpContext.Current.Request; } }
 
         private static HttpResponse Response { get { return HttpContext.Current.Response; } }
@@ -34,7 +39,6 @@ namespace Bardock.Utils.Web
 
         private RequestNotifications()
         {
-            ContractResolver = new DefaultContractResolver();
             InitItems();
         }
 
