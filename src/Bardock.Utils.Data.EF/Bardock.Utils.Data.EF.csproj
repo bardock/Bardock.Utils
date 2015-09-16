@@ -47,8 +47,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Annotations\DbSetTableAttribute.cs" />
     <Compile Include="DbContextBase.cs" />
     <Compile Include="DbContextExtensions.cs" />
+    <Compile Include="DbModelBuilderExtensions.cs" />
     <Compile Include="EntityTypeConfigurationExtensions.cs" />
     <Compile Include="Exceptions\DuplicatedEntryException.cs" />
     <Compile Include="Exceptions\Mappers\CompositeExceptionMapper.cs" />

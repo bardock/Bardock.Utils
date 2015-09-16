@@ -5,7 +5,11 @@ using System.Data.Common;
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
+using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
+using Bardock.Utils.Data.EF.Annotations;
+using Bardock.Utils.Extensions;
 
 namespace Bardock.Utils.Data.EF
 {
@@ -96,6 +100,30 @@ namespace Bardock.Utils.Data.EF
         protected virtual void SetExceptionMapper(IExceptionMapper exceptionMapper)
         {
             _exceptionMapper = exceptionMapper ?? new NullExceptionMapper();
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            SetupDbSetTables(modelBuilder);
+        }
+
+        /// <summary>
+        /// Setups table and schema name for each db set
+        /// </summary>
+        protected void SetupDbSetTables(DbModelBuilder modelBuilder)
+        {
+            foreach (var p in this.GetType().GetProperties()
+                .Where(prop => prop.PropertyType.IsAssignableToGenericType(typeof(IDbSet<>)))
+                .Select(prop => new { Prop = prop, TableAttr = prop.GetCustomAttribute<DbSetTableAttribute>() })
+                .Where(x => x.TableAttr != null))
+            {
+                var entityType = p.Prop.PropertyType.GetGenericArguments()[0];
+                var tableName = p.TableAttr.Name ?? entityType.Name;
+
+                modelBuilder
+                    .Entity(entityType)
+                    .ToTable(tableName, p.TableAttr.Schema);
+            }
         }
 
         protected virtual void SetEntityAdder(IEntityAdder entityAdder)

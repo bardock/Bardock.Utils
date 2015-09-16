@@ -10,7 +10,7 @@ using System.Collections;
 
 namespace Bardock.Utils.Tests.Extensions
 {
-    public class TypeExtensionsTests
+    public class TypeExtensionsIsPrimitiveTests
     {
         [Theory]
         [InlineData(typeof(byte))]
@@ -48,7 +48,7 @@ namespace Bardock.Utils.Tests.Extensions
         [InlineData(typeof(DateTimeOffset?))]
         [InlineData(typeof(TimeSpan?))]
         [InlineData(typeof(object))]
-        public void IsPrimitive_PrimitiveType_ShouldReturnTrue(Type primitiveType)
+        public void PrimitiveType_ShouldReturnTrue(Type primitiveType)
         {
             //Exercise
             var actual = primitiveType.IsPrimitive();
@@ -62,8 +62,8 @@ namespace Bardock.Utils.Tests.Extensions
         [InlineData(typeof(ArrayList))]
         [InlineData(typeof(List<string>))]
         [InlineData(typeof(Tuple<int>))]
-        [InlineData(typeof(TypeExtensionsTests))]
-        public void IsPrimitive_NonPrimitiveType_ShouldReturnFalse(Type nonPrimitiveType)
+        [InlineData(typeof(TypeExtensionsIsPrimitiveTests))]
+        public void NonPrimitiveType_ShouldReturnFalse(Type nonPrimitiveType)
         {
             //Exercise
             var actual = nonPrimitiveType.IsPrimitive();
