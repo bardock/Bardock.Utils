@@ -1,19 +1,18 @@
 ﻿using System.Collections.Generic;
-using System.Data.Entity;
 
 namespace Bardock.Utils.Data.EF
 {
     public static class DbContextExtensions
     {
         public static TDbContext Delete<TDbContext>(this TDbContext db, object e)
-            where TDbContext : DbContext
+            where TDbContext : DbContextBase
         {
-            db.Entry(e).State = EntityState.Deleted;
+            db.Delete(e);
             return db;
         }
 
         public static TDbContext Delete<TDbContext, T>(this TDbContext db, IEnumerable<T> e)
-            where TDbContext : DbContext
+            where TDbContext : DbContextBase
         {
             foreach (var item in e)
             {
@@ -23,17 +22,14 @@ namespace Bardock.Utils.Data.EF
         }
 
         public static TDbContext Add<TDbContext>(this TDbContext db, object e)
-            where TDbContext : DbContext
+            where TDbContext : DbContextBase
         {
-            if (db.Entry(e).State != EntityState.Modified)
-            {
-                db.Entry(e).State = EntityState.Added;
-            }
+            db.Add(e);
             return db;
         }
 
         public static TDbContext Add<TDbContext, T>(this TDbContext db, IEnumerable<T> e)
-            where TDbContext : DbContext
+            where TDbContext : DbContextBase
         {
             foreach (var item in e)
             {
@@ -43,17 +39,14 @@ namespace Bardock.Utils.Data.EF
         }
 
         public static TDbContext Update<TDbContext>(this TDbContext db, object e)
-            where TDbContext : DbContext
+            where TDbContext : DbContextBase
         {
-            if (db.Entry(e).State != EntityState.Modified)
-            {
-                db.Entry(e).State = EntityState.Modified;
-            }
+            db.Update(e);
             return db;
         }
 
         public static TDbContext Update<TDbContext, T>(this TDbContext db, IEnumerable<T> e)
-            where TDbContext : DbContext
+            where TDbContext : DbContextBase
         {
             foreach (var item in e)
             {
@@ -63,14 +56,14 @@ namespace Bardock.Utils.Data.EF
         }
 
         public static TDbContext Detach<TDbContext>(this TDbContext db, object e)
-            where TDbContext : DbContext
+            where TDbContext : DbContextBase
         {
-            db.Entry(e).State = EntityState.Detached;
+            db.Detach(e);
             return db;
         }
 
         public static TDbContext Detach<TDbContext, T>(this TDbContext db, IEnumerable<T> e)
-            where TDbContext : DbContext
+            where TDbContext : DbContextBase
         {
             foreach (var item in e)
             {
