@@ -53,10 +53,10 @@ namespace Bardock.Utils.Data.EF.Operations.Decorators
 
         public void Update(DbContextBase dbCtx, object e)
         {
-            var type = e.GetType();
-            if (_typesToExclude.Any(t => t.IsAssignableFrom(type)))
+            var entityType = e.GetType();
+            if (!_typesToExclude.Any(t => t.IsAssignableFrom(entityType)))
             {
-                var pi = type.GetProperty(_propertyName);
+                var pi = entityType.GetProperty(_propertyName);
                 if (pi != null)
                 {
                     dbCtx.Entry(e).OriginalValues[_propertyName] = pi.GetValue(e);

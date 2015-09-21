@@ -21,7 +21,7 @@ namespace Bardock.Utils.Data.EF
         private IEntityDeleter _entityDeleter;
         private IEntityDetacher _entityDetacher;
 
-        protected DbContextBase(
+        public DbContextBase(
             IExceptionMapper exceptionMapper = null,
             IEntityAdder entityAdder = null,
             IEntityUpdater entityUpdater = null,
