@@ -6,12 +6,17 @@ namespace Bardock.Utils.Extensions
 {
     public static class MemberExpressionExtensions
     {
-        public static MemberExpression ToExpression(this PropertyInfo prop, string parameterName = "x")
+        public static MemberExpression ToExpression<TParam>(this PropertyInfo prop, string parameterName = "x")
+        {
+            return prop.ToExpression(parameterType: typeof(TParam), parameterName: parameterName);
+        }
+
+        public static MemberExpression ToExpression(this PropertyInfo prop, Type parameterType = null, string parameterName = "x")
         {
             if (prop == null)
                 throw new ArgumentException("prop is null");
 
-            var parameter = Expression.Parameter(prop.DeclaringType, parameterName);
+            var parameter = Expression.Parameter(parameterType ?? prop.DeclaringType, parameterName);
             return Expression.Property(parameter, prop);
         }
 

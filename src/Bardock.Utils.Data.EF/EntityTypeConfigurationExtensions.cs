@@ -87,7 +87,7 @@ namespace Bardock.Utils.Data.EF
                 if (propertyMethod.IsGenericMethod)
                     propertyMethod = propertyMethod.MakeGenericMethod(prop.PropertyType.GetNullableUnderlyingType() ?? prop.PropertyType);
 
-                var propertyConfig = propertyMethod.Invoke(config, new[] { prop.ToLambdaExpression() }) as PrimitivePropertyConfiguration;
+                var propertyConfig = propertyMethod.Invoke(config, new[] { prop.ToExpression<TEntity>().ToLambda() }) as PrimitivePropertyConfiguration;
 
                 propertyConfig
                     .HasColumnAnnotation(
