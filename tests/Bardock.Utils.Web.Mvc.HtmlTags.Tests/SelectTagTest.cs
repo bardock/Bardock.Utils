@@ -253,7 +253,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
             var tag = new SelectTag()
                 .AddOptions(
                     OptionsList.CreateForEnum<Enum1>()
-                        .SelectedValue(2)
+                        .SelectedValue(Enum1.Option2.ToString())
                         .Configure((x, op) => op.Data("customdata", x.Value)));
 
             Assert.Equal(2, tag.Children.Count());
@@ -262,11 +262,11 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
             var secondChild = tag.Children.Skip(1).First();
 
             Assert.Equal("Option1", firstChild.Text());
-            Assert.True(firstChild.ValueIsEqual(1));
+            Assert.True(firstChild.ValueIsEqual(Enum1.Option1.ToString()));
             Assert.False(firstChild.HasAttr("selected"));
             Assert.Equal(1, firstChild.Data("customdata"));
             Assert.Equal("Option2", secondChild.Text());
-            Assert.True(secondChild.ValueIsEqual(2));
+            Assert.True(secondChild.ValueIsEqual(Enum1.Option2.ToString()));
             Assert.True(secondChild.HasAttr("selected"));
             Assert.Equal(2, secondChild.Data("customdata"));
         }
@@ -277,7 +277,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
             var tag = new SelectTag()
                 .AddOptions(
                     OptionsList.CreateForEnum<Enum1>(display: x => x.Name + "-" + x.Value)
-                        .SelectedValue(2)
+                        .SelectedValue(Enum1.Option2.ToString())
                         .Configure((x, op) => op.Data("customdata", x.Value)));
 
             Assert.Equal(2, tag.Children.Count());
@@ -286,11 +286,11 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
             var secondChild = tag.Children.Skip(1).First();
 
             Assert.Equal("Option1-1", firstChild.Text());
-            Assert.True(firstChild.ValueIsEqual(1));
+            Assert.True(firstChild.ValueIsEqual(Enum1.Option1.ToString()));
             Assert.False(firstChild.HasAttr("selected"));
             Assert.Equal(1, firstChild.Data("customdata"));
             Assert.Equal("Option2-2", secondChild.Text());
-            Assert.True(secondChild.ValueIsEqual(2));
+            Assert.True(secondChild.ValueIsEqual(Enum1.Option2.ToString()));
             Assert.True(secondChild.HasAttr("selected"));
             Assert.Equal(2, secondChild.Data("customdata"));
         }
@@ -311,7 +311,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
                 var tag = new SelectTag()
                     .AddOptions(
                         OptionsList.CreateForEnum<Enum1>()
-                        .SelectedValue(2)
+                        .SelectedValue(Enum1.Option2.ToString())
                         .Configure((x, op) => op.Data("customdata", x.Value)));
 
                 Assert.Equal(2, tag.Children.Count());
@@ -320,11 +320,11 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
                 var secondChild = tag.Children.Skip(1).First();
 
                 Assert.Equal("Option 1", firstChild.Text());
-                Assert.True(firstChild.ValueIsEqual(1));
+                Assert.True(firstChild.ValueIsEqual(Enum1.Option1.ToString()));
                 Assert.False(firstChild.HasAttr("selected"));
                 Assert.Equal(1, firstChild.Data("customdata"));
                 Assert.Equal("Option2", secondChild.Text());
-                Assert.True(secondChild.ValueIsEqual(2));
+                Assert.True(secondChild.ValueIsEqual(Enum1.Option2.ToString()));
                 Assert.True(secondChild.HasAttr("selected"));
                 Assert.Equal(2, secondChild.Data("customdata"));
             }
@@ -340,7 +340,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
             var tag = new SelectTag()
                 .AddOptions(
                     OptionsList.CreateForEnum<Enum1>()
-                        .SelectedValue(2)
+                        .SelectedValue(Enum1.Option2.ToString())
                         .Configure((x, op) => op.Data("customdata", x.Value)));
 
             Assert.Equal(2, tag.Children.Count());
@@ -349,11 +349,11 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
             var secondChild = tag.Children.Skip(1).First();
 
             Assert.Equal("Option1", firstChild.Text());
-            Assert.True(firstChild.ValueIsEqual(1));
+            Assert.True(firstChild.ValueIsEqual(Enum1.Option1.ToString()));
             Assert.False(firstChild.HasAttr("selected"));
             Assert.Equal(1, firstChild.Data("customdata"));
             Assert.Equal("Option2", secondChild.Text());
-            Assert.True(secondChild.ValueIsEqual(2));
+            Assert.True(secondChild.ValueIsEqual(Enum1.Option2.ToString()));
             Assert.True(secondChild.HasAttr("selected"));
             Assert.Equal(2, secondChild.Data("customdata"));
         }
@@ -364,7 +364,10 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
             var tag = new SelectTag()
                 .AddOptions(
                     OptionsList.CreateForEnum<Enum1>()
-                        .SelectedValues(Coll.Array(2))
+                        .SelectedValues(new string[] 
+                            {
+                                Enum1.Option2.ToString()
+                            })
                         .Configure((x, op) => op.Data("customdata", x.Value)));
 
             Assert.Equal(2, tag.Children.Count());
@@ -373,11 +376,11 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags.Tests
             var secondChild = tag.Children.Skip(1).First();
 
             Assert.Equal("Option1", firstChild.Text());
-            Assert.True(firstChild.ValueIsEqual(1));
+            Assert.True(firstChild.ValueIsEqual(Enum1.Option1.ToString()));
             Assert.False(firstChild.HasAttr("selected"));
             Assert.Equal(1, firstChild.Data("customdata"));
             Assert.Equal("Option2", secondChild.Text());
-            Assert.True(secondChild.ValueIsEqual(2));
+            Assert.True(secondChild.ValueIsEqual(Enum1.Option2.ToString()));
             Assert.True(secondChild.HasAttr("selected"));
             Assert.Equal(2, secondChild.Data("customdata"));
         }
