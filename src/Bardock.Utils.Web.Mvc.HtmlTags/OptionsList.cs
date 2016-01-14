@@ -36,7 +36,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
             return Create(
                 items: EnumType.Create<TEnum>(),
                 display: display ?? (x => Resources.Current.GetValue(x.Name)),
-                value: x => x.Value);
+                value: x => x.Name);
         }
 
         public static OptionsList<SelectListItem> CreateForBoolean(
