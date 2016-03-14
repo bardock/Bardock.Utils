@@ -125,6 +125,7 @@ namespace Bardock.Utils.Web.Mvc.HtmlTags
         {
             return (SelectTag)new SelectTag()
                 .InitFor(expression, _htmlHelper)
+                .RemoveAttr("data-val-number")
                 .RemoveAttr("value");
         }
 
