@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace Bardock.Utils.Web.Mvc.ModelBinders
 {
@@ -12,14 +10,15 @@ namespace Bardock.Utils.Web.Mvc.ModelBinders
     {
         /// <summary>
         /// Determines if specified field will be initialized with default value.
+        /// Returns true when field is not present in the binding context.
         /// </summary>
-        /// <param name="model">Model object</param>
-        /// <param name="field">KeyValuePair with field name and default value</param>
+        /// <param name="fieldName">Field name</param>
+        /// <param name="model">Binded model object</param>
         /// <param name="controllerContext">Controller context</param>
         /// <param name="bindingContext">Binding context</param>
-        protected override bool RequiresDefaultValue(T model, KeyValuePair<string, Func<object>> field, ControllerContext controllerContext, ModelBindingContext bindingContext)
+        protected override bool FieldIsEmpty(string fieldName, T model, ControllerContext controllerContext, ModelBindingContext bindingContext)
         {
-            var val = bindingContext.ValueProvider.GetValue(field.Key);
+            var val = bindingContext.ValueProvider.GetValue(fieldName);
             return val == null;
         }
 

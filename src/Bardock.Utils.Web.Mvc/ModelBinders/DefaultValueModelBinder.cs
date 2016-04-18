@@ -11,7 +11,7 @@ namespace Bardock.Utils.Web.Mvc.ModelBinders
     /// <typeparam name="T">Model type</typeparam>
     public class DefaultValueModelBinder<T> : DefaultModelBinder
     {
-        private Dictionary<string, Func<object>> _fields = new Dictionary<string, Func<object>>();
+        private List<FieldSpecification> _fields = new List<FieldSpecification>();
 
         public DefaultValueModelBinder()
         { }
@@ -22,9 +22,13 @@ namespace Bardock.Utils.Web.Mvc.ModelBinders
         /// <typeparam name="TField"></typeparam>
         /// <param name="fieldExpr">Field expression</param>
         /// <param name="defaultValue">Constant default value</param>
-        public DefaultValueModelBinder<T> AddField<TField>(Expression<Func<T, TField>> fieldExpr, object defaultValue)
+        /// <param name="when">Additional condition that the field must satisfy in order to be populated with the default value</param>
+        public DefaultValueModelBinder<T> AddField<TField>(
+            Expression<Func<T, TField>> fieldExpr,
+            object defaultValue,
+            Func<ValueProviderResult, bool> when = null)
         {
-            return this.AddField(fieldExpr, () => defaultValue);
+            return this.AddField(fieldExpr, () => defaultValue, when);
         }
 
         /// <summary>
@@ -33,9 +37,16 @@ namespace Bardock.Utils.Web.Mvc.ModelBinders
         /// <typeparam name="TField"></typeparam>
         /// <param name="fieldExpr">Field expression</param>
         /// <param name="defaultValueResolver">Function that resolves default value. Useful when it depends on some context status</param>
-        public DefaultValueModelBinder<T> AddField<TField>(Expression<Func<T, TField>> fieldExpr, Func<object> defaultValueResolver)
+        /// <param name="when">Additional condition that the field must satisfy in order to be populated with the default value</param>
+        public DefaultValueModelBinder<T> AddField<TField>(
+            Expression<Func<T, TField>> fieldExpr,
+            Func<object> defaultValueResolver,
+            Func<ValueProviderResult, bool> when = null)
         {
-            _fields.Add(Bardock.Utils.Linq.Expressions.ExpressionHelper.GetExpressionText(fieldExpr), defaultValueResolver);
+            _fields.Add(new FieldSpecification(
+                name: Bardock.Utils.Linq.Expressions.ExpressionHelper.GetExpressionText(fieldExpr),
+                defaultValueResolver: defaultValueResolver,
+                condition: when));
             return this;
         }
 
@@ -47,25 +58,27 @@ namespace Bardock.Utils.Web.Mvc.ModelBinders
             T model = (T)base.BindModel(controllerContext, bindingContext);
             foreach (var field in _fields)
             {
-                if (RequiresDefaultValue(model, field, controllerContext, bindingContext))
+                var val = bindingContext.ValueProvider.GetValue(field.Name);
+                if (FieldIsEmpty(field.Name, model, controllerContext, bindingContext) && field.Condition(val))
                 {
-                    var prop = model.GetType().GetProperty(field.Key);
-                    prop.GetSetMethod().Invoke(model, new object[] { field.Value() });
+                    var prop = model.GetType().GetProperty(field.Name);
+                    prop.GetSetMethod().Invoke(model, new object[] { field.DefaultValueResolver() });
                 }
             }
             return model;
         }
 
         /// <summary>
-        /// Determines if specified field will be initialized with default value
+        /// Determines if specified field will be initialized with default value.
+        /// Returns true when field was binded to a null value.
         /// </summary>
-        /// <param name="model">Model object</param>
-        /// <param name="field">KeyValuePair with field name and default value</param>
+        /// <param name="fieldName">Field name</param>
+        /// <param name="model">Binded model object</param>
         /// <param name="controllerContext">Controller context</param>
         /// <param name="bindingContext">Binding context</param>
-        protected virtual bool RequiresDefaultValue(T model, KeyValuePair<string, Func<object>> field, ControllerContext controllerContext, ModelBindingContext bindingContext)
+        protected virtual bool FieldIsEmpty(string fieldName, T model, ControllerContext controllerContext, ModelBindingContext bindingContext)
         {
-            var prop = model.GetType().GetProperty(field.Key);
+            var prop = model.GetType().GetProperty(fieldName);
             var val = prop.GetGetMethod().Invoke(model, null);
             return val == null;
         }
@@ -78,6 +91,20 @@ namespace Bardock.Utils.Web.Mvc.ModelBinders
             var binder = new DefaultValueModelBinder<T>();
             binders.Add(typeof(T), binder);
             return binder;
+        }
+
+        private class FieldSpecification
+        {
+            public string Name { get; private set; }
+            public Func<object> DefaultValueResolver { get; private set; }
+            public Func<ValueProviderResult, bool> Condition { get; private set; }
+
+            public FieldSpecification(string name, Func<object> defaultValueResolver, Func<ValueProviderResult, bool> condition = null)
+            {
+                this.Name = name;
+                this.DefaultValueResolver = defaultValueResolver;
+                this.Condition = condition ?? (r => true);
+            }
         }
     }
 }
