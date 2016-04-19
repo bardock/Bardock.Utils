@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 
 namespace Bardock.Utils.Web.Mvc.ModelBinders
 {
@@ -6,6 +7,7 @@ namespace Bardock.Utils.Web.Mvc.ModelBinders
     /// Initializes model fields with specified default values when they were not specified in request params
     /// </summary>
     /// <typeparam name="T">Model type</typeparam>
+    [Obsolete("Please use a CustomModelBinder with a condition like this: (valueResultProvider, _) => !valueResultProvider.IsPresent()")]
     public class DefaultForMissingValueModelBinder<T> : DefaultValueModelBinder<T>
     {
         /// <summary>
