@@ -80,7 +80,7 @@ namespace Bardock.Utils.Data.EF
             foreach (var entity in db.ChangeTracker.Entries()
                 .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified || e.State == EntityState.Deleted))
             {
-                db.Detach(entity);
+                db.Detach(entity.Entity);
             }
 
             return db;
