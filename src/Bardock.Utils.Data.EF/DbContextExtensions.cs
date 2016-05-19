@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 
 namespace Bardock.Utils.Data.EF
 {
@@ -76,6 +77,18 @@ namespace Bardock.Utils.Data.EF
             {
                 db.Detach(item);
             }
+            return db;
+        }
+
+        public static TDbContext DetachAll<TDbContext>(this TDbContext db)
+            where TDbContext : DbContextBase
+        {
+            foreach (var entity in db.ChangeTracker.Entries()
+                .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified || e.State == EntityState.Deleted))
+            {
+                db.Detach(entity);
+            }
+
             return db;
         }
     }
